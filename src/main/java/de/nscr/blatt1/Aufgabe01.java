@@ -2,15 +2,24 @@ package de.nscr.blatt1;
 import java.math.BigInteger;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class Aufgabe01 {
 
     static Scanner sc = new Scanner(System.in);
 
 
+    /**
+     *
+     */
     public Aufgabe01() {
         anfang();
     }
 
+    /**
+     *
+     */
     public void anfang() {
         System.out.print("Geben sie die erste Zahl ein von der sie die Fakultaet berechnen wollen: " );
         berechneFakultaet(sc.nextInt());
@@ -18,6 +27,9 @@ public class Aufgabe01 {
         weiter();
     }
 
+    /**
+     *
+     */
     public void weiter () {
         String zeile = sc.nextLine();
         if (zeile.equals("y")) {
@@ -30,6 +42,11 @@ public class Aufgabe01 {
         }
     }
 
+    /**
+     *
+     * @param pZahl
+     * @return
+     */
     public BigInteger berechneFakultaet(int pZahl) {
         BigInteger ergebnis = new BigInteger("1");
 

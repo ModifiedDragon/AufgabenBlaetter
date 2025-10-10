@@ -8,6 +8,9 @@ import de.nscr.blatt1.Aufgabe04;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class main {
     static void main() throws IOException {
         /// TODO Failsaves einfügen

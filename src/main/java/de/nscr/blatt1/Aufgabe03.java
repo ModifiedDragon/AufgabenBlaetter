@@ -2,13 +2,22 @@ package de.nscr.blatt1;
 
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class Aufgabe03 {
     Scanner sc = new Scanner(System.in);
 
+    /**
+     *
+     */
     public Aufgabe03() {
         start();
     }
 
+    /**
+     *
+     */
     public void start() {
         System.out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
         switch (sc.nextInt()) {
@@ -38,12 +47,16 @@ public class Aufgabe03 {
         weiter();
     }
 
+    /**
+     *
+     */
     private void weiter() {
         System.out.println("Willst du noch eine Sache abfragen? (y/n)");
         String zeile = sc.next();
         switch (zeile) {
             case "y" :
                 start();
+                break;
             case "n" :
                 sc.close();
                 break;
@@ -53,6 +66,10 @@ public class Aufgabe03 {
         }
     }
 
+    /**
+     *
+     * @param pRadius
+     */
     public void berechneFlaecheninhaltKreis(double pRadius){
         double flaecheninhalt;
 
@@ -61,6 +78,11 @@ public class Aufgabe03 {
         System.out.println("Der Flaecheninhalt des Kreises mit dem Radius " + pRadius +" beträgt " + flaecheninhalt);
     }
 
+    /**
+     *
+     * @param pSeiteA
+     * @param pSeiteB
+     */
     public void berechneFlaecheninhaltDreieck(double pSeiteA,  double pSeiteB){
         double flaecheninhalt;
 
@@ -69,6 +91,11 @@ public class Aufgabe03 {
         System.out.println("Der Flaecheninhalt des Dreiecks mit den Seitenlängen " + pSeiteA +" und " + pSeiteB +" beträgt " + flaecheninhalt);
     }
 
+    /**
+     *
+     * @param pHöhe
+     * @param pGrundseite
+     */
     public void berechneFlaecheninhaltParralelo(double pHöhe, double pGrundseite) {
         double flaecheninhalt;
 
