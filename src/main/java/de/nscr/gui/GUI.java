@@ -17,12 +17,14 @@ public class GUI {
     private int[] aufgabenPerTestat; // Configurable number per Testat (index 0 = Testat 1)
     private int totalAufgaben; // Total bottom buttons (sum of aufgabenPerTestat)
     public Scanner input;
+    private String[] options = {"Testat 1", "Testat 2", "Testat 3", "Wähle das Testat", "Exit"};
+    private JComboBox<String> dropdown = new JComboBox<>(options);
 
     public GUI(Scanner input) {
         this.input = input;
     }
 
-    public void setup() {
+    public void setup(int mode) {
         // Define variable numbers per Testat (CHANGE THESE VALUES AS NEEDED)
         aufgabenPerTestat = new int[]{4, 0, 0, 0};
 
@@ -40,9 +42,6 @@ public class GUI {
         frame.setSize(800, 400); // Adjust width if more buttons (e.g., 1000 for 6+ buttons)
         frame.setLocationRelativeTo(null);
 
-        // Create the JComboBox with sample items
-        String[] options = {"Testat 1", "Testat 2", "Testat 3", "Wähle das Testat", "Exit"};
-        JComboBox<String> dropdown = new JComboBox<>(options);
         dropdown.setSelectedIndex(3); // Set default selection
         // Optional: Add an action listener for when an item is selected
         dropdown.addActionListener(e -> {
@@ -54,7 +53,6 @@ public class GUI {
             testat = dropdown.getSelectedIndex() + 1; // Set selected testat (1-4)
             aufgaben.setVisible(true); // Show bottom panel
             populateAufgaben(); // Populate with variable number of bottom buttons (overlay effect)
-            System.out.println("Selected: " + selected); // Or update UI here
         });
         // Add the dropdown to the frame
         dropdown.setVisible(true);
@@ -90,6 +88,12 @@ public class GUI {
         }
         // Trigger the initial/default selection logic (so it shows on startup)
         testat = dropdown.getSelectedIndex() + 1; // Set initial testat
+        if (mode != 0) {
+            testat = mode; // Set selected testat (1-4)
+            aufgaben.setVisible(true); // Show bottom panel
+            dropdown.setSelectedIndex(mode);
+            populateAufgaben(); // Populate with variable number of bottom buttons (overlay effect)
+        }
         frame.add(dropdown, BorderLayout.NORTH); // Places it at the top, visible and non-overlapping
 
         // Add panels to frame

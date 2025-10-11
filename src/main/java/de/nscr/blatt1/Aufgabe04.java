@@ -65,7 +65,7 @@ public class Aufgabe04 {
                 break;
             case "n" :
                 GUI gui = new GUI(scanner);
-                gui.setup();
+                gui.setup(1);
                 break;
             default :
                 System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");

@@ -41,7 +41,7 @@ public class Aufgabe01 {
             anfang();
         } else if (zeile.equals("n")) {
             GUI gui = new GUI(scanner);
-            gui.setup();
+            gui.setup(1);
         } else {
             System.out.println("Bitte gebe eine gültige Eingabe von entweder 'y' oder 'n'.");
             weiter();

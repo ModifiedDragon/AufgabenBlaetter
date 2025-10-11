@@ -18,7 +18,7 @@ public class Main {
         /// TODO Anrede an den User überprüfen
         /// TODO Klassen static machen?
         GUI gui = new GUI(new Scanner(System.in));
-        gui.setup();
+        gui.setup(0);
         /*
         Scanner sc = new Scanner(System.in);
         System.out.println("Welche Aufgabe soll abgerufen werden? (1/2/3/4)");
