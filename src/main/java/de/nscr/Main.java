@@ -1,20 +1,14 @@
 package de.nscr;
 
-import de.nscr.blatt1.Aufgabe01;
-import de.nscr.blatt1.Aufgabe02;
-import de.nscr.blatt1.Aufgabe03;
-import de.nscr.blatt1.Aufgabe04;
 import de.nscr.gui.GUI;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  *
  */
-public class main {
-    static void main() throws IOException {
+public class Main {
+    static void main(String[] args) throws IOException {
         /// TODO Failsaves einfügen
         /// TODO Debugs entfernen
         /// TODO Kommentare einfügen
