@@ -3,12 +3,13 @@ package de.nscr;
 import de.nscr.gui.GUI;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  *
  */
 public class Main {
-    static void main(String[] args) throws IOException {
+    static void main() {
         /// TODO Failsaves einfügen
         /// TODO Debugs entfernen
         /// TODO Kommentare einfügen
@@ -16,7 +17,7 @@ public class Main {
         /// TODO Namen der KLassen, Methoden, Variablen überprüfen
         /// TODO Anrede an den User überprüfen
         /// TODO Klassen static machen?
-        GUI gui = new GUI();
+        GUI gui = new GUI(new Scanner(System.in));
         gui.setup();
         /*
         Scanner sc = new Scanner(System.in);

@@ -13,13 +13,14 @@ public class Aufgabe04 {
     int ober;
     int unter;
     int anzahl = 1;
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner;
 
     /**
      *
      */
     public Aufgabe04(GUI frame) {
         frame.exit();
+        scanner = frame.input;
         anfang();
     }
 
@@ -28,7 +29,7 @@ public class Aufgabe04 {
      */
     public void anfang() {
         System.out.println("In Welchem Bereich willst du raten? z.B. '3,100'");
-        String[] teile = null;
+        String[] teile;
         String angabe = scanner.nextLine();
         teile = angabe.trim().split(",");
 
@@ -63,8 +64,7 @@ public class Aufgabe04 {
                 anfang();
                 break;
             case "n" :
-                scanner.close();
-                GUI gui = new GUI();
+                GUI gui = new GUI(scanner);
                 gui.setup();
                 break;
             default :

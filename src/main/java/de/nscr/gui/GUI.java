@@ -7,6 +7,7 @@ import de.nscr.blatt1.Aufgabe04;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Scanner;
 
 public class GUI {
     private JFrame frame;
@@ -15,6 +16,11 @@ public class GUI {
     private int testat;
     private int[] aufgabenPerTestat; // Configurable number per Testat (index 0 = Testat 1)
     private int totalAufgaben; // Total bottom buttons (sum of aufgabenPerTestat)
+    public Scanner input;
+
+    public GUI(Scanner input) {
+        this.input = input;
+    }
 
     public void setup() {
         // Define variable numbers per Testat (CHANGE THESE VALUES AS NEEDED)
@@ -42,6 +48,7 @@ public class GUI {
         dropdown.addActionListener(e -> {
             String selected = (String) dropdown.getSelectedItem();
             if (selected.equals("Exit")) {
+                input.close();
                 System.exit(0);
             }
             testat = dropdown.getSelectedIndex() + 1; // Set selected testat (1-4)
@@ -65,7 +72,6 @@ public class GUI {
             int numForThisTestat = aufgabenPerTestat[t - 1];
             for (int sub = 1; sub <= numForThisTestat; sub++) {
                 int buttonIndex = currentIndex;
-                /// TODO Füge Kommandozeile für einzelne Aufgaben ein?
                 aufgabenb[buttonIndex] = new JButton("Aufgabe " + t + "-" + sub);
                 aufgabenb[buttonIndex].setFocusable(false);
                 // Reduced height to 30px for aufgaben buttons (shorter)

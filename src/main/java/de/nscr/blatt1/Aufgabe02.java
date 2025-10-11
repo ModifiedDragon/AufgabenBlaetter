@@ -6,23 +6,23 @@ import java.util.Scanner;
 
 public class Aufgabe02 {
     int pZahl;
-    Scanner sc = new Scanner(System.in);
+    Scanner scanner;
 
     public Aufgabe02(GUI frame) {
         frame.exit();
+        scanner = frame.input;
         pZahlBerechnen(pZahl);
     }
 
     private void weiter() {
         System.out.println("Willst du noch eine Sache abfragen? (y/n)");
-        String zeile = sc.next();
+        String zeile = scanner.next();
         switch (zeile) {
             case "y" :
 
                 break;
             case "n" :
-                sc.close();
-                GUI gui = new GUI();
+                GUI gui = new GUI(scanner);
                 gui.setup();
                 break;
             default :
