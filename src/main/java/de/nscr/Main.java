@@ -11,8 +11,8 @@ import java.util.Scanner;
 /**
  *
  */
-public class main {
-    static void main() throws IOException {
+public class Main {
+    static void main(String[] args) throws IOException {
         /// TODO Failsaves einfügen
         /// TODO Debugs entfernen
         /// TODO Kommentare einfügen
