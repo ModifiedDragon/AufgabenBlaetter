@@ -1,5 +1,7 @@
 package de.nscr.blatt1;
 
+import de.nscr.gui.GUI;
+
 import java.util.Scanner;
 
 /**
@@ -11,7 +13,8 @@ public class Aufgabe03 {
     /**
      *
      */
-    public Aufgabe03() {
+    public Aufgabe03(GUI frame) {
+        frame.exit();
         start();
     }
 
@@ -59,6 +62,8 @@ public class Aufgabe03 {
                 break;
             case "n" :
                 sc.close();
+                GUI gui = new GUI();
+                gui.setup();
                 break;
             default :
                 System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");

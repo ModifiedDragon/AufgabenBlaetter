@@ -4,7 +4,9 @@ import de.nscr.blatt1.Aufgabe01;
 import de.nscr.blatt1.Aufgabe02;
 import de.nscr.blatt1.Aufgabe03;
 import de.nscr.blatt1.Aufgabe04;
+import de.nscr.gui.GUI;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -20,14 +22,18 @@ public class main {
         /// TODO Namen der KLassen, Methoden, Variablen überprüfen
         /// TODO Anrede an den User überprüfen
         /// TODO Klassen static machen?
+        GUI gui = new GUI();
+        gui.setup();
+        /*
         Scanner sc = new Scanner(System.in);
         System.out.println("Welche Aufgabe soll abgerufen werden? (1/2/3/4)");
         switch (sc.nextLine()) {
-            case "1" -> new Aufgabe01();
-            case "2" -> new Aufgabe02();
-            case "3" -> new Aufgabe03();
-            case "4" -> new Aufgabe04();
+            case "1" -> new Aufgabe01(new JFrame());
+            case "2" -> new Aufgabe02(new JFrame());
+            case "3" -> new Aufgabe03(new JFrame());
+            case "4" -> new Aufgabe04(new JFrame());
             default -> throw new IOException("Keine Zahl von 1-4 eingegeben");
         }
+         */
     }
 }

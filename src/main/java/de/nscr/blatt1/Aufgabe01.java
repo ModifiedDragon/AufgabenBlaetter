@@ -1,4 +1,7 @@
 package de.nscr.blatt1;
+
+import de.nscr.gui.GUI;
+import javax.swing.*;
 import java.math.BigInteger;
 import java.util.Scanner;
 
@@ -13,7 +16,8 @@ public class Aufgabe01 {
     /**
      *
      */
-    public Aufgabe01() {
+    public Aufgabe01(GUI frame) {
+        frame.exit();
         anfang();
     }
 
@@ -36,11 +40,14 @@ public class Aufgabe01 {
             anfang();
         } else if (zeile.equals("n")) {
             sc.close();
+            GUI gui = new GUI();
+            gui.setup();
         } else {
             System.out.println("Bitte gebe eine gültige Eingabe von entweder 'y' oder 'n'.");
             weiter();
         }
     }
+
 
     /**
      *
