@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class GUI {
     /// TODO rename everything
     /// TODO remove comments
@@ -22,10 +25,18 @@ public class GUI {
     private String[] options = {"Testat 1", "Testat 2", "Testat 3", "Wähle das Testat", "Exit"};
     private JComboBox<String> dropdown = new JComboBox<>(options);
 
+    /**
+     *
+     * @param input
+     */
     public GUI(Scanner input) {
         this.input = input;
     }
 
+    /**
+     *
+     * @param mode
+     */
     public void setup(int mode) {
         aufgabenPerTestat = new int[]{4, 0, 0};
 
@@ -106,7 +117,9 @@ public class GUI {
         frame.revalidate();
     }
 
-    // UPDATED: Populate bottom panel with variable number of buttons
+    /**
+     *
+     */
     private void populateAufgaben() {
         aufgaben.removeAll(); // Clear previous buttons (overlay: same position)
 
@@ -135,6 +148,9 @@ public class GUI {
         frame.repaint(); // Redraw
     }
 
+    /**
+     *
+     */
     public void exit() {
         frame.dispose();
     }
