@@ -10,6 +10,8 @@ import java.awt.*;
 import java.util.Scanner;
 
 public class GUI {
+    /// TODO rename everything
+    /// TODO remove comments
     private JFrame frame;
     private JPanel aufgaben;
     private JButton[] aufgabenb;
@@ -25,8 +27,7 @@ public class GUI {
     }
 
     public void setup(int mode) {
-        // Define variable numbers per Testat (CHANGE THESE VALUES AS NEEDED)
-        aufgabenPerTestat = new int[]{4, 0, 0, 0};
+        aufgabenPerTestat = new int[]{4, 0, 0};
 
         // Calculate total bottom buttons
         totalAufgaben = 0;
