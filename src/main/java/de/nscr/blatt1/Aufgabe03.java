@@ -1,17 +1,21 @@
 package de.nscr.blatt1;
 
+import de.nscr.gui.GUI;
+
 import java.util.Scanner;
 
 /**
  *
  */
 public class Aufgabe03 {
-    Scanner sc = new Scanner(System.in);
+    Scanner scanner;
 
     /**
      *
      */
-    public Aufgabe03() {
+    public Aufgabe03(GUI frame) {
+        frame.exit();
+        scanner = frame.input;
         start();
     }
 
@@ -20,23 +24,23 @@ public class Aufgabe03 {
      */
     public void start() {
         System.out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
-        switch (sc.nextInt()) {
+        switch (scanner.nextInt()) {
             case 0 :
                 System.out.print("Bitte gebe den Radius des Kreises an: ");
-                berechneFlaecheninhaltKreis(sc.nextInt());
+                berechneFlaecheninhaltKreis(scanner.nextInt());
                 break;
             case 1 :
                 System.out.print("Bitte gebe die Größe der Grundlfläche an: ");
-                double temp1 = sc.nextDouble();
+                double temp1 = scanner.nextDouble();
                 System.out.print("Bitte gebe die Größe der Höhe an: ");
-                double temp2 = sc.nextDouble();
+                double temp2 = scanner.nextDouble();
                 berechneFlaecheninhaltDreieck(temp1, temp2);
                 break;
             case 2 :
                 System.out.print("Bitte gebe die Größe der Grundlfläche an: ");
-                double temp3 = sc.nextDouble();
+                double temp3 = scanner.nextDouble();
                 System.out.print("Bitte gebe die Größe der Höhe an: ");
-                double temp4 = sc.nextDouble();
+                double temp4 = scanner.nextDouble();
                 berechneFlaecheninhaltParralelo(temp3, temp4);
                 break;
             default :
@@ -52,13 +56,14 @@ public class Aufgabe03 {
      */
     private void weiter() {
         System.out.println("Willst du noch eine Sache abfragen? (y/n)");
-        String zeile = sc.next();
+        String zeile = scanner.next();
         switch (zeile) {
             case "y" :
                 start();
                 break;
             case "n" :
-                sc.close();
+                GUI gui = new GUI(scanner);
+                gui.setup(1);
                 break;
             default :
                 System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
@@ -93,14 +98,14 @@ public class Aufgabe03 {
 
     /**
      *
-     * @param pHöhe
+     * @param pHoehe
      * @param pGrundseite
      */
-    public void berechneFlaecheninhaltParralelo(double pHöhe, double pGrundseite) {
+    public void berechneFlaecheninhaltParralelo(double pHoehe, double pGrundseite) {
         double flaecheninhalt;
 
-        flaecheninhalt = pHöhe *  pGrundseite;
+        flaecheninhalt = pHoehe *  pGrundseite;
 
-        System.out.println("Der Flaecheninhalt des Parralelogram mit der höhe " + pHöhe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
+        System.out.println("Der Flaecheninhalt des Parralelogram mit der höhe " + pHoehe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
     }
 }

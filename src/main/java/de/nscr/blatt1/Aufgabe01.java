@@ -1,4 +1,7 @@
 package de.nscr.blatt1;
+
+import de.nscr.gui.GUI;
+
 import java.math.BigInteger;
 import java.util.Scanner;
 
@@ -7,13 +10,15 @@ import java.util.Scanner;
  */
 public class Aufgabe01 {
 
-    static Scanner sc = new Scanner(System.in);
+    Scanner scanner;
 
 
     /**
      *
      */
-    public Aufgabe01() {
+    public Aufgabe01(GUI frame) {
+        frame.exit();
+        this.scanner = frame.input;
         anfang();
     }
 
@@ -22,7 +27,7 @@ public class Aufgabe01 {
      */
     public void anfang() {
         System.out.print("Geben sie die erste Zahl ein von der sie die Fakultaet berechnen wollen: " );
-        berechneFakultaet(sc.nextInt());
+        berechneFakultaet(scanner.nextInt());
         System.out.println("Wollen sie weitere Faklutaeten berechnen? (y/n)");
         weiter();
     }
@@ -31,16 +36,18 @@ public class Aufgabe01 {
      *
      */
     public void weiter () {
-        String zeile = sc.nextLine();
+        String zeile = scanner.nextLine();
         if (zeile.equals("y")) {
             anfang();
         } else if (zeile.equals("n")) {
-            sc.close();
+            GUI gui = new GUI(scanner);
+            gui.setup(1);
         } else {
             System.out.println("Bitte gebe eine gültige Eingabe von entweder 'y' oder 'n'.");
             weiter();
         }
     }
+
 
     /**
      *
