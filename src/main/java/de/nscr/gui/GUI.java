@@ -31,6 +31,8 @@ public class GUI {
      */
     public GUI(Scanner input) {
         this.input = input;
+        AufgabenGUI newAufgabenGUI = new AufgabenGUI();
+        newAufgabenGUI.setup(this, 1, 1);
     }
 
     /**
@@ -38,7 +40,7 @@ public class GUI {
      * @param mode
      */
     public void setup(int mode) {
-        aufgabenPerTestat = new int[]{4, 0, 0};
+        aufgabenPerTestat = new int[]{4, 0, 0, 0};
 
         // Calculate total bottom buttons
         totalAufgaben = 0;
@@ -153,5 +155,9 @@ public class GUI {
      */
     public void exit() {
         frame.dispose();
+    }
+
+    public void togglevisible() {
+        frame.setVisible(!frame.isVisible());
     }
 }
