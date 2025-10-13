@@ -39,6 +39,7 @@ public class Aufgabe01 {
 
     public void anfang() {
         /// TODO kein rekursiver aufruf
+        System.out.println("Geben sie die erste Zahl ein von der sie die Fakultaet berechnen wollen: " );
         try {
             String line = readLineFromQin();  // Custom read (blocks until full line)
             if (line == null) {
@@ -47,16 +48,16 @@ public class Aufgabe01 {
             int zahl = Integer.parseInt(line);  // Parse to int
             berechneFakultaet(zahl);
         } catch (NumberFormatException ex) {
-
-            // No extra consumption needed—custom readLineFromQin() already consumed the full bad line
             anfang();  // Retry
         } catch (IOException ex) {
             System.out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
             anfang();
         }
+        weiter();
     }
 
     public void weiter() {
+        System.out.println("Wollen sie weitere Faklutaeten berechnen? (y/n)");
         while (true) {
             try {
                 String zeile = readLineFromQin();  // Custom read (blocks until full line)
