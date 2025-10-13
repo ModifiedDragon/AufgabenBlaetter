@@ -27,7 +27,7 @@ public class GUI {
     }
 
     public void setup(int mode) {
-        aufgabenPerTestat = new int[]{4, 0, 0};
+        aufgabenPerTestat = new int[]{4, 0, 0, 0};
 
         // Calculate total bottom buttons
         totalAufgaben = 0;
