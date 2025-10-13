@@ -2,7 +2,9 @@ package de.nscr.blatt1;
 
 import de.nscr.gui.AufgabenGUI;
 import de.nscr.gui.GUI;
+import de.nscr.gui.QueueInputStream;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -10,14 +12,35 @@ import java.util.Scanner;
  */
 public class Aufgabe03 {
     private final AufgabenGUI gui;
+    private final QueueInputStream qin;
     Scanner scanner;
 
     /**
      *
      */
-    public Aufgabe03(AufgabenGUI frame) {
+    public Aufgabe03(AufgabenGUI frame, QueueInputStream qin) {
         gui = frame;
+        this.qin = qin;
         start();
+    }
+
+    // Custom line reader: Reads bytes from qin until \n, no buffering or extra reads
+    private String readLineFromQin() throws IOException {
+        // Optional: Remove debug prints for production
+        StringBuilder line = new StringBuilder();
+        int b;
+        while ((b = qin.read()) != -1) {  // Blocks on read() until data or EOF
+            char c = (char) b;
+            if (c == '\n') {
+                break;  // Stop at newline
+            }
+            line.append(c);
+        }
+        String result = line.toString().trim();  // Trim extra spaces
+        if (result.isEmpty() && b == -1) {
+            return null;  // EOF reached
+        }
+        return result;
     }
 
     /**

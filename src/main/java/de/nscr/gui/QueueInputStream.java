@@ -6,16 +6,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-class QueueInputStream extends InputStream {
+public class QueueInputStream extends InputStream {
     private final BlockingQueue<byte[]> queue = new LinkedBlockingQueue<>();
     private byte[] current = null;
     private int pos = 0;
 
-    // GUI calls this to add input (include newline)
     public void addInput(String s) {
-        queue.add(s.getBytes(StandardCharsets.UTF_8));
+        try {
+            byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
+            boolean isDummy = s.trim().isEmpty();  // Detect empty lines
+            queue.add(bytes);
+        } catch (Exception ex) {
+            System.out.println("ERROR in addInput(): " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
-
     @Override
     public int read() throws IOException {
         while (current == null || pos >= current.length) {
@@ -27,6 +32,10 @@ class QueueInputStream extends InputStream {
                 throw new IOException("Interrupted", ex);
             }
         }
-        return current[pos++] & 0xFF;
+        int result = current[pos++] & 0xFF;
+        if (pos >= current.length) {  // Optional: Reset after full read
+            current = null;
+        }
+        return result;
     }
 }

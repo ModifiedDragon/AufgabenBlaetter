@@ -1,13 +1,15 @@
 package de.nscr.gui;
 
 import de.nscr.blatt1.Aufgabe01;
+import de.nscr.blatt1.Aufgabe02;
+import de.nscr.blatt1.Aufgabe03;
+import de.nscr.blatt1.Aufgabe04;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -21,7 +23,6 @@ public class AufgabenGUI {
     public static JTextArea consoleTextOutput;
     private JTextField consoleTextInputField;
     public GUI window;
-    public Scanner scanner = new Scanner(System.in);
     private int testat;
     private int task;
     public QueueInputStream qin;
@@ -33,19 +34,22 @@ public class AufgabenGUI {
         this.qin = window.qin;
         setup();
 
-        // Start task in background thread to avoid blocking EDT
-        new Thread(() -> {
-            if (testat == 1) {
-                switch (task) {
-                    case 1 -> new Aufgabe01(this);  // Now runs asynchronously
-                    // Add cases for other tasks
+        SwingUtilities.invokeLater(() -> {
+            new Thread(() -> {
+                if (testat == 1) {
+                    switch (task) {
+                        case 1 -> new Aufgabe01(this, qin);
+                        case 2 -> new Aufgabe02(this, qin);
+                        case 3 -> new Aufgabe03(this, qin);
+                        case 4 -> new Aufgabe04(this, qin);
+                    }
                 }
-            }
-            // For other testats/tasks, add similar switches
-        }).start();
+                // For other testats/tasks, add similar switches
+            }).start();
+        });
     }
-    public void setup() {
 
+    public void setup() {
         frame = new JFrame("Task");
         frame.setUndecorated(true);
         frame.setResizable(false);
@@ -62,7 +66,6 @@ public class AufgabenGUI {
 
         frame.setSize(800, 400); // Adjust width if more buttons (e.g., 1000 for 6+ buttons)
         frame.setLocationRelativeTo(null);
-
 
         consoleContainer = new JPanel();
         consoleTextOutput = new JTextArea(8,10);
@@ -88,9 +91,24 @@ public class AufgabenGUI {
         consoleContainer.add(new JScrollPane(consoleTextOutput), BorderLayout.CENTER);
         consoleContainer.add(consoleTextInputField, BorderLayout.SOUTH);
         consoleTextInputField.addActionListener(e -> {
-            String command = consoleTextInputField.getText();
+            String command = consoleTextInputField.getText().trim();
+            if (command.isEmpty()) {
+                consoleTextInputField.setText("");
+                return;
+            }
+
             consoleTextOutput.append(">> " + command + "\n");
             executeInput(command);
+
+            if (!command.equalsIgnoreCase("exit") && !command.equalsIgnoreCase("help")) {
+                if (qin == null) {
+                    return;
+                }
+                String inputToAdd = command + "\n";
+
+                qin.addInput(inputToAdd);  // Only real input
+            }
+
             consoleTextInputField.setText("");
         });
         consoleContainer.setSize(600,400);
@@ -100,7 +118,7 @@ public class AufgabenGUI {
         consoleTextInputField.setForeground(Color.WHITE);
         consoleContainer.setVisible(true);
 
-        frame.add(consoleContainer, BorderLayout.NORTH);
+        frame.add(consoleContainer, BorderLayout.CENTER);
 
         // Make frame visible after setup
         frame.setVisible(true);
@@ -126,6 +144,8 @@ public class AufgabenGUI {
     }
 
     public void exit() {
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));  // Restore original
+        System.setIn(new FileInputStream(FileDescriptor.in));
         frame.dispose();
     }
 

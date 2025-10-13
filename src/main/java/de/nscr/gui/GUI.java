@@ -1,17 +1,8 @@
 package de.nscr.gui;
 
-import de.nscr.blatt1.Aufgabe01;
-import de.nscr.blatt1.Aufgabe02;
-import de.nscr.blatt1.Aufgabe03;
-import de.nscr.blatt1.Aufgabe04;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.Scanner;
 
-/**
- *
- */
 public class GUI {
     /// TODO rename everything
     /// TODO remove comments
