@@ -1,5 +1,6 @@
 package de.nscr.blatt1;
 
+import de.nscr.gui.AufgabenGUI;
 import de.nscr.gui.GUI;
 
 import java.util.Scanner;
@@ -8,14 +9,14 @@ import java.util.Scanner;
  *
  */
 public class Aufgabe03 {
+    private final AufgabenGUI gui;
     Scanner scanner;
 
     /**
      *
      */
-    public Aufgabe03(GUI frame) {
-        frame.exit();
-        scanner = frame.input;
+    public Aufgabe03(AufgabenGUI frame) {
+        gui = frame;
         start();
     }
 
@@ -56,14 +57,14 @@ public class Aufgabe03 {
      */
     private void weiter() {
         System.out.println("Willst du noch eine Sache abfragen? (y/n)");
-        String zeile = scanner.next();
+        String zeile = scanner.nextLine().trim().toLowerCase();
         switch (zeile) {
             case "y" :
                 start();
                 break;
             case "n" :
-                GUI gui = new GUI(scanner);
-                gui.setup(1);
+                gui.window.togglevisible();
+                gui.exit();
                 break;
             default :
                 System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");

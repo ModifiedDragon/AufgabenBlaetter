@@ -17,7 +17,6 @@ public class Main {
         /// TODO Namen der KLassen, Methoden, Variablen überprüfen
         /// TODO Anrede an den User überprüfen
         /// TODO Klassen static machen?
-        GUI gui = new GUI(new Scanner(System.in));
-        gui.setup(0);
+        GUI gui = new GUI();
     }
 }

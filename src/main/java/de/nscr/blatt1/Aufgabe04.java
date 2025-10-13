@@ -1,5 +1,6 @@
 package de.nscr.blatt1;
 
+import de.nscr.gui.AufgabenGUI;
 import de.nscr.gui.GUI;
 
 import java.util.Random;
@@ -9,6 +10,7 @@ import java.util.Scanner;
  *
  */
 public class Aufgabe04 {
+    private final AufgabenGUI gui;
     int zahl;
     int ober;
     int unter;
@@ -18,9 +20,8 @@ public class Aufgabe04 {
     /**
      *
      */
-    public Aufgabe04(GUI frame) {
-        frame.exit();
-        scanner = frame.input;
+    public Aufgabe04(AufgabenGUI frame) {
+        this.gui = frame;
         anfang();
     }
 
@@ -56,7 +57,7 @@ public class Aufgabe04 {
      */
     private void weiter() {
         System.out.println("Willst du noch eine Sache abfragen? (y/n)");
-        String zeile = scanner.next();
+        String zeile = scanner.nextLine().trim().toLowerCase();
         // Diese Zeile leert den Zeilen umbruch (56)
         scanner.nextLine();
         switch (zeile) {
@@ -64,8 +65,8 @@ public class Aufgabe04 {
                 anfang();
                 break;
             case "n" :
-                GUI gui = new GUI(scanner);
-                gui.setup(1);
+                gui.window.togglevisible();
+                gui.exit();
                 break;
             default :
                 System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");

@@ -21,25 +21,15 @@ public class GUI {
     private int testat;
     private int[] aufgabenPerTestat; // Configurable number per Testat (index 0 = Testat 1)
     private int totalAufgaben; // Total bottom buttons (sum of aufgabenPerTestat)
-    public Scanner input;
     private String[] options = {"Testat 1", "Testat 2", "Testat 3", "Wähle das Testat", "Exit"};
     private JComboBox<String> dropdown = new JComboBox<>(options);
+    public QueueInputStream qin = new QueueInputStream();
 
-    /**
-     *
-     * @param input
-     */
-    public GUI(Scanner input) {
-        this.input = input;
-        AufgabenGUI newAufgabenGUI = new AufgabenGUI();
-        newAufgabenGUI.setup(this, 1, 1);
+    public GUI() {
+        setup();
     }
 
-    /**
-     *
-     * @param mode
-     */
-    public void setup(int mode) {
+    public void setup() {
         aufgabenPerTestat = new int[]{4, 0, 0, 0};
 
         // Calculate total bottom buttons
@@ -61,7 +51,6 @@ public class GUI {
         dropdown.addActionListener(e -> {
             String selected = (String) dropdown.getSelectedItem();
             if (selected.equals("Exit")) {
-                input.close();
                 System.exit(0);
             }
             testat = dropdown.getSelectedIndex() + 1; // Set selected testat (1-4)
@@ -70,7 +59,6 @@ public class GUI {
         });
         // Add the dropdown to the frame
         dropdown.setVisible(true);
-        frame.add(dropdown);
 
         // Bottom panel: Variable total buttons, grouped by testat
         aufgabenb = new JButton[totalAufgaben]; // Dynamic size
@@ -89,11 +77,12 @@ public class GUI {
                 // Reduced height to 30px for aufgaben buttons (shorter)
                 aufgabenb[buttonIndex].setPreferredSize(new Dimension(180, 30));
                 aufgabenb[buttonIndex].addActionListener(e -> {
+                    this.togglevisible();
                     switch (buttonIndex) {
-                        case 0 -> new Aufgabe01(this);
-                        case 1 -> new Aufgabe02(this);
-                        case 2 -> new Aufgabe03(this);
-                        case 3 -> new Aufgabe04(this);
+                        case 0 -> new AufgabenGUI(this, 1, 1);
+                        case 1 -> new AufgabenGUI(this, 1, 2);
+                        case 2 -> new AufgabenGUI(this, 1, 3);
+                        case 3 -> new AufgabenGUI(this, 1, 4);
                         default ->  System.exit(0);
                     }
                 });
@@ -102,12 +91,7 @@ public class GUI {
         }
         // Trigger the initial/default selection logic (so it shows on startup)
         testat = dropdown.getSelectedIndex() + 1; // Set initial testat
-        if (mode != 0) {
-            testat = mode; // Set selected testat (1-4)
-            aufgaben.setVisible(true); // Show bottom panel
-            dropdown.setSelectedIndex(mode);
-            populateAufgaben(); // Populate with variable number of bottom buttons (overlay effect)
-        }
+
         frame.add(dropdown, BorderLayout.NORTH); // Places it at the top, visible and non-overlapping
 
         // Add panels to frame
@@ -119,9 +103,6 @@ public class GUI {
         frame.revalidate();
     }
 
-    /**
-     *
-     */
     private void populateAufgaben() {
         aufgaben.removeAll(); // Clear previous buttons (overlay: same position)
 
@@ -150,9 +131,7 @@ public class GUI {
         frame.repaint(); // Redraw
     }
 
-    /**
-     *
-     */
+
     public void exit() {
         frame.dispose();
     }
