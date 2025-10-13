@@ -1,11 +1,10 @@
 package de.nscr.blatt1;
 
 import de.nscr.gui.AufgabenGUI;
-import de.nscr.gui.GUI;
 import de.nscr.gui.QueueInputStream;
 
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.Objects;
 
 /**
  *
@@ -13,7 +12,6 @@ import java.util.Scanner;
 public class Aufgabe03 {
     private final AufgabenGUI gui;
     private final QueueInputStream qin;
-    Scanner scanner;
 
     /**
      *
@@ -48,29 +46,33 @@ public class Aufgabe03 {
      */
     public void start() {
         System.out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
-        switch (scanner.nextInt()) {
-            case 0 :
-                System.out.print("Bitte gebe den Radius des Kreises an: ");
-                berechneFlaecheninhaltKreis(scanner.nextInt());
-                break;
-            case 1 :
-                System.out.print("Bitte gebe die Größe der Grundlfläche an: ");
-                double temp1 = scanner.nextDouble();
-                System.out.print("Bitte gebe die Größe der Höhe an: ");
-                double temp2 = scanner.nextDouble();
-                berechneFlaecheninhaltDreieck(temp1, temp2);
-                break;
-            case 2 :
-                System.out.print("Bitte gebe die Größe der Grundlfläche an: ");
-                double temp3 = scanner.nextDouble();
-                System.out.print("Bitte gebe die Größe der Höhe an: ");
-                double temp4 = scanner.nextDouble();
-                berechneFlaecheninhaltParralelo(temp3, temp4);
-                break;
-            default :
-                System.out.println("Bitte geben Sie eine Eingabe con 0 bis 2 ein.");
-                start();
-                break;
+        try {
+            switch (Integer.parseInt(Objects.requireNonNull(readLineFromQin()))){
+                case 0:
+                    System.out.print("Bitte gebe den Radius des Kreises an: ");
+                    berechneFlaecheninhaltKreis(Integer.parseInt(Objects.requireNonNull(readLineFromQin())));
+                    break;
+                case 1:
+                    System.out.print("Bitte gebe die Größe der Grundlfläche an: ");
+                    double temp1 = Double.parseDouble(Objects.requireNonNull(readLineFromQin()));
+                    System.out.print("Bitte gebe die Größe der Höhe an: ");
+                    double temp2 = Double.parseDouble(Objects.requireNonNull(readLineFromQin()));
+                    berechneFlaecheninhaltDreieck(temp1, temp2);
+                    break;
+                case 2:
+                    System.out.print("Bitte gebe die Größe der Grundlfläche an: ");
+                    double temp3 = Double.parseDouble(Objects.requireNonNull(readLineFromQin()));
+                    System.out.print("Bitte gebe die Größe der Höhe an: ");
+                    double temp4 = Double.parseDouble(Objects.requireNonNull(readLineFromQin()));
+                    berechneFlaecheninhaltParralelo(temp3, temp4);
+                    break;
+                default:
+                    System.out.println("Bitte geben Sie eine Eingabe con 0 bis 2 ein.");
+                    start();
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         weiter();
     }
@@ -80,18 +82,24 @@ public class Aufgabe03 {
      */
     private void weiter() {
         System.out.println("Willst du noch eine Sache abfragen? (y/n)");
-        String zeile = scanner.nextLine().trim().toLowerCase();
-        switch (zeile) {
-            case "y" :
-                start();
-                break;
-            case "n" :
-                gui.window.togglevisible();
-                gui.exit();
-                break;
-            default :
-                System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
-                weiter();
+        while (true) {
+            try {
+                String zeile = readLineFromQin();
+                switch (zeile) {
+                    case "y":
+                        start();
+                        return;
+                    case "n":
+                        gui.window.togglevisible();
+                        gui.exit();
+                        return;
+                    default:
+                        System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
+                        weiter();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

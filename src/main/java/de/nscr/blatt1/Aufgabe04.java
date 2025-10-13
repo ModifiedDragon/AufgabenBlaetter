@@ -4,8 +4,8 @@ import de.nscr.gui.AufgabenGUI;
 import de.nscr.gui.QueueInputStream;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  *
@@ -17,7 +17,6 @@ public class Aufgabe04 {
     int ober;
     int unter;
     int anzahl = 1;
-    Scanner scanner;
 
     /**
      *
@@ -52,25 +51,29 @@ public class Aufgabe04 {
     public void anfang() {
         System.out.println("In Welchem Bereich willst du raten? z.B. '3,100'");
         String[] teile;
-        String angabe = scanner.nextLine();
-        teile = angabe.trim().split(",");
+        try {
+            String angabe = readLineFromQin();
+            teile = angabe.trim().split(",");
 
-        if (teile.length != 2) {
-            System.out.println("Bitte gebe zwei Zahlen an.");
-            anfang();
+            if (teile.length != 2) {
+                System.out.println("Bitte gebe zwei Zahlen an.");
+                anfang();
+            }
+            int temp1 = Integer.parseInt(teile[0]);
+            if (temp1 > Integer.parseInt(teile[1])) {
+                ober = temp1;
+                unter = Integer.parseInt(teile[1]);
+            } else {
+                unter = temp1;
+                ober = Integer.parseInt(teile[1]);
+            }
+            Random random = new Random();
+            // Ober und Untergrenze müssen um 1 erhöht werde, da Random mit 0 anfängt und nicht 1
+            zahl = random.nextInt(unter + 1, ober + 1);
+            raten();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        int temp1 = Integer.parseInt(teile[0]);
-        if (temp1 > Integer.parseInt(teile[1])) {
-            ober = temp1;
-            unter = Integer.parseInt(teile[1]);
-        } else {
-            unter = temp1;
-            ober = Integer.parseInt(teile[1]);
-        }
-        Random random = new Random();
-        // Ober und Untergrenze müssen um 1 erhöht werde, da Random mit 0 anfängt und nicht 1
-        zahl = random.nextInt(unter + 1, ober + 1);
-        raten();
     }
 
     /**
@@ -78,20 +81,23 @@ public class Aufgabe04 {
      */
     private void weiter() {
         System.out.println("Willst du noch eine Sache abfragen? (y/n)");
-        String zeile = scanner.nextLine().trim().toLowerCase();
-        // Diese Zeile leert den Zeilen umbruch (56)
-        scanner.nextLine();
-        switch (zeile) {
-            case "y" :
-                anfang();
-                break;
-            case "n" :
-                gui.window.togglevisible();
-                gui.exit();
-                break;
-            default :
-                System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
-                weiter();
+        while (true) {
+            try {
+                String zeile = readLineFromQin();
+                switch (zeile) {
+                    case "y":
+                        anfang();
+                        return;
+                    case "n":
+                        gui.window.togglevisible();
+                        gui.exit();
+                        return;
+                    default:
+                        System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -100,13 +106,17 @@ public class Aufgabe04 {
      */
     private void raten() {
         System.out.println("Rate die Zahl im Bereich von " + unter + " und " + ober + ".");
-        int temp2 = scanner.nextInt();
-        if (!vergleicheZahl(temp2)) {
-            anzahl++;
-            raten();
-        } else {
-            System.out.println("Du hast die Zahl in " + anzahl + " versuchen erraten.");
-            weiter();
+        try {
+            int temp2 = Integer.parseInt(Objects.requireNonNull(readLineFromQin()));
+            if (!vergleicheZahl(temp2)) {
+                anzahl++;
+                raten();
+            } else {
+                System.out.println("Du hast die Zahl in " + anzahl + " versuchen erraten.");
+                weiter();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

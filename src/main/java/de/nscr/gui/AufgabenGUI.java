@@ -129,7 +129,6 @@ public class AufgabenGUI {
 
     private void executeInput(String input){
         if(input.equalsIgnoreCase("exit")){
-            consoleTextOutput.append("Program is closing ...\n");
             window.togglevisible();
             frame.dispose();
         }  else if(input.equalsIgnoreCase("help")){ //console commands
@@ -138,8 +137,6 @@ public class AufgabenGUI {
                     'exit' -> closes the Task
                     'help' -> displays this information
                     """);
-        } else if (input.toLowerCase().startsWith("recreateitem")) {
-
         }
     }
 

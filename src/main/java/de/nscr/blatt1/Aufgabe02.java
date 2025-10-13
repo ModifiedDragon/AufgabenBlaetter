@@ -1,17 +1,14 @@
 package de.nscr.blatt1;
 
 import de.nscr.gui.AufgabenGUI;
-import de.nscr.gui.GUI;
 import de.nscr.gui.QueueInputStream;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Aufgabe02 {
     private final AufgabenGUI gui;
     private final QueueInputStream qin;
     int pZahl;
-    Scanner scanner;
 
     public Aufgabe02(AufgabenGUI frame, QueueInputStream qin) {
         gui = frame;
@@ -39,18 +36,24 @@ public class Aufgabe02 {
 
     private void weiter() {
         System.out.println("Willst du noch eine Sache abfragen? (y/n)");
-        String zeile = scanner.nextLine().trim().toLowerCase();
-        switch (zeile) {
-            case "y" :
+        while (true) {
+            try {
+                String zeile = readLineFromQin();
+                switch (zeile) {
+                    case "y":
 
-                break;
-            case "n" :
-                gui.window.togglevisible();
-                gui.exit();
-                break;
-            default :
+                        return;
+                    case "n":
+                        gui.window.togglevisible();
+                        gui.exit();
+                        return;
+                    default:
+                        System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
+                        weiter();
+                }
+            } catch (IOException e) {
                 System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
-                weiter();
+            }
         }
     }
 
