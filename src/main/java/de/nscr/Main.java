@@ -12,6 +12,7 @@ public class Main {
     static void main() {
         /// TODO Failsaves einfügen
         /// TODO Unnötigen Code/Imports entfernen
+        /// TODO Code Optimizieung
         /// TODO Debugs entfernen
         /// TODO Kommentare einfügen
         /// TODO JavaDoc dokumentation verwenden
