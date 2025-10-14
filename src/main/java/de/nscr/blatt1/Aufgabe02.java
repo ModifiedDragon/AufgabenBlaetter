@@ -4,6 +4,7 @@ import de.nscr.gui.AufgabenGUI;
 import de.nscr.gui.QueueInputStream;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Aufgabe02 {
     private final AufgabenGUI gui;
@@ -13,7 +14,8 @@ public class Aufgabe02 {
     public Aufgabe02(AufgabenGUI frame, QueueInputStream qin) {
         gui = frame;
         this.qin = qin;
-        pZahlBerechnen(pZahl);
+        ausführen();
+
     }
 
     // Custom line reader: Reads bytes from qin until \n, no buffering or extra reads
@@ -57,24 +59,32 @@ public class Aufgabe02 {
         }
     }
 
-    private void pZahlBerechnen(int pZahl) {
-        ///  Methode der Primzahlzerlegung aussuchen
 
+    public void ausführen() {
+        System.out.println("Welche Zahl willst du als Primzahl überprüfen?");
+        int pZahl = scanner.nextInt();
+        pZahlBerechnen(pZahl, true);
     }
 
-    /*
-    private void teiler(int zahl) {
-        for (int i = 0; i < zahl / 2; i++) {
-            switch(i) {
-                case i%2==0 -> continue;
-                case i%3==0 -> continue;
-                case i%5==0 -> continue;
-                case i%7==0 -> continue;
+    private boolean pZahlBerechnen(int pZahl, boolean ersteDurchlauf) {
+        ArrayList<Integer> teiler = new ArrayList<>();
+        for (int i = 1; i <= pZahl / 2; i++) {
+            if (pZahl % i == 0) {
+                teiler.add(i);
             }
-
         }
+        teiler.add(pZahl);
+        if (teiler.size() == 2) {
+            System.out.println(ersteDurchlauf ? pZahl + " ist eine Primzahl." : "Der Teiler " + pZahl + " ist eine Primzahl.");
+            return true;
+        }
+        if (ersteDurchlauf) {
+            for (int i = 0; i < teiler.size(); i++) {
+                boolean prim = pZahlBerechnen(teiler.get(i), false);
+                System.out.println((pZahl + " ist durch " + teiler.get(i) + " teilbar") + (prim ? " und ist eine Primzahl." : "." ));
+            }
+        }
+        return false;
     }
-
-     */
 
 }
