@@ -21,7 +21,6 @@ public class QueueInputStream extends InputStream {
     public void addInput(String s) {
         try {
             byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
-            boolean isDummy = s.trim().isEmpty();  // Detect empty lines
             queue.add(bytes);
         } catch (Exception ex) {
             System.out.println("ERROR in addInput(): " + ex.getMessage());

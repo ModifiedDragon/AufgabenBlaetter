@@ -13,8 +13,8 @@ public class GUI {
     private JPanel aufgaben;
     private JButton[] aufgabenb;
     private int testat;
-    private int[] aufgabenPerTestat; // Configurable number per Testat (index 0 = Testat 1)
-    private int totalAufgaben; // Total bottom buttons (sum of aufgabenPerTestat)
+    private int[] aufgabenPerTestat;
+    private int totalAufgaben;
     private String[] options = {"Testat 1", "Testat 2", "Testat 3", "Wähle das Testat", "Exit"};
     private JComboBox<String> dropdown = new JComboBox<>(options);
     public QueueInputStream qin = new QueueInputStream();
@@ -74,7 +74,6 @@ public class GUI {
                 int buttonIndex = currentIndex;
                 aufgabenb[buttonIndex] = new JButton("Aufgabe " + t + "-" + sub);
                 aufgabenb[buttonIndex].setFocusable(false);
-                // Reduced height to 30px for aufgaben buttons (shorter)
                 aufgabenb[buttonIndex].setPreferredSize(new Dimension(180, 30));
                 aufgabenb[buttonIndex].addActionListener(e -> {
                     this.togglevisible();
@@ -89,9 +88,7 @@ public class GUI {
                 currentIndex++;
             }
         }
-        // Trigger the initial/default selection logic (so it shows on startup)
         testat = dropdown.getSelectedIndex() + 1; // Set initial testat
-
         frame.add(dropdown, BorderLayout.NORTH); // Places it at the top, visible and non-overlapping
 
         // Add panels to frame
@@ -117,7 +114,6 @@ public class GUI {
 
         int numButtons = aufgabenPerTestat[testat - 1]; // Variable number for this testat
 
-        // NEW: Create sub-panel for aufgaben buttons (horizontal row)
         JPanel aufgabenRow = new JPanel(new GridLayout(1, numButtons, 10, 10));
         aufgabenRow.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // Small bottom padding before Back
 

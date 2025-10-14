@@ -25,8 +25,6 @@ public class AufgabenGUI {
     public static JTextArea consoleTextOutput;
     private JTextField consoleTextInputField;
     public GUI window;
-    private int testat;
-    private int task;
     public QueueInputStream qin;
 
     /**
@@ -37,8 +35,6 @@ public class AufgabenGUI {
      */
     public AufgabenGUI(GUI window, int testat, int task) {
         this.window = window;
-        this.testat = testat;
-        this.task = task;
         this.qin = window.qin;
         setup();
 
@@ -52,7 +48,6 @@ public class AufgabenGUI {
                         case 4 -> new Aufgabe04(this, qin);
                     }
                 }
-                // For other testats/tasks, add similar switches
             }).start();
         });
     }
@@ -66,16 +61,16 @@ public class AufgabenGUI {
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
 
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);  // Just close this window, don't exit app
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                window.togglevisible();  // Show parent GUI when task closes
+                window.togglevisible();
                 frame.dispose();
             }
         });
 
-        frame.setSize(800, 400); // Adjust width if more buttons (e.g., 1000 for 6+ buttons)
+        frame.setSize(800, 400);
         frame.setLocationRelativeTo(null);
 
         consoleContainer = new JPanel();
@@ -111,6 +106,7 @@ public class AufgabenGUI {
         consoleContainer.setLayout(new BorderLayout());
         consoleContainer.add(new JScrollPane(consoleTextOutput), BorderLayout.CENTER);
         consoleContainer.add(consoleTextInputField, BorderLayout.SOUTH);
+
         consoleTextInputField.addActionListener(e -> {
             String command = consoleTextInputField.getText().trim();
             if (command.isEmpty()) {
@@ -127,7 +123,7 @@ public class AufgabenGUI {
                 }
                 String inputToAdd = command + "\n";
 
-                qin.addInput(inputToAdd);  // Only real input
+                qin.addInput(inputToAdd);
             }
 
             consoleTextInputField.setText("");
@@ -141,7 +137,6 @@ public class AufgabenGUI {
 
         frame.add(consoleContainer, BorderLayout.CENTER);
 
-        // Make frame visible after setup
         frame.setVisible(true);
         frame.repaint();
         frame.revalidate();
@@ -168,7 +163,7 @@ public class AufgabenGUI {
      *
      */
     public void exit() {
-        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));  // Restore original
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
         System.setIn(new FileInputStream(FileDescriptor.in));
         frame.dispose();
     }

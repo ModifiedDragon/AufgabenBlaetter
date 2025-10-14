@@ -5,6 +5,7 @@ import de.nscr.gui.QueueInputStream;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
@@ -78,7 +79,7 @@ public class Aufgabe02 {
     public void ausführen() {
         System.out.println("Welche Zahl willst du als Primzahl überprüfen?");
         try {
-            int pZahl = Integer.parseInt(readLineFromQin());
+            int pZahl = Integer.parseInt(Objects.requireNonNull(readLineFromQin()));
             pZahlBerechnen(pZahl, true);
             weiter();
         } catch (IOException e) {

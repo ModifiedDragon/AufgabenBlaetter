@@ -43,22 +43,22 @@ public class Aufgabe01 {
     }
 
     public void anfang() {
-        /// TODO kein rekursiver aufruf
         System.out.println("Geben sie die erste Zahl ein von der sie die Fakultaet berechnen wollen: " );
-        try {
-            String line = readLineFromQin();  // Custom read (blocks until full line)
-            if (line == null) {
-                return;
+        while (true) {
+            try {
+                String line = readLineFromQin();  // Custom read (blocks until full line)
+                if (line == null) {
+                    return;
+                }
+                int zahl = Integer.parseInt(line);  // Parse to int
+                berechneFakultaet(zahl);
+            } catch (NumberFormatException ex) {
+                System.out.println("Es wurde keine Richtige Nummer eingegeben.");
+            } catch (IOException ex) {
+                System.out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
             }
-            int zahl = Integer.parseInt(line);  // Parse to int
-            berechneFakultaet(zahl);
-        } catch (NumberFormatException ex) {
-            anfang();  // Retry
-        } catch (IOException ex) {
-            System.out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
-            anfang();
+            weiter();
         }
-        weiter();
     }
 
     public void weiter() {
