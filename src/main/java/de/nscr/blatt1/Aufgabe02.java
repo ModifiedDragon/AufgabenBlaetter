@@ -43,7 +43,7 @@ public class Aufgabe02 {
                 String zeile = readLineFromQin();
                 switch (zeile) {
                     case "y":
-
+                        ausführen();
                         return;
                     case "n":
                         gui.window.togglevisible();
@@ -62,12 +62,20 @@ public class Aufgabe02 {
 
     public void ausführen() {
         System.out.println("Welche Zahl willst du als Primzahl überprüfen?");
-        int pZahl = scanner.nextInt();
-        pZahlBerechnen(pZahl, true);
+        try {
+            int pZahl = Integer.parseInt(readLineFromQin());
+            pZahlBerechnen(pZahl, true);
+            weiter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private boolean pZahlBerechnen(int pZahl, boolean ersteDurchlauf) {
+        ///TODO überprüfen,
         ArrayList<Integer> teiler = new ArrayList<>();
+        // Auflisten aller Teiler
         for (int i = 1; i <= pZahl / 2; i++) {
             if (pZahl % i == 0) {
                 teiler.add(i);
@@ -75,13 +83,24 @@ public class Aufgabe02 {
         }
         teiler.add(pZahl);
         if (teiler.size() == 2) {
-            System.out.println(ersteDurchlauf ? pZahl + " ist eine Primzahl." : "Der Teiler " + pZahl + " ist eine Primzahl.");
+            if (ersteDurchlauf) {
+                System.out.println(pZahl + " ist eine Primzahl.");
+            }
             return true;
-        }
-        if (ersteDurchlauf) {
-            for (int i = 0; i < teiler.size(); i++) {
-                boolean prim = pZahlBerechnen(teiler.get(i), false);
-                System.out.println((pZahl + " ist durch " + teiler.get(i) + " teilbar") + (prim ? " und ist eine Primzahl." : "." ));
+        } else {
+            if (ersteDurchlauf) {
+                System.out.println(pZahl + " ist durch 1 teilbar und diese ist eine Primzahl.");
+                for (int i = 0; i < teiler.size(); i++) {
+                    boolean prim = pZahlBerechnen(teiler.get(i), false);
+                    if (prim) {
+                        System.out.println(pZahl + " ist durch " + teiler.get(i) + " teilbar und diese ist eine Primzahl.");
+                    }
+                }
+                if (teiler.size() == 2) {
+                    System.out.println(pZahl + " ist eine Primzahl.");
+                } else {
+                    System.out.println(pZahl + " ist keine Primzahl.");
+                }
             }
         }
         return false;

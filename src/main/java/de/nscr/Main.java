@@ -11,12 +11,12 @@ import java.util.Scanner;
 public class Main {
     static void main() {
         /// TODO Failsaves einfügen
+        /// TODO Unnötigen Code/Imports entfernen
         /// TODO Debugs entfernen
         /// TODO Kommentare einfügen
         /// TODO JavaDoc dokumentation verwenden
         /// TODO Namen der KLassen, Methoden, Variablen überprüfen
         /// TODO Anrede an den User überprüfen
-        /// TODO Klassen static machen?
-        GUI gui = new GUI();
+        new GUI();
     }
 }
