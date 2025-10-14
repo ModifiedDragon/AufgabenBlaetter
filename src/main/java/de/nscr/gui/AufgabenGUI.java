@@ -16,12 +16,7 @@ import java.nio.charset.StandardCharsets;
  *
  */
 public class AufgabenGUI {
-    ///  IDEA: In GUI open Task -> opens AufgabenGUI with new Aufgabe and scanner as Param and keep GUI open but hidden.
-    ///  After closing Task it will show the GUI again and everything can start again
-    ///  This frame should show a Console Input and a Text output (with possibly buttons for options)
-    ///  Acts as kind of daughter-class of the Jframe?
     private JFrame frame;
-    private JPanel consoleContainer;
     public static JTextArea consoleTextOutput;
     private JTextField consoleTextInputField;
     public GUI window;
@@ -38,18 +33,16 @@ public class AufgabenGUI {
         this.qin = window.qin;
         setup();
 
-        SwingUtilities.invokeLater(() -> {
-            new Thread(() -> {
-                if (testat == 1) {
-                    switch (task) {
-                        case 1 -> new Aufgabe01(this, qin);
-                        case 2 -> new Aufgabe02(this, qin);
-                        case 3 -> new Aufgabe03(this, qin);
-                        case 4 -> new Aufgabe04(this, qin);
-                    }
+        SwingUtilities.invokeLater(() -> new Thread(() -> {
+            if (testat == 1) {
+                switch (task) {
+                    case 1 -> new Aufgabe01(this, qin);
+                    case 2 -> new Aufgabe02(this, qin);
+                    case 3 -> new Aufgabe03(this, qin);
+                    case 4 -> new Aufgabe04(this, qin);
                 }
-            }).start();
-        });
+            }
+        }).start());
     }
 
     /**
@@ -73,7 +66,7 @@ public class AufgabenGUI {
         frame.setSize(800, 400);
         frame.setLocationRelativeTo(null);
 
-        consoleContainer = new JPanel();
+        JPanel consoleContainer = new JPanel();
         consoleTextOutput = new JTextArea(8,10);
         consoleTextInputField = new JTextField();
         consoleTextOutput.setEditable(false);

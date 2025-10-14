@@ -89,7 +89,7 @@ public class Aufgabe01 {
         }
     }
 
-    public BigInteger berechneFakultaet(int pZahl) {
+    public void berechneFakultaet(int pZahl) {
         BigInteger ergebnis = BigInteger.valueOf(1);  // Fixed: Use valueOf for consistency
 
         for (int i = pZahl; i > 0; i--) {
@@ -97,6 +97,5 @@ public class Aufgabe01 {
         }
 
         System.out.println("Die Fakultaet von " + pZahl + " ist " + ergebnis);
-        return ergebnis;
     }
 }

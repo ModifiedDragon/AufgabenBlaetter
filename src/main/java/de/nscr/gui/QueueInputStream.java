@@ -45,7 +45,7 @@ public class QueueInputStream extends InputStream {
             }
         }
         int result = current[pos++] & 0xFF;
-        if (pos >= current.length) {  // Optional: Reset after full read
+        if (pos >= current.length) {
             current = null;
         }
         return result;

@@ -7,16 +7,13 @@ import java.awt.*;
  *
  */
 public class GUI {
-    /// TODO rename everything
-    /// TODO remove comments
     private JFrame frame;
     private JPanel aufgaben;
-    private JButton[] aufgabenb;
+    private JButton[] aufgabenknoepfe;
     private int testat;
     private int[] aufgabenPerTestat;
-    private int totalAufgaben;
-    private String[] options = {"Testat 1", "Testat 2", "Testat 3", "Wähle das Testat", "Exit"};
-    private JComboBox<String> dropdown = new JComboBox<>(options);
+    private final String[] options = {"Testat 1", "Testat 2", "Testat 3", "Wähle das Testat", "Exit"};
+    private final JComboBox<String> dropdown = new JComboBox<>(options);
     public QueueInputStream qin = new QueueInputStream();
 
     /**
@@ -33,7 +30,7 @@ public class GUI {
         aufgabenPerTestat = new int[]{4, 0, 0, 0};
 
         // Calculate total bottom buttons
-        totalAufgaben = 0;
+        int totalAufgaben = 0;
         for (int count : aufgabenPerTestat) {
             totalAufgaben += count;
         }
@@ -50,6 +47,7 @@ public class GUI {
         // Optional: Add an action listener for when an item is selected
         dropdown.addActionListener(e -> {
             String selected = (String) dropdown.getSelectedItem();
+            assert selected != null;
             if (selected.equals("Exit")) {
                 System.exit(0);
             }
@@ -61,7 +59,7 @@ public class GUI {
         dropdown.setVisible(true);
 
         // Bottom panel: Variable total buttons, grouped by testat
-        aufgabenb = new JButton[totalAufgaben]; // Dynamic size
+        aufgabenknoepfe = new JButton[totalAufgaben]; // Dynamic size
         aufgaben = new JPanel(new BorderLayout()); // CHANGED: Use BorderLayout for Back button placement
         aufgaben.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding
         aufgaben.setVisible(false); // Initially hidden and empty
@@ -72,10 +70,10 @@ public class GUI {
             int numForThisTestat = aufgabenPerTestat[t - 1];
             for (int sub = 1; sub <= numForThisTestat; sub++) {
                 int buttonIndex = currentIndex;
-                aufgabenb[buttonIndex] = new JButton("Aufgabe " + t + "-" + sub);
-                aufgabenb[buttonIndex].setFocusable(false);
-                aufgabenb[buttonIndex].setPreferredSize(new Dimension(180, 30));
-                aufgabenb[buttonIndex].addActionListener(e -> {
+                aufgabenknoepfe[buttonIndex] = new JButton("Aufgabe " + t + "-" + sub);
+                aufgabenknoepfe[buttonIndex].setFocusable(false);
+                aufgabenknoepfe[buttonIndex].setPreferredSize(new Dimension(180, 30));
+                aufgabenknoepfe[buttonIndex].addActionListener(e -> {
                     this.togglevisible();
                     switch (buttonIndex) {
                         case 0 -> new AufgabenGUI(this, 1, 1);
@@ -120,7 +118,7 @@ public class GUI {
         // Add only the relevant aufgaben buttons to the row
         for (int i = 0; i < numButtons; i++) {
             int buttonIndex = startIndex + i;
-            aufgabenRow.add(aufgabenb[buttonIndex]);
+            aufgabenRow.add(aufgabenknoepfe[buttonIndex]);
         }
 
         // Add to aufgaben panel: Row in CENTER
