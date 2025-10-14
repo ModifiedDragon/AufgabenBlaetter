@@ -1,65 +1,94 @@
 package de.nscr.blatt1;
 
-import de.nscr.gui.GUI;
+import de.nscr.gui.AufgabenGUI;
+import de.nscr.gui.QueueInputStream;
 
+import javax.swing.*;
 import java.math.BigInteger;
-import java.util.Scanner;
+import java.io.IOException;
 
 /**
  *
  */
 public class Aufgabe01 {
+    private final AufgabenGUI gui;
+    private final QueueInputStream qin;  // Direct qin
 
-    Scanner scanner;
-
-
-    /**
-     *
-     */
-    public Aufgabe01(GUI frame) {
-        frame.exit();
-        this.scanner = frame.input;
+    public Aufgabe01(AufgabenGUI frame, QueueInputStream qin) {  // Takes qin
+        this.gui = frame;
+        this.qin = qin;
         anfang();
     }
 
-    /**
-     *
-     */
+    private String readLineFromQin() throws IOException {
+        StringBuilder line = new StringBuilder();
+        int b;
+        while ((b = qin.read()) != -1) {  // Blocks on read() until data
+            char c = (char) b;
+            if (c == '\n') {
+                break;  // Stop at newline
+            }
+            line.append(c);
+        }
+        String result = line.toString().trim();
+        if (result.isEmpty() && b == -1) {
+            return null;  // EOF
+        }
+        return result;
+    }
+
     public void anfang() {
-        System.out.print("Geben sie die erste Zahl ein von der sie die Fakultaet berechnen wollen: " );
-        berechneFakultaet(scanner.nextInt());
-        System.out.println("Wollen sie weitere Faklutaeten berechnen? (y/n)");
+        /// TODO kein rekursiver aufruf
+        System.out.println("Geben sie die erste Zahl ein von der sie die Fakultaet berechnen wollen: " );
+        try {
+            String line = readLineFromQin();  // Custom read (blocks until full line)
+            if (line == null) {
+                return;
+            }
+            int zahl = Integer.parseInt(line);  // Parse to int
+            berechneFakultaet(zahl);
+        } catch (NumberFormatException ex) {
+            anfang();  // Retry
+        } catch (IOException ex) {
+            System.out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
+            anfang();
+        }
         weiter();
     }
 
-    /**
-     *
-     */
-    public void weiter () {
-        String zeile = scanner.nextLine();
-        if (zeile.equals("y")) {
-            anfang();
-        } else if (zeile.equals("n")) {
-            GUI gui = new GUI(scanner);
-            gui.setup(1);
-        } else {
-            System.out.println("Bitte gebe eine gültige Eingabe von entweder 'y' oder 'n'.");
-            weiter();
+    public void weiter() {
+        System.out.println("Wollen sie weitere Faklutaeten berechnen? (y/n)");
+        while (true) {
+            try {
+                String zeile = readLineFromQin();  // Custom read (blocks until full line)
+                if (zeile == null) {
+                    break;
+                }
+                zeile = zeile.toLowerCase();
+                if (zeile.equals("y")) {
+                    anfang();
+                    return;
+                } else if (zeile.equals("n")) {
+                    SwingUtilities.invokeLater(() -> {
+                        gui.window.togglevisible();
+                        gui.exit();
+                    });
+                    return;
+                } else {
+                    System.out.println("Bitte gebe eine gültige Eingabe von entweder 'y' oder 'n'.");
+                }
+            } catch (IOException ex) {
+                System.out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
+                break;
+            }
         }
     }
 
-
-    /**
-     *
-     * @param pZahl
-     * @return
-     */
     public BigInteger berechneFakultaet(int pZahl) {
-        BigInteger ergebnis = new BigInteger("1");
+        BigInteger ergebnis = BigInteger.valueOf(1);  // Fixed: Use valueOf for consistency
 
         for (int i = pZahl; i > 0; i--) {
-            BigInteger i1 = BigInteger.valueOf(i);
-            ergebnis = ergebnis.multiply(i1);
+            ergebnis = ergebnis.multiply(BigInteger.valueOf(i));
         }
 
         System.out.println("Die Fakultaet von " + pZahl + " ist " + ergebnis);

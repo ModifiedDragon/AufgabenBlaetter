@@ -1,33 +1,61 @@
 package de.nscr.blatt1;
 
-import de.nscr.gui.GUI;
+import de.nscr.gui.AufgabenGUI;
+import de.nscr.gui.QueueInputStream;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Aufgabe02 {
-    Scanner scanner;
+    private final AufgabenGUI gui;
+    private final QueueInputStream qin;
+    int pZahl;
 
-    public Aufgabe02(GUI frame) {
-        frame.exit();
-        scanner = frame.input;
+    public Aufgabe02(AufgabenGUI frame, QueueInputStream qin) {
+        gui = frame;
+        this.qin = qin;
         ausführen();
+
+    }
+
+    // Custom line reader: Reads bytes from qin until \n, no buffering or extra reads
+    private String readLineFromQin() throws IOException {
+        StringBuilder line = new StringBuilder();
+        int b;
+        while ((b = qin.read()) != -1) {  // Blocks on read() until data or EOF
+            char c = (char) b;
+            if (c == '\n') {
+                break;  // Stop at newline
+            }
+            line.append(c);
+        }
+        String result = line.toString().trim();  // Trim extra spaces
+        if (result.isEmpty() && b == -1) {
+            return null;  // EOF reached
+        }
+        return result;
     }
 
     private void weiter() {
         System.out.println("Willst du noch eine Sache abfragen? (y/n)");
-        String zeile = scanner.next();
-        switch (zeile) {
-            case "y" :
+        while (true) {
+            try {
+                String zeile = readLineFromQin();
+                switch (zeile) {
+                    case "y":
 
-                break;
-            case "n" :
-                GUI gui = new GUI(scanner);
-                gui.setup(1);
-                break;
-            default :
+                        return;
+                    case "n":
+                        gui.window.togglevisible();
+                        gui.exit();
+                        return;
+                    default:
+                        System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
+                        weiter();
+                }
+            } catch (IOException e) {
                 System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
-                weiter();
+            }
         }
     }
 
