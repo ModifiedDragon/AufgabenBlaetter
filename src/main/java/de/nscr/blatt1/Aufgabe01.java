@@ -14,6 +14,11 @@ public class Aufgabe01 {
     private final AufgabenGUI gui;
     private final QueueInputStream qin;  // Direct qin
 
+    /**
+     *
+     * @param frame
+     * @param qin
+     */
     public Aufgabe01(AufgabenGUI frame, QueueInputStream qin) {  // Takes qin
         this.gui = frame;
         this.qin = qin;

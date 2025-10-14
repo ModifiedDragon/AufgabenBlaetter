@@ -6,11 +6,18 @@ import de.nscr.gui.QueueInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class Aufgabe02 {
     private final AufgabenGUI gui;
     private final QueueInputStream qin;
-    int pZahl;
 
+    /**
+     *
+     * @param frame
+     * @param qin
+     */
     public Aufgabe02(AufgabenGUI frame, QueueInputStream qin) {
         gui = frame;
         this.qin = qin;
@@ -19,6 +26,12 @@ public class Aufgabe02 {
     }
 
     // Custom line reader: Reads bytes from qin until \n, no buffering or extra reads
+
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     private String readLineFromQin() throws IOException {
         StringBuilder line = new StringBuilder();
         int b;
@@ -59,7 +72,9 @@ public class Aufgabe02 {
         }
     }
 
-
+    /**
+     *
+     */
     public void ausführen() {
         System.out.println("Welche Zahl willst du als Primzahl überprüfen?");
         try {
@@ -72,6 +87,12 @@ public class Aufgabe02 {
 
     }
 
+    /**
+     *
+     * @param pZahl
+     * @param ersteDurchlauf
+     * @return
+     */
     private boolean pZahlBerechnen(int pZahl, boolean ersteDurchlauf) {
         ///TODO überprüfen,
         ArrayList<Integer> teiler = new ArrayList<>();

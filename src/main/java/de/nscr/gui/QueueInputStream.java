@@ -6,11 +6,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ *
+ */
 public class QueueInputStream extends InputStream {
     private final BlockingQueue<byte[]> queue = new LinkedBlockingQueue<>();
     private byte[] current = null;
     private int pos = 0;
 
+    /**
+     *
+     * @param s
+     */
     public void addInput(String s) {
         try {
             byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
@@ -21,6 +28,12 @@ public class QueueInputStream extends InputStream {
             ex.printStackTrace();
         }
     }
+
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     @Override
     public int read() throws IOException {
         while (current == null || pos >= current.length) {

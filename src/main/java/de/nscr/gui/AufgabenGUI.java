@@ -11,8 +11,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
 
+/**
+ *
+ */
 public class AufgabenGUI {
     ///  IDEA: In GUI open Task -> opens AufgabenGUI with new Aufgabe and scanner as Param and keep GUI open but hidden.
     ///  After closing Task it will show the GUI again and everything can start again
@@ -27,6 +29,12 @@ public class AufgabenGUI {
     private int task;
     public QueueInputStream qin;
 
+    /**
+     *
+     * @param window
+     * @param testat
+     * @param task
+     */
     public AufgabenGUI(GUI window, int testat, int task) {
         this.window = window;
         this.testat = testat;
@@ -49,6 +57,9 @@ public class AufgabenGUI {
         });
     }
 
+    /**
+     *
+     */
     public void setup() {
         frame = new JFrame("Task");
         frame.setUndecorated(true);
@@ -73,12 +84,22 @@ public class AufgabenGUI {
         consoleTextOutput.setEditable(false);
 
         PrintStream consoleOut = new PrintStream(new OutputStream() {
+            /**
+             *
+             * @param b   the {@code byte}.
+             */
             @Override
             public void write(int b) {
                 consoleTextOutput.append(String.valueOf((char) b));
                 consoleTextOutput.setCaretPosition(consoleTextOutput.getDocument().getLength()); // Auto-scroll
             }
 
+            /**
+             *
+             * @param b     the data.
+             * @param off   the start offset in the data.
+             * @param len   the number of bytes to write.
+             */
             @Override
             public void write(byte[] b, int off, int len) {
                 consoleTextOutput.append(new String(b, off, len, StandardCharsets.UTF_8));
@@ -126,7 +147,10 @@ public class AufgabenGUI {
         frame.revalidate();
     }
 
-
+    /**
+     *
+     * @param input
+     */
     private void executeInput(String input){
         if(input.equalsIgnoreCase("exit")){
             window.togglevisible();
@@ -140,18 +164,12 @@ public class AufgabenGUI {
         }
     }
 
+    /**
+     *
+     */
     public void exit() {
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));  // Restore original
         System.setIn(new FileInputStream(FileDescriptor.in));
         frame.dispose();
-    }
-
-    public void togglevisible() {
-        frame.setVisible(!frame.isVisible());
-    }
-
-    public void addText(String text) {
-        consoleTextOutput.append(text + "\n");
-        consoleTextOutput.setCaretPosition(consoleTextOutput.getDocument().getLength());
     }
 }

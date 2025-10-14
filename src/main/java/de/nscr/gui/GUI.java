@@ -3,6 +3,9 @@ package de.nscr.gui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ *
+ */
 public class GUI {
     /// TODO rename everything
     /// TODO remove comments
@@ -16,10 +19,16 @@ public class GUI {
     private JComboBox<String> dropdown = new JComboBox<>(options);
     public QueueInputStream qin = new QueueInputStream();
 
+    /**
+     *
+     */
     public GUI() {
         setup();
     }
 
+    /**
+     *
+     */
     public void setup() {
         aufgabenPerTestat = new int[]{4, 0, 0, 0};
 
@@ -94,6 +103,9 @@ public class GUI {
         frame.revalidate();
     }
 
+    /**
+     *
+     */
     private void populateAufgaben() {
         aufgaben.removeAll(); // Clear previous buttons (overlay: same position)
 
@@ -122,11 +134,9 @@ public class GUI {
         frame.repaint(); // Redraw
     }
 
-
-    public void exit() {
-        frame.dispose();
-    }
-
+    /**
+     *
+     */
     public void togglevisible() {
         frame.setVisible(!frame.isVisible());
     }

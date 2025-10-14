@@ -20,6 +20,8 @@ public class Aufgabe04 {
 
     /**
      *
+     * @param frame
+     * @param qin
      */
     public Aufgabe04(AufgabenGUI frame, QueueInputStream qin) {
         this.gui = frame;
@@ -28,6 +30,12 @@ public class Aufgabe04 {
     }
 
     // Custom line reader: Reads bytes from qin until \n, no buffering or extra reads
+
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     private String readLineFromQin() throws IOException {
         StringBuilder line = new StringBuilder();
         int b;

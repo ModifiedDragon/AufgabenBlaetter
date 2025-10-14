@@ -2,9 +2,6 @@ package de.nscr;
 
 import de.nscr.gui.GUI;
 
-import java.io.IOException;
-import java.util.Scanner;
-
 /**
  *
  */
@@ -18,6 +15,7 @@ public class Main {
         /// TODO JavaDoc dokumentation verwenden
         /// TODO Namen der KLassen, Methoden, Variablen überprüfen
         /// TODO Anrede an den User überprüfen
+        /// TODO readfromqin auslagern in Klasse?
         new GUI();
     }
 }
