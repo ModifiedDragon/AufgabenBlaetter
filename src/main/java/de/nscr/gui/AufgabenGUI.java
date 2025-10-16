@@ -16,30 +16,30 @@ import java.nio.charset.StandardCharsets;
  *
  */
 public class AufgabenGUI {
-    private JFrame frame;
-    public static JTextArea consoleTextOutput;
-    private JTextField consoleTextInputField;
-    public GUI window;
-    public QueueInputStream qin;
+    private JFrame fenster;
+    public static JTextArea konsolenTestAusgabe;
+    private JTextField konsolenTestEingabe;
+    public GUI gui;
+    public SchlangenEingabe eingabe;
 
     /**
      *
-     * @param window
-     * @param testat
-     * @param task
+     * @param gui Der Frame, der übergeben wird
+     * @param testat Das ausgewählte Testat wird übergeben
+     * @param aufgabe Die ausgewählte Aufgabe wird übergeben
      */
-    public AufgabenGUI(GUI window, int testat, int task) {
-        this.window = window;
-        this.qin = window.qin;
+    public AufgabenGUI(GUI gui, int testat, int aufgabe) {
+        this.gui = gui;
+        this.eingabe = gui.eingabe;
         setup();
 
         SwingUtilities.invokeLater(() -> new Thread(() -> {
             if (testat == 1) {
-                switch (task) {
-                    case 1 -> new Aufgabe01(this, qin);
-                    case 2 -> new Aufgabe02(this, qin);
-                    case 3 -> new Aufgabe03(this, qin);
-                    case 4 -> new Aufgabe04(this, qin);
+                switch (aufgabe) {
+                    case 1 -> new Aufgabe01(this, eingabe);
+                    case 2 -> new Aufgabe02(this, eingabe);
+                    case 3 -> new Aufgabe03(this, eingabe);
+                    case 4 -> new Aufgabe04(this, eingabe);
                 }
             }
         }).start());
@@ -49,37 +49,41 @@ public class AufgabenGUI {
      *
      */
     public void setup() {
-        frame = new JFrame("Task");
-        frame.setUndecorated(true);
-        frame.setResizable(false);
-        frame.setLayout(new BorderLayout());
+        fenster = new JFrame("Aufgabe");
+        fenster.setUndecorated(true);
+        fenster.setResizable(false);
+        fenster.setLayout(new BorderLayout());
 
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
+        fenster.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        fenster.addWindowListener(new WindowAdapter() {
+            /**
+             * 
+             * @param e the event to be processed
+             */
             @Override
             public void windowClosing(WindowEvent e) {
-                window.togglevisible();
-                frame.dispose();
+                gui.togglevisible();
+                fenster.dispose();
             }
         });
 
-        frame.setSize(800, 400);
-        frame.setLocationRelativeTo(null);
+        fenster.setSize(800, 400);
+        fenster.setLocationRelativeTo(null);
 
-        JPanel consoleContainer = new JPanel();
-        consoleTextOutput = new JTextArea(8,10);
-        consoleTextInputField = new JTextField();
-        consoleTextOutput.setEditable(false);
+        JPanel konsolenContainer = new JPanel();
+        konsolenTestAusgabe = new JTextArea(8,10);
+        konsolenTestEingabe = new JTextField();
+        konsolenTestAusgabe.setEditable(false);
 
-        PrintStream consoleOut = new PrintStream(new OutputStream() {
+        PrintStream konsolenOutput = new PrintStream(new OutputStream() {
             /**
              *
              * @param b   the {@code byte}.
              */
             @Override
             public void write(int b) {
-                consoleTextOutput.append(String.valueOf((char) b));
-                consoleTextOutput.setCaretPosition(consoleTextOutput.getDocument().getLength()); // Auto-scroll
+                konsolenTestAusgabe.append(String.valueOf((char) b));
+                konsolenTestAusgabe.setCaretPosition(konsolenTestAusgabe.getDocument().getLength()); // Auto-scroll
             }
 
             /**
@@ -90,61 +94,60 @@ public class AufgabenGUI {
              */
             @Override
             public void write(byte[] b, int off, int len) {
-                consoleTextOutput.append(new String(b, off, len, StandardCharsets.UTF_8));
-                consoleTextOutput.setCaretPosition(consoleTextOutput.getDocument().getLength());
+                konsolenTestAusgabe.append(new String(b, off, len, StandardCharsets.UTF_8));
+                konsolenTestAusgabe.setCaretPosition(konsolenTestAusgabe.getDocument().getLength());
             }
         }, true, StandardCharsets.UTF_8); // Auto-flush, UTF-8
-        System.setOut(consoleOut);
+        System.setOut(konsolenOutput);
 
-        consoleContainer.setLayout(new BorderLayout());
-        consoleContainer.add(new JScrollPane(consoleTextOutput), BorderLayout.CENTER);
-        consoleContainer.add(consoleTextInputField, BorderLayout.SOUTH);
+        konsolenContainer.setLayout(new BorderLayout());
+        konsolenContainer.add(new JScrollPane(konsolenTestAusgabe), BorderLayout.CENTER);
+        konsolenContainer.add(konsolenTestEingabe, BorderLayout.SOUTH);
 
-        consoleTextInputField.addActionListener(e -> {
-            String command = consoleTextInputField.getText().trim();
+        konsolenTestEingabe.addActionListener(e -> {
+            String command = konsolenTestEingabe.getText().trim();
             if (command.isEmpty()) {
-                consoleTextInputField.setText("");
+                konsolenTestEingabe.setText("");
                 return;
             }
 
-            consoleTextOutput.append(">> " + command + "\n");
-            executeInput(command);
+            konsolenTestAusgabe.append(">> " + command + "\n");
+            inputAusfueren(command);
 
             if (!command.equalsIgnoreCase("exit") && !command.equalsIgnoreCase("help")) {
-                if (qin == null) {
+                if (eingabe == null) {
                     return;
                 }
                 String inputToAdd = command + "\n";
-
-                qin.addInput(inputToAdd);
+                eingabe.inputEinfuegen(inputToAdd);
             }
 
-            consoleTextInputField.setText("");
+            konsolenTestEingabe.setText("");
         });
-        consoleContainer.setSize(600,400);
-        consoleTextOutput.setBackground(Color.BLACK);
-        consoleTextOutput.setForeground(Color.WHITE);
-        consoleTextInputField.setBackground(Color.BLACK);
-        consoleTextInputField.setForeground(Color.WHITE);
-        consoleContainer.setVisible(true);
+        konsolenContainer.setSize(600,400);
+        konsolenTestAusgabe.setBackground(Color.BLACK);
+        konsolenTestAusgabe.setForeground(Color.WHITE);
+        konsolenTestEingabe.setBackground(Color.BLACK);
+        konsolenTestEingabe.setForeground(Color.WHITE);
+        konsolenContainer.setVisible(true);
 
-        frame.add(consoleContainer, BorderLayout.CENTER);
+        fenster.add(konsolenContainer, BorderLayout.CENTER);
 
-        frame.setVisible(true);
-        frame.repaint();
-        frame.revalidate();
+        fenster.setVisible(true);
+        fenster.repaint();
+        fenster.revalidate();
     }
 
     /**
      *
-     * @param input
+     * @param eingabe Die Konsoleneingabe, welche möglicherweise ausgeführt wird
      */
-    private void executeInput(String input){
-        if(input.equalsIgnoreCase("exit")){
-            window.togglevisible();
-            frame.dispose();
-        }  else if(input.equalsIgnoreCase("help")){ //console commands
-            consoleTextOutput.append("""
+    private void inputAusfueren(String eingabe){
+        if(eingabe.equalsIgnoreCase("exit")){
+            gui.togglevisible();
+            fenster.dispose();
+        }  else if(eingabe.equalsIgnoreCase("help")){ //console commands
+            konsolenTestAusgabe.append("""
                     \
                     'exit' -> closes the Task
                     'help' -> displays this information
@@ -158,6 +161,6 @@ public class AufgabenGUI {
     public void exit() {
         System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
         System.setIn(new FileInputStream(FileDescriptor.in));
-        frame.dispose();
+        fenster.dispose();
     }
 }

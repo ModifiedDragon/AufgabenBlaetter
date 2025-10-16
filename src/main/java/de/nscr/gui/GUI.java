@@ -7,14 +7,14 @@ import java.awt.*;
  *
  */
 public class GUI {
-    private JFrame frame;
+    private JFrame fenster;
     private JPanel aufgaben;
     private JButton[] aufgabenknoepfe;
     private int testat;
     private int[] aufgabenPerTestat;
-    private final String[] options = {"Testat 1", "Testat 2", "Testat 3", "Wähle das Testat", "Exit"};
-    private final JComboBox<String> dropdown = new JComboBox<>(options);
-    public QueueInputStream qin = new QueueInputStream();
+    private final String[] optionen = {"Testat 1", "Testat 2", "Testat 3", "Wähle das Testat", "Exit"};
+    private final JComboBox<String> dropdownbox = new JComboBox<>(optionen);
+    public SchlangenEingabe eingabe = new SchlangenEingabe();
 
     /**
      *
@@ -31,32 +31,32 @@ public class GUI {
 
         // Calculate total bottom buttons
         int totalAufgaben = 0;
-        for (int count : aufgabenPerTestat) {
-            totalAufgaben += count;
+        for (int anzahl : aufgabenPerTestat) {
+            totalAufgaben += anzahl;
         }
 
-        frame = new JFrame("GUI");
-        frame.setUndecorated(true);
-        frame.setResizable(false);
-        frame.setLayout(new BorderLayout());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 400); // Adjust width if more buttons (e.g., 1000 for 6+ buttons)
-        frame.setLocationRelativeTo(null);
+        fenster = new JFrame("GUI");
+        fenster.setUndecorated(true);
+        fenster.setResizable(false);
+        fenster.setLayout(new BorderLayout());
+        fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenster.setSize(800, 400); // Adjust width if more buttons (e.g., 1000 for 6+ buttons)
+        fenster.setLocationRelativeTo(null);
 
-        dropdown.setSelectedIndex(3); // Set default selection
+        dropdownbox.setSelectedIndex(3); // Set default selection
         // Optional: Add an action listener for when an item is selected
-        dropdown.addActionListener(e -> {
-            String selected = (String) dropdown.getSelectedItem();
-            assert selected != null;
-            if (selected.equals("Exit")) {
+        dropdownbox.addActionListener(e -> {
+            String ausgewaehlt = (String) dropdownbox.getSelectedItem();
+            assert ausgewaehlt != null;
+            if (ausgewaehlt.equals("Exit")) {
                 System.exit(0);
             }
-            testat = dropdown.getSelectedIndex() + 1; // Set selected testat (1-4)
+            testat = dropdownbox.getSelectedIndex() + 1; // Set selected testat (1-4)
             aufgaben.setVisible(true); // Show bottom panel
-            populateAufgaben(); // Populate with variable number of bottom buttons (overlay effect)
+            aufgabenAnzeigen(); // Populate with variable number of bottom buttons (overlay effect)
         });
         // Add the dropdown to the frame
-        dropdown.setVisible(true);
+        dropdownbox.setVisible(true);
 
         // Bottom panel: Variable total buttons, grouped by testat
         aufgabenknoepfe = new JButton[totalAufgaben]; // Dynamic size
@@ -65,17 +65,17 @@ public class GUI {
         aufgaben.setVisible(false); // Initially hidden and empty
 
         // Create all bottom buttons with cumulative indexing
-        int currentIndex = 0;
-        for (int t = 1; t <= 4; t++) { // For each Testat
-            int numForThisTestat = aufgabenPerTestat[t - 1];
-            for (int sub = 1; sub <= numForThisTestat; sub++) {
-                int buttonIndex = currentIndex;
-                aufgabenknoepfe[buttonIndex] = new JButton("Aufgabe " + t + "-" + sub);
-                aufgabenknoepfe[buttonIndex].setFocusable(false);
-                aufgabenknoepfe[buttonIndex].setPreferredSize(new Dimension(180, 30));
-                aufgabenknoepfe[buttonIndex].addActionListener(e -> {
+        int nummer = 0;
+        for (int testat = 1; testat <= 4; testat++) { // For each Testat
+            int numberTestat = aufgabenPerTestat[testat - 1];
+            for (int aufgabe = 1; aufgabe <= numberTestat; aufgabe++) {
+                int knopfnummer = nummer;
+                aufgabenknoepfe[knopfnummer] = new JButton("Aufgabe " + testat + "-" + aufgabe);
+                aufgabenknoepfe[knopfnummer].setFocusable(false);
+                aufgabenknoepfe[knopfnummer].setPreferredSize(new Dimension(180, 30));
+                aufgabenknoepfe[knopfnummer].addActionListener(e -> {
                     this.togglevisible();
-                    switch (buttonIndex) {
+                    switch (knopfnummer) {
                         case 0 -> new AufgabenGUI(this, 1, 1);
                         case 1 -> new AufgabenGUI(this, 1, 2);
                         case 2 -> new AufgabenGUI(this, 1, 3);
@@ -83,55 +83,55 @@ public class GUI {
                         default ->  System.exit(0);
                     }
                 });
-                currentIndex++;
+                nummer++;
             }
         }
-        testat = dropdown.getSelectedIndex() + 1; // Set initial testat
-        frame.add(dropdown, BorderLayout.NORTH); // Places it at the top, visible and non-overlapping
+        testat = dropdownbox.getSelectedIndex() + 1; // Set initial testat
+        fenster.add(dropdownbox, BorderLayout.NORTH); // Places it at the top, visible and non-overlapping
 
         // Add panels to frame
-        frame.add(aufgaben, BorderLayout.CENTER);
+        fenster.add(aufgaben, BorderLayout.CENTER);
 
         // Make frame visible after setup
-        frame.setVisible(true);
-        frame.repaint();
-        frame.revalidate();
+        fenster.setVisible(true);
+        fenster.repaint();
+        fenster.revalidate();
     }
 
     /**
      *
      */
-    private void populateAufgaben() {
+    private void aufgabenAnzeigen() {
         aufgaben.removeAll(); // Clear previous buttons (overlay: same position)
 
         // Calculate start index for this testat
-        int startIndex = 0;
+        int anfangsIndex = 0;
         for (int t = 1; t < testat; t++) {
-            startIndex += aufgabenPerTestat[t - 1];
+            anfangsIndex += aufgabenPerTestat[t - 1];
         }
 
-        int numButtons = aufgabenPerTestat[testat - 1]; // Variable number for this testat
+        int knopfNummer = aufgabenPerTestat[testat - 1]; // Variable number for this testat
 
-        JPanel aufgabenRow = new JPanel(new GridLayout(1, numButtons, 10, 10));
-        aufgabenRow.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // Small bottom padding before Back
+        JPanel aufgabenReihe = new JPanel(new GridLayout(1, knopfNummer, 10, 10));
+        aufgabenReihe.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // Small bottom padding before Back
 
         // Add only the relevant aufgaben buttons to the row
-        for (int i = 0; i < numButtons; i++) {
-            int buttonIndex = startIndex + i;
-            aufgabenRow.add(aufgabenknoepfe[buttonIndex]);
+        for (int i = 0; i < knopfNummer; i++) {
+            int buttonIndex = anfangsIndex + i;
+            aufgabenReihe.add(aufgabenknoepfe[buttonIndex]);
         }
 
         // Add to aufgaben panel: Row in CENTER
-        aufgaben.add(aufgabenRow, BorderLayout.CENTER);
+        aufgaben.add(aufgabenReihe, BorderLayout.CENTER);
 
-        frame.revalidate(); // Refresh layout
-        frame.repaint(); // Redraw
+        fenster.revalidate(); // Refresh layout
+        fenster.repaint(); // Redraw
     }
 
     /**
      *
      */
     public void togglevisible() {
-        frame.setVisible(!frame.isVisible());
+        fenster.setVisible(!fenster.isVisible());
     }
 }

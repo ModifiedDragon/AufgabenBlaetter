@@ -1,7 +1,7 @@
 package de.nscr.blatt1;
 
 import de.nscr.gui.AufgabenGUI;
-import de.nscr.gui.QueueInputStream;
+import de.nscr.gui.SchlangenEingabe;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -11,41 +11,39 @@ import java.util.Objects;
  */
 public class Aufgabe03 {
     private final AufgabenGUI gui;
-    private final QueueInputStream qin;
+    private final SchlangenEingabe eingabe;
 
     /**
      *
-     * @param frame
-     * @param qin
+     * @param gui Der Frame, der übergeben wird
+     * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
      */
-    public Aufgabe03(AufgabenGUI frame, QueueInputStream qin) {
-        gui = frame;
-        this.qin = qin;
+    public Aufgabe03(AufgabenGUI gui, SchlangenEingabe eingabe) {
+        this.gui = gui;
+        this.eingabe = eingabe;
         start();
     }
 
-    // Custom line reader: Reads bytes from qin until \n, no buffering or extra reads
 
     /**
      *
      * @return
      * @throws IOException
      */
-    private String readLineFromQin() throws IOException {
+    private String auslesen() throws IOException {
 
-        // Optional: Remove debug prints for production
         StringBuilder line = new StringBuilder();
         int b;
-        while ((b = qin.read()) != -1) {  // Blocks on read() until data or EOF
+        while ((b = eingabe.read()) != -1) {
             char c = (char) b;
             if (c == '\n') {
-                break;  // Stop at newline
+                break;
             }
             line.append(c);
         }
-        String result = line.toString().trim();  // Trim extra spaces
+        String result = line.toString().trim();
         if (result.isEmpty() && b == -1) {
-            return null;  // EOF reached
+            return null;
         }
         return result;
     }
@@ -56,24 +54,24 @@ public class Aufgabe03 {
     public void start() {
         System.out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
         try {
-            switch (Integer.parseInt(Objects.requireNonNull(readLineFromQin()))){
+            switch (Integer.parseInt(Objects.requireNonNull(auslesen()))){
                 case 0:
-                    System.out.print("Bitte gebe den Radius des Kreises an: ");
-                    berechneFlaecheninhaltKreis(Integer.parseInt(Objects.requireNonNull(readLineFromQin())));
+                    System.out.print("Bitte geben Sie den Radius des Kreises an: ");
+                    berechneFlaecheninhaltKreis(Integer.parseInt(Objects.requireNonNull(auslesen())));
                     break;
                 case 1:
-                    System.out.print("Bitte gebe die Größe der Grundlfläche an: ");
-                    double temp1 = Double.parseDouble(Objects.requireNonNull(readLineFromQin()));
-                    System.out.print("Bitte gebe die Größe der Höhe an: ");
-                    double temp2 = Double.parseDouble(Objects.requireNonNull(readLineFromQin()));
+                    System.out.print("Bitte geben Sie die Größe der Grundfläche an: ");
+                    double temp1 = Double.parseDouble(Objects.requireNonNull(auslesen()));
+                    System.out.print("Bitte geben Sie die Größe der Höhe an: ");
+                    double temp2 = Double.parseDouble(Objects.requireNonNull(auslesen()));
                     berechneFlaecheninhaltDreieck(temp1, temp2);
                     break;
                 case 2:
-                    System.out.print("Bitte gebe die Größe der Grundlfläche an: ");
-                    double temp3 = Double.parseDouble(Objects.requireNonNull(readLineFromQin()));
-                    System.out.print("Bitte gebe die Größe der Höhe an: ");
-                    double temp4 = Double.parseDouble(Objects.requireNonNull(readLineFromQin()));
-                    berechneFlaecheninhaltParralelo(temp3, temp4);
+                    System.out.print("Bitte geben Sie die Größe der Grundfläche an: ");
+                    double temp3 = Double.parseDouble(Objects.requireNonNull(auslesen()));
+                    System.out.print("Bitte geben Sie die Größe der Höhe an: ");
+                    double temp4 = Double.parseDouble(Objects.requireNonNull(auslesen()));
+                    berechneFlaecheninhaltParallelogramm(temp3, temp4);
                     break;
                 default:
                     System.out.println("Bitte geben Sie eine Eingabe con 0 bis 2 ein.");
@@ -90,20 +88,20 @@ public class Aufgabe03 {
      *
      */
     private void weiter() {
-        System.out.println("Willst du noch eine Sache abfragen? (y/n)");
+        System.out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
         while (true) {
             try {
-                String zeile = readLineFromQin();
+                String zeile = auslesen();
                 switch (zeile) {
                     case "y":
                         start();
                         return;
                     case "n":
-                        gui.window.togglevisible();
+                        gui.gui.togglevisible();
                         gui.exit();
                         return;
                     default:
-                        System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
+                        System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
                         weiter();
                 }
             } catch (IOException e) {
@@ -114,39 +112,39 @@ public class Aufgabe03 {
 
     /**
      *
-     * @param pRadius
+     * @param pRadius ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
      */
     public void berechneFlaecheninhaltKreis(double pRadius){
         double flaecheninhalt;
 
         flaecheninhalt = Math.PI * pRadius * pRadius;
 
-        System.out.println("Der Flaecheninhalt des Kreises mit dem Radius " + pRadius +" beträgt " + flaecheninhalt);
+        System.out.println("Der Flächeninhalt des Kreises mit dem Radius " + pRadius + " beträgt " + flaecheninhalt);
     }
 
     /**
      *
-     * @param pSeiteA
-     * @param pSeiteB
+     * @param pSeiteA ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
+     * @param pSeiteB ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
      */
     public void berechneFlaecheninhaltDreieck(double pSeiteA,  double pSeiteB){
         double flaecheninhalt;
 
         flaecheninhalt = (pSeiteA * pSeiteB) / 2;
 
-        System.out.println("Der Flaecheninhalt des Dreiecks mit den Seitenlängen " + pSeiteA +" und " + pSeiteB +" beträgt " + flaecheninhalt);
+        System.out.println("Der Flächeninhalt des Dreiecks mit den Seitenlängen " + pSeiteA + " und " + pSeiteB + " beträgt " + flaecheninhalt);
     }
 
     /**
      *
-     * @param pHoehe
-     * @param pGrundseite
+     * @param pHoehe ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
+     * @param pGrundseite ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
      */
-    public void berechneFlaecheninhaltParralelo(double pHoehe, double pGrundseite) {
+    public void berechneFlaecheninhaltParallelogramm(double pHoehe, double pGrundseite) {
         double flaecheninhalt;
 
         flaecheninhalt = pHoehe *  pGrundseite;
 
-        System.out.println("Der Flaecheninhalt des Parralelogram mit der höhe " + pHoehe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
+        System.out.println("Der Flächeninhalt des Parallelogram mit der höhe " + pHoehe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
     }
 }

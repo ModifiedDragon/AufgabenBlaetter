@@ -1,7 +1,7 @@
 package de.nscr.blatt1;
 
 import de.nscr.gui.AufgabenGUI;
-import de.nscr.gui.QueueInputStream;
+import de.nscr.gui.SchlangenEingabe;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -12,43 +12,41 @@ import java.util.Random;
  */
 public class Aufgabe04 {
     private final AufgabenGUI gui;
-    private final QueueInputStream qin;
+    private final SchlangenEingabe eingabe;
     int zahl;
     int ober;
     int unter;
-    int anzahl = 1;
+    int versuchsAnzahl = 1;
 
     /**
      *
-     * @param frame
-     * @param qin
+     * @param gui Der Frame, der übergeben wird
+     * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
      */
-    public Aufgabe04(AufgabenGUI frame, QueueInputStream qin) {
-        this.gui = frame;
-        this.qin = qin;
+    public Aufgabe04(AufgabenGUI gui, SchlangenEingabe eingabe) {
+        this.gui = gui;
+        this.eingabe = eingabe;
         anfang();
     }
-
-    // Custom line reader: Reads bytes from qin until \n, no buffering or extra reads
 
     /**
      *
      * @return
      * @throws IOException
      */
-    private String readLineFromQin() throws IOException {
+    private String auslesen() throws IOException {
         StringBuilder line = new StringBuilder();
         int b;
-        while ((b = qin.read()) != -1) {  // Blocks on read() until data or EOF
+        while ((b = eingabe.read()) != -1) {
             char c = (char) b;
             if (c == '\n') {
-                break;  // Stop at newline
+                break;
             }
             line.append(c);
         }
-        String result = line.toString().trim();  // Trim extra spaces
+        String result = line.toString().trim();
         if (result.isEmpty() && b == -1) {
-            return null;  // EOF reached
+            return null;
         }
         return result;
     }
@@ -57,14 +55,14 @@ public class Aufgabe04 {
      *
      */
     public void anfang() {
-        System.out.println("In Welchem Bereich willst du raten? z.B. '3,100'");
+        System.out.println("In Welchem Bereich  raten? Wolle Sie raten z.B. '3,100'");
         String[] teile;
         try {
-            String angabe = readLineFromQin();
+            String angabe = auslesen();
             teile = angabe.trim().split(",");
 
             if (teile.length != 2) {
-                System.out.println("Bitte gebe zwei Zahlen an.");
+                System.out.println("Bitte geben Sie zwei Zahlen an.");
                 anfang();
             }
             int temp1 = Integer.parseInt(teile[0]);
@@ -88,20 +86,20 @@ public class Aufgabe04 {
      *
      */
     private void weiter() {
-        System.out.println("Willst du noch eine Sache abfragen? (y/n)");
+        System.out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
         while (true) {
             try {
-                String zeile = readLineFromQin();
+                String zeile = auslesen();
                 switch (zeile) {
                     case "y":
                         anfang();
                         return;
                     case "n":
-                        gui.window.togglevisible();
+                        gui.gui.togglevisible();
                         gui.exit();
                         return;
                     default:
-                        System.out.println("Bitte gebe eine gültige Eingabe. (y/n)");
+                        System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -113,14 +111,14 @@ public class Aufgabe04 {
      *
      */
     private void raten() {
-        System.out.println("Rate die Zahl im Bereich von " + unter + " und " + ober + ".");
+        System.out.println("Raten Sie die Zahl im Bereich von " + unter + " und " + ober + ".");
         try {
-            int temp2 = Integer.parseInt(Objects.requireNonNull(readLineFromQin()));
+            int temp2 = Integer.parseInt(Objects.requireNonNull(auslesen()));
             if (!vergleicheZahl(temp2)) {
-                anzahl++;
+                versuchsAnzahl++;
                 raten();
             } else {
-                System.out.println("Du hast die Zahl in " + anzahl + " versuchen erraten.");
+                System.out.println("Sie haben die Zahl in " + versuchsAnzahl + " versuchen erraten.");
                 weiter();
             }
         } catch (Exception e) {
@@ -130,21 +128,21 @@ public class Aufgabe04 {
 
     /**
      *
-     * @param pWert
+     * @param pWert ist die generierte Zahl, nach welcher der User sucht. Diese wird genutzt, um sie mit den Schätzungen, des User, zu vergleichen.
      * @return
      */
     public boolean vergleicheZahl(int pWert){ //pWert ist der schätzwert
-        if (zahl == pWert) {
+        if (ober < pWert || unter < pWert) {
+            System.out.println("Ihre Schätzung liegt außerhalb des definierten Bereichs");
+            return false;
+        } else if (zahl == pWert) {
             System.out.println("Sie haben die richtige Zahl erraten, SUPER!!!");
             return true;
         } else if (zahl > pWert) {
-            System.out.println("Ihre schaetzung ist groeßer als die Zahl");
+            System.out.println("Ihre Schätzung ist größer als die Zahl");
             return false;
         } else if (zahl < pWert) {
-            System.out.println("Ihre schaetzung ist kleiner als die Zahl");
-            return false;
-        } else if (ober < pWert || unter < pWert) {
-            System.out.println("Ihre schaetzung liegt außerhalb des definierten Bereichs");
+            System.out.println("Ihre Schätzung ist kleiner als die Zahl");
             return false;
         }
         return false;
