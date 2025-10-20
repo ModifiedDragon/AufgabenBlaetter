@@ -116,7 +116,6 @@ public class Aufgabe02 {
         } else {
             // Falls erste Rekursionsebene führt der Code dies aus
             if (ersteDurchlauf) {
-                System.out.println(pZahl + " ist durch 1 teilbar und diese ist eine Primzahl.");
                 // Durchgehen der Zahlen in der TeilerListe und überprüfen, ob diese Teiler sind
                 for (int i = 0; i < teiler.size(); i++) {
                     boolean prim = pZahlBerechnen(teiler.get(i), false);

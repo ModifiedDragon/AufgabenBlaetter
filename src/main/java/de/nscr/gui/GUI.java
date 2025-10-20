@@ -29,7 +29,6 @@ public class GUI {
     public void setup() {
         aufgabenPerTestat = new int[]{4, 0, 0, 0};
 
-        // Calculate total bottom buttons
         int totalAufgaben = 0;
         for (int anzahl : aufgabenPerTestat) {
             totalAufgaben += anzahl;
@@ -40,33 +39,29 @@ public class GUI {
         fenster.setResizable(false);
         fenster.setLayout(new BorderLayout());
         fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenster.setSize(800, 400); // Adjust width if more buttons (e.g., 1000 for 6+ buttons)
+        fenster.setSize(800, 400);
         fenster.setLocationRelativeTo(null);
 
-        dropdownbox.setSelectedIndex(3); // Set default selection
-        // Optional: Add an action listener for when an item is selected
+        dropdownbox.setSelectedIndex(3);
         dropdownbox.addActionListener(e -> {
             String ausgewaehlt = (String) dropdownbox.getSelectedItem();
             assert ausgewaehlt != null;
             if (ausgewaehlt.equals("Exit")) {
                 System.exit(0);
             }
-            testat = dropdownbox.getSelectedIndex() + 1; // Set selected testat (1-4)
-            aufgaben.setVisible(true); // Show bottom panel
-            aufgabenAnzeigen(); // Populate with variable number of bottom buttons (overlay effect)
+            testat = dropdownbox.getSelectedIndex() + 1;
+            aufgaben.setVisible(true);
+            aufgabenAnzeigen();
         });
-        // Add the dropdown to the frame
         dropdownbox.setVisible(true);
 
-        // Bottom panel: Variable total buttons, grouped by testat
-        aufgabenknoepfe = new JButton[totalAufgaben]; // Dynamic size
-        aufgaben = new JPanel(new BorderLayout()); // CHANGED: Use BorderLayout for Back button placement
+        aufgabenknoepfe = new JButton[totalAufgaben];
+        aufgaben = new JPanel(new BorderLayout());
         aufgaben.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Padding
-        aufgaben.setVisible(false); // Initially hidden and empty
+        aufgaben.setVisible(false);
 
-        // Create all bottom buttons with cumulative indexing
         int nummer = 0;
-        for (int testat = 1; testat <= 4; testat++) { // For each Testat
+        for (int testat = 1; testat <= 4; testat++) {
             int numberTestat = aufgabenPerTestat[testat - 1];
             for (int aufgabe = 1; aufgabe <= numberTestat; aufgabe++) {
                 int knopfnummer = nummer;
@@ -86,13 +81,11 @@ public class GUI {
                 nummer++;
             }
         }
-        testat = dropdownbox.getSelectedIndex() + 1; // Set initial testat
-        fenster.add(dropdownbox, BorderLayout.NORTH); // Places it at the top, visible and non-overlapping
+        testat = dropdownbox.getSelectedIndex() + 1;
+        fenster.add(dropdownbox, BorderLayout.NORTH);
 
-        // Add panels to frame
         fenster.add(aufgaben, BorderLayout.CENTER);
 
-        // Make frame visible after setup
         fenster.setVisible(true);
         fenster.repaint();
         fenster.revalidate();
@@ -102,30 +95,27 @@ public class GUI {
      *
      */
     private void aufgabenAnzeigen() {
-        aufgaben.removeAll(); // Clear previous buttons (overlay: same position)
+        aufgaben.removeAll();
 
-        // Calculate start index for this testat
         int anfangsIndex = 0;
         for (int t = 1; t < testat; t++) {
             anfangsIndex += aufgabenPerTestat[t - 1];
         }
 
-        int knopfNummer = aufgabenPerTestat[testat - 1]; // Variable number for this testat
+        int knopfNummer = aufgabenPerTestat[testat - 1];
 
         JPanel aufgabenReihe = new JPanel(new GridLayout(1, knopfNummer, 10, 10));
-        aufgabenReihe.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // Small bottom padding before Back
+        aufgabenReihe.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
-        // Add only the relevant aufgaben buttons to the row
         for (int i = 0; i < knopfNummer; i++) {
             int buttonIndex = anfangsIndex + i;
             aufgabenReihe.add(aufgabenknoepfe[buttonIndex]);
         }
 
-        // Add to aufgaben panel: Row in CENTER
         aufgaben.add(aufgabenReihe, BorderLayout.CENTER);
 
-        fenster.revalidate(); // Refresh layout
-        fenster.repaint(); // Redraw
+        fenster.revalidate();
+        fenster.repaint();
     }
 
     /**

@@ -37,7 +37,7 @@ public class SchlangenEingabe extends InputStream {
     public int read() throws IOException {
         while (jetziger == null || position >= jetziger.length) {
             try {
-                jetziger = schlange.take(); // blocks until input available
+                jetziger = schlange.take();
                 position = 0;
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();

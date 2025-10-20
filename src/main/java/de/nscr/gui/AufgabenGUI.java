@@ -83,7 +83,7 @@ public class AufgabenGUI {
             @Override
             public void write(int b) {
                 konsolenTestAusgabe.append(String.valueOf((char) b));
-                konsolenTestAusgabe.setCaretPosition(konsolenTestAusgabe.getDocument().getLength()); // Auto-scroll
+                konsolenTestAusgabe.setCaretPosition(konsolenTestAusgabe.getDocument().getLength());
             }
 
             /**
@@ -97,7 +97,7 @@ public class AufgabenGUI {
                 konsolenTestAusgabe.append(new String(b, off, len, StandardCharsets.UTF_8));
                 konsolenTestAusgabe.setCaretPosition(konsolenTestAusgabe.getDocument().getLength());
             }
-        }, true, StandardCharsets.UTF_8); // Auto-flush, UTF-8
+        }, true, StandardCharsets.UTF_8);
         System.setOut(konsolenOutput);
 
         konsolenContainer.setLayout(new BorderLayout());
