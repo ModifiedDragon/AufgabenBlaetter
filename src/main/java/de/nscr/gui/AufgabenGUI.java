@@ -33,6 +33,8 @@ public class AufgabenGUI {
         this.eingabe = gui.eingabe;
         setup();
 
+        // Erstellen eines Hintergrund threads, damit die Aufgabe und die GUI Konsole gleichzeitig laufen können
+        // Bei dem Erstellen des GUI wird bereits angegeben, welche Aufgabe ausgewählt wurde
         SwingUtilities.invokeLater(() -> new Thread(() -> {
             if (testat == 1) {
                 switch (aufgabe) {
@@ -46,7 +48,7 @@ public class AufgabenGUI {
     }
 
     /**
-     *
+     * Erstellen des GUI und aufsetzen der Konsolen Ein- und Ausgabe
      */
     public void setup() {
         fenster = new JFrame("Aufgabe");

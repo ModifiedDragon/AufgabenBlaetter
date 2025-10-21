@@ -15,8 +15,8 @@ public class SchlangenEingabe extends InputStream {
     private int position = 0;
 
     /**
-     *
-     * @param string Eingabe aus der GUI vom Benutzer
+     * Dazu da, die Eingaben aus dem GUI zu übertragen auf das Background thread Aufgaben
+     * @param string Eingabe aus dem GUI vom Benutzer
      */
     public void inputEinfuegen(String string) {
         try {

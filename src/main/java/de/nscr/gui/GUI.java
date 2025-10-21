@@ -24,7 +24,7 @@ public class GUI {
     }
 
     /**
-     *
+     * Erstellen des GUI mit Buttons und Combobox
      */
     public void setup() {
         aufgabenPerTestat = new int[]{4, 0, 0, 0};
@@ -92,7 +92,7 @@ public class GUI {
     }
 
     /**
-     *
+     * Dafür da, damit die richtigen Aufgaben von dem jeweiligen Testat angezeigt werden und nicht die anderen Aufgaben, da diese sich überschneiden
      */
     private void aufgabenAnzeigen() {
         aufgaben.removeAll();
