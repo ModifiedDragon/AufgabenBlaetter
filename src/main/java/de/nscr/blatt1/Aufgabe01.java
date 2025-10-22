@@ -13,9 +13,10 @@ import java.io.IOException;
 public class Aufgabe01 {
     private final AufgabenGUI gui;
     private final SchlangenEingabe eingabe;
+
     /**
      *
-     * @param gui Der Frame, der übergeben wird
+     * @param gui     Der Frame, der übergeben wird
      * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
      */
     public Aufgabe01(AufgabenGUI gui, SchlangenEingabe eingabe) {

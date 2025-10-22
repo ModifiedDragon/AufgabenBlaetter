@@ -12,12 +12,11 @@ import java.util.Objects;
  */
 public class Aufgabe02 {
     private final AufgabenGUI gui;
-    private final SchlangenEingabe eingabe
-            ;
+    private final SchlangenEingabe eingabe;
 
     /**
      *
-     * @param gui Der Frame, der übergeben wird
+     * @param gui     Der Frame, der übergeben wird
      * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
      */
     public Aufgabe02(AufgabenGUI gui, SchlangenEingabe eingabe) {
@@ -97,7 +96,7 @@ public class Aufgabe02 {
 
     /**
      *
-     * @param pZahl ist die Zahl, die vom User eingegeben wird und die auf teiler / Primzahl geprüft wird
+     * @param pZahl          ist die Zahl, die vom User eingegeben wird und die auf teiler / Primzahl geprüft wird
      * @param ersteDurchlauf wird benutzt um zu erkennen, ob es der erste Durchlauf im rekursiven Sinne ist.
      * @return benutzt den Wahrheitswert, um zu überprüfen, ob es in der 2. Rekursionsebene eine Primzahl ist
      */

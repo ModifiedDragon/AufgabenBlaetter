@@ -20,7 +20,7 @@ public class Aufgabe04 {
 
     /**
      *
-     * @param gui Der Frame, der übergeben wird
+     * @param gui     Der Frame, der übergeben wird
      * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
      */
     public Aufgabe04(AufgabenGUI gui, SchlangenEingabe eingabe) {
@@ -134,7 +134,7 @@ public class Aufgabe04 {
      * @param pWert ist die generierte Zahl, nach welcher der User sucht. Diese wird genutzt, um sie mit den Schätzungen, des User, zu vergleichen.
      * @return
      */
-    public boolean vergleicheZahl(int pWert){ //pWert ist der schätzwert
+    public boolean vergleicheZahl(int pWert) { //pWert ist der schätzwert
         if (ober < pWert || unter < pWert) {
             System.out.println("Ihre Schätzung liegt außerhalb des definierten Bereichs");
             return false;
