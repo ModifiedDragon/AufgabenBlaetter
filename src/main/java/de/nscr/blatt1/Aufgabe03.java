@@ -53,35 +53,37 @@ public class Aufgabe03 {
      */
     public void start() {
         System.out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
-        try {
-            switch (Integer.parseInt(Objects.requireNonNull(auslesen()))){
-                case 0:
-                    System.out.print("Bitte geben Sie den Radius des Kreises an: ");
-                    berechneFlaecheninhaltKreis(Integer.parseInt(Objects.requireNonNull(auslesen())));
-                    break;
-                case 1:
-                    System.out.print("Bitte geben Sie die Größe der Grundfläche an: ");
-                    double temp1 = Double.parseDouble(Objects.requireNonNull(auslesen()));
-                    System.out.print("Bitte geben Sie die Größe der Höhe an: ");
-                    double temp2 = Double.parseDouble(Objects.requireNonNull(auslesen()));
-                    berechneFlaecheninhaltDreieck(temp1, temp2);
-                    break;
-                case 2:
-                    System.out.print("Bitte geben Sie die Größe der Grundfläche an: ");
-                    double temp3 = Double.parseDouble(Objects.requireNonNull(auslesen()));
-                    System.out.print("Bitte geben Sie die Größe der Höhe an: ");
-                    double temp4 = Double.parseDouble(Objects.requireNonNull(auslesen()));
-                    berechneFlaecheninhaltParallelogramm(temp3, temp4);
-                    break;
-                default:
-                    System.out.println("Bitte geben Sie eine Eingabe con 0 bis 2 ein.");
-                    start();
-                    break;
+        while (true) {
+            try {
+                switch (Integer.parseInt(Objects.requireNonNull(auslesen()))) {
+                    case 0:
+                        System.out.print("Bitte geben Sie den Radius des Kreises an: ");
+                        berechneFlaecheninhaltKreis(Integer.parseInt(Objects.requireNonNull(auslesen())));
+                        break;
+                    case 1:
+                        System.out.print("Bitte geben Sie die Größe der Grundfläche an: ");
+                        double temp1 = Double.parseDouble(Objects.requireNonNull(auslesen()));
+                        System.out.print("Bitte geben Sie die Größe der Höhe an: ");
+                        double temp2 = Double.parseDouble(Objects.requireNonNull(auslesen()));
+                        berechneFlaecheninhaltDreieck(temp1, temp2);
+                        break;
+                    case 2:
+                        System.out.print("Bitte geben Sie die Größe der Grundfläche an: ");
+                        double temp3 = Double.parseDouble(Objects.requireNonNull(auslesen()));
+                        System.out.print("Bitte geben Sie die Größe der Höhe an: ");
+                        double temp4 = Double.parseDouble(Objects.requireNonNull(auslesen()));
+                        berechneFlaecheninhaltParallelogramm(temp3, temp4);
+                        break;
+                    default:
+                        System.out.println("Bitte geben Sie eine Eingabe con 0 bis 2 ein.");
+                        start();
+                        break;
+                }
+            } catch (IOException e) {
+                System.out.println("Es wurde keine Richtige Nummer eingegeben (Ganzzahl).");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            weiter();
         }
-        weiter();
     }
 
     /**
@@ -102,10 +104,9 @@ public class Aufgabe03 {
                         return;
                     default:
                         System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
-                        weiter();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
             }
         }
     }

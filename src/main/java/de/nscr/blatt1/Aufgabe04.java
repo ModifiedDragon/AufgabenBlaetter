@@ -57,28 +57,31 @@ public class Aufgabe04 {
     public void anfang() {
         System.out.println("In Welchem Bereich  raten? Wolle Sie raten z.B. '3,100'");
         String[] teile;
-        try {
-            String angabe = auslesen();
-            teile = angabe.trim().split(",");
+        while (true) {
+            try {
+                String angabe = auslesen();
+                teile = angabe.trim().split(",");
 
-            if (teile.length != 2) {
-                System.out.println("Bitte geben Sie zwei Zahlen an.");
-                anfang();
+                if (teile.length != 2) {
+                    System.out.println("Bitte geben Sie zwei Zahlen an.");
+                    anfang();
+                }
+                int temp1 = Integer.parseInt(teile[0]);
+                if (temp1 > Integer.parseInt(teile[1])) {
+                    ober = temp1;
+                    unter = Integer.parseInt(teile[1]);
+                } else {
+                    unter = temp1;
+                    ober = Integer.parseInt(teile[1]);
+                }
+                Random random = new Random();
+                // Ober und Untergrenze müssen um 1 erhöht werde, da Random mit 0 anfängt und nicht 1
+                zahl = random.nextInt(unter + 1, ober + 1);
+                raten();
+                return;
+            } catch (Exception e) {
+                System.out.println("Bitte geben Sie eine richtige Angabe an.");
             }
-            int temp1 = Integer.parseInt(teile[0]);
-            if (temp1 > Integer.parseInt(teile[1])) {
-                ober = temp1;
-                unter = Integer.parseInt(teile[1]);
-            } else {
-                unter = temp1;
-                ober = Integer.parseInt(teile[1]);
-            }
-            Random random = new Random();
-            // Ober und Untergrenze müssen um 1 erhöht werde, da Random mit 0 anfängt und nicht 1
-            zahl = random.nextInt(unter + 1, ober + 1);
-            raten();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

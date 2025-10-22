@@ -81,13 +81,16 @@ public class Aufgabe02 {
      *
      */
     public void ausfuehren() {
-        System.out.println("Welche Zahl wollen Sie als Primzahl überprüfen?");
-        try {
-            int pZahl = Integer.parseInt(Objects.requireNonNull(auslesen()));
-            pZahlBerechnen(pZahl, true);
-            weiter();
-        } catch (IOException e) {
-            e.printStackTrace();
+        System.out.println("Welche Zahl wollen Sie als Primzahl überprüfen? (Ganzzahl)");
+        while (true) {
+            try {
+                int pZahl = Integer.parseInt(Objects.requireNonNull(auslesen()));
+                pZahlBerechnen(pZahl, true);
+                weiter();
+                return;
+            } catch (IOException e) {
+                System.out.println("Es wurde keine Richtige Nummer eingegeben (Ganzzahl).");
+            }
         }
 
     }
