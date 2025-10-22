@@ -146,6 +146,6 @@ public class Aufgabe03 {
 
         flaecheninhalt = pHoehe *  pGrundseite;
 
-        System.out.println("Der Flächeninhalt des Parallelogram mit der höhe " + pHoehe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
+        System.out.println("Der Flächeninhalt des Parallelogram mit der Höhe " + pHoehe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
     }
 }

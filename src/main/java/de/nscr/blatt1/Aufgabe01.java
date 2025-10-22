@@ -50,7 +50,7 @@ public class Aufgabe01 {
      *
      */
     public void anfang() {
-        System.out.println("Geben Sie die erste Zahl ein von der sie die Fakultät berechnen wollen (Ganzzahl): " );
+        System.out.println("Geben Sie die erste Zahl ein von der sie die Fakultät berechnen wollen. (Ganzzahl) " );
         while (true) {
             try {
                 String zeile = auslesen();
@@ -61,7 +61,7 @@ public class Aufgabe01 {
                 berechneFakultaet(zahl);
                 weiter();
             } catch (NumberFormatException ex) {
-                System.out.println("Es wurde keine Richtige Nummer eingegeben (Ganzzahl).");
+                System.out.println("Es wurde keine Richtige Nummer eingegeben. (Ganzzahl)");
             } catch (IOException ex) {
                 System.out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
             }

@@ -55,7 +55,7 @@ public class Aufgabe04 {
      *
      */
     public void anfang() {
-        System.out.println("In Welchem Bereich  raten? Wolle Sie raten z.B. '3,100'");
+        System.out.println("In welchem Bereich raten? Wolle Sie raten (z.B. '3,100')");
         String[] teile;
         while (true) {
             try {

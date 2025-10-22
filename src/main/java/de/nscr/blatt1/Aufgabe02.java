@@ -89,7 +89,7 @@ public class Aufgabe02 {
                 weiter();
                 return;
             } catch (IOException e) {
-                System.out.println("Es wurde keine Richtige Nummer eingegeben (Ganzzahl).");
+                System.out.println("Es wurde keine Richtige Nummer eingegeben. (Ganzzahl)");
             }
         }
 
