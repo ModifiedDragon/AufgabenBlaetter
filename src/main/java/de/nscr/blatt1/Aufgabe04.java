@@ -98,6 +98,7 @@ public class Aufgabe04 {
                         anfang();
                         return;
                     case "n":
+                        System.exit(0);
                         gui.gui.togglevisible();
                         gui.exit();
                         return;

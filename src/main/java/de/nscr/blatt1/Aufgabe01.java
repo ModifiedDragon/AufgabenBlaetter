@@ -96,6 +96,7 @@ public class Aufgabe01 {
                     return;
                 } else if (zeile.equals("n")) {
                     SwingUtilities.invokeLater(() -> {
+                        System.exit(0);
                         gui.gui.togglevisible();
                         gui.exit();
                     });

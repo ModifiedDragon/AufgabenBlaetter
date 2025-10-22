@@ -63,6 +63,7 @@ public class Aufgabe02 {
                         ausfuehren();
                         return;
                     case "n":
+                        System.exit(0);
                         gui.gui.togglevisible();
                         gui.exit();
                         return;

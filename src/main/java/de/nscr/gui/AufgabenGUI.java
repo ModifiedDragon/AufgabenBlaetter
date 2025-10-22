@@ -59,7 +59,7 @@ public class AufgabenGUI {
         fenster.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         fenster.addWindowListener(new WindowAdapter() {
             /**
-             * 
+             *
              * @param e the event to be processed
              */
             @Override
@@ -146,12 +146,13 @@ public class AufgabenGUI {
      */
     private void inputAusfueren(String eingabe){
         if(eingabe.equalsIgnoreCase("exit")){
+            System.exit(0);
             gui.togglevisible();
             fenster.dispose();
         }  else if(eingabe.equalsIgnoreCase("help")){ //console commands
             konsolenTestAusgabe.append("""
                     \
-                    'exit' -> closes the Task
+                    'exit' -> closes the Programm
                     'help' -> displays this information
                     """);
         }
