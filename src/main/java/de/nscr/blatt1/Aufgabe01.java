@@ -58,7 +58,17 @@ public class Aufgabe01 {
                 if (zeile == null) {
                     return;
                 }
+
+
                 int zahl = Integer.parseInt(zeile);
+
+                if (zahl <0){
+                    System.out.println("Bitte geben sie eine Zahl >= 0 ein");
+                    anfang();
+                }
+                if (zahl == 0) {
+                    System.out.println("Die Fakultät von 0 ist 1");
+                }
                 berechneFakultaet(zahl);
                 weiter();
             } catch (NumberFormatException ex) {
