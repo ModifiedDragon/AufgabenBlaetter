@@ -15,7 +15,7 @@ public class Aufgabe03 {
 
     /**
      *
-     * @param gui Der Frame, der übergeben wird
+     * @param gui     Der Frame, der übergeben wird
      * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
      */
     public Aufgabe03(AufgabenGUI gui, SchlangenEingabe eingabe) {
@@ -115,7 +115,7 @@ public class Aufgabe03 {
      *
      * @param pRadius ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
      */
-    public void berechneFlaecheninhaltKreis(double pRadius){
+    public void berechneFlaecheninhaltKreis(double pRadius) {
         double flaecheninhalt;
 
         flaecheninhalt = Math.PI * pRadius * pRadius;
@@ -128,7 +128,7 @@ public class Aufgabe03 {
      * @param pSeiteA ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
      * @param pSeiteB ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
      */
-    public void berechneFlaecheninhaltDreieck(double pSeiteA,  double pSeiteB){
+    public void berechneFlaecheninhaltDreieck(double pSeiteA, double pSeiteB) {
         double flaecheninhalt;
 
         flaecheninhalt = (pSeiteA * pSeiteB) / 2;
@@ -138,14 +138,14 @@ public class Aufgabe03 {
 
     /**
      *
-     * @param pHoehe ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
+     * @param pHoehe      ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
      * @param pGrundseite ist die Eingabe vom User, die genutzt wird zur Berechnung des Flächeninhalts
      */
     public void berechneFlaecheninhaltParallelogramm(double pHoehe, double pGrundseite) {
         double flaecheninhalt;
 
-        flaecheninhalt = pHoehe *  pGrundseite;
+        flaecheninhalt = pHoehe * pGrundseite;
 
-        System.out.println("Der Flächeninhalt des Parallelogram mit der höhe " + pHoehe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
+        System.out.println("Der Flächeninhalt des Parallelogram mit der höhe " + pHoehe + " und der Grundseitenlänge " + pGrundseite + " beträgt " + flaecheninhalt);
     }
 }
