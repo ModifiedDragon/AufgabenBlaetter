@@ -117,18 +117,14 @@ public class Aufgabe02 {
             // Falls erste Rekursionsebene führt der Code dies aus
             if (ersteDurchlauf) {
                 // Durchgehen der Zahlen in der TeilerListe und überprüfen, ob diese Teiler sind
-                for (int i = 0; i < teiler.size(); i++) {
-                    boolean prim = pZahlBerechnen(teiler.get(i), false);
+                for (Integer integer : teiler) {
+                    boolean prim = pZahlBerechnen(integer, false);
                     if (prim) {
-                        System.out.println(pZahl + " ist durch " + teiler.get(i) + " teilbar und diese ist eine Primzahl.");
+                        System.out.println(pZahl + " ist durch " + integer + " teilbar und diese ist eine Primzahl.");
                     }
                 }
                 // Überprüfen am Ende, ob die eingegebene Zahl eine Primzahl ist
-                if (teiler.size() == 2) {
-                    System.out.println(pZahl + " ist eine Primzahl.");
-                } else {
-                    System.out.println(pZahl + " ist keine Primzahl.");
-                }
+                System.out.println(pZahl + " ist keine Primzahl.");
             }
         }
         return false;
