@@ -1,4 +1,6 @@
-package de.nscr.gui;
+package de.nscr.archive;
+
+import de.nscr.gui.SchlangenEingabe;
 
 import javax.swing.*;
 import java.awt.*;

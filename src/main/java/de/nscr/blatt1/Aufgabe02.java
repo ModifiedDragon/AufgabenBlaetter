@@ -1,6 +1,6 @@
 package de.nscr.blatt1;
 
-import de.nscr.gui.AufgabenGUI;
+import de.nscr.archive.AufgabenGUI;
 import de.nscr.gui.SchlangenEingabe;
 
 import java.io.IOException;
@@ -11,21 +11,16 @@ import java.util.Objects;
  *
  */
 public class Aufgabe02 {
-    private final AufgabenGUI gui;
     private final SchlangenEingabe eingabe;
 
     /**
      *
-     * @param gui     Der Frame, der übergeben wird
      * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
      */
-    public Aufgabe02(AufgabenGUI gui, SchlangenEingabe eingabe) {
-        this.gui = gui;
+    public Aufgabe02(SchlangenEingabe eingabe) {
         this.eingabe = eingabe;
         ausfuehren();
-
     }
-
 
     /**
      *
@@ -63,9 +58,7 @@ public class Aufgabe02 {
                         ausfuehren();
                         return;
                     case "n":
-                        System.exit(0);
-                        gui.gui.togglevisible();
-                        gui.exit();
+                        System.out.println("Aufgabe beendet.");
                         return;
                     default:
                         System.out.println("Bitte geben Sie eine gültige Eingabe ein. (y/n)");

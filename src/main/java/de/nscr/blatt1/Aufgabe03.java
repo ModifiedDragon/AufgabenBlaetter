@@ -1,6 +1,6 @@
 package de.nscr.blatt1;
 
-import de.nscr.gui.AufgabenGUI;
+import de.nscr.archive.AufgabenGUI;
 import de.nscr.gui.SchlangenEingabe;
 
 import java.io.IOException;

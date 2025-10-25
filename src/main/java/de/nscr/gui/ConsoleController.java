@@ -1,0 +1,90 @@
+package de.nscr.gui;
+
+import de.nscr.blatt1.Aufgabe01;
+import de.nscr.blatt1.Aufgabe02;
+import jakarta.annotation.PostConstruct;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+
+@RestController
+public class ConsoleController {
+    private final SchlangenEingabe eingabe = new SchlangenEingabe();
+    private final ConsoleOutput output = new ConsoleOutput();
+    private volatile boolean aufgabeAktiv = false;
+
+    public ConsoleController() {
+        System.setOut(new PrintStream(output, true, StandardCharsets.UTF_8));
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("DEBUG: init() aufgerufen, starte Lesethread...");
+        new Thread(() -> {
+            StringBuilder sb = new StringBuilder();
+            try {
+                int c;
+                while ((c = eingabe.read()) != -1) {
+                    if (c == '\n') {
+                        String line = sb.toString().trim();
+                        sb.setLength(0);
+
+                        if (!aufgabeAktiv) {
+                            System.out.println("DEBUG: Controller hat gelesen -> " + line);
+
+                            if (line.equalsIgnoreCase("start 1-1")) {
+                                System.out.println("DEBUG: Starte Aufgabe01");
+                                aufgabeAktiv = true;
+
+                                // Controller-Loop beenden, damit er nicht mehr liest
+                                new Thread(() -> {
+                                    new Aufgabe01(eingabe);
+                                    // nach Ende wieder ins Menü zurück
+                                    aufgabeAktiv = false;
+                                    init(); // neuen Menü-Thread starten
+                                }).start();
+                                break; // Controller-Loop verlassen
+                            } else if (line.equalsIgnoreCase("help")) {
+                                System.out.println("'exit' beendet, 'help' zeigt diese Hilfe");
+                            } else if (line.equalsIgnoreCase("exit")) {
+                                System.out.println("Beende Konsole...");
+                                break;
+                            } else {
+                                System.out.println("Unbekannter Befehl: " + line);
+                            }
+                        }
+                    } else {
+                        sb.append((char) c);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
+    @PostMapping("/api/input")
+    public void input(@RequestBody String command) {
+        System.out.println("DEBUG: Eingabe erhalten -> " + command);
+        eingabe.inputEinfuegen(command + "\n"); // wichtig: nur \n reicht hier
+    }
+
+    @GetMapping("/api/output")
+    public String output() {
+        return output.getAndClear();
+    }
+}
+
+
+
+
+
