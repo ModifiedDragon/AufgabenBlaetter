@@ -10,16 +10,13 @@ import java.util.Objects;
  *
  */
 public class Aufgabe03 {
-    private final AufgabenGUI gui;
     private final SchlangenEingabe eingabe;
 
     /**
      *
-     * @param gui     Der Frame, der übergeben wird
      * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
      */
-    public Aufgabe03(AufgabenGUI gui, SchlangenEingabe eingabe) {
-        this.gui = gui;
+    public Aufgabe03(SchlangenEingabe eingabe) {
         this.eingabe = eingabe;
         start();
     }
@@ -52,6 +49,7 @@ public class Aufgabe03 {
      *
      */
     public void start() {
+        ///  TODO while schleife mit weiter geht nicht
         System.out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
         while (true) {
             try {
@@ -99,9 +97,7 @@ public class Aufgabe03 {
                         start();
                         return;
                     case "n":
-                        System.exit(0);
-                        gui.gui.togglevisible();
-                        gui.exit();
+                        System.out.println("Aufgabe beendet.");
                         return;
                     default:
                         System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");

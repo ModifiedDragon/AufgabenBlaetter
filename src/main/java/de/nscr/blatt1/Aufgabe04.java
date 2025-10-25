@@ -11,7 +11,6 @@ import java.util.Random;
  *
  */
 public class Aufgabe04 {
-    private final AufgabenGUI gui;
     private final SchlangenEingabe eingabe;
     int zahl;
     int ober;
@@ -20,11 +19,9 @@ public class Aufgabe04 {
 
     /**
      *
-     * @param gui     Der Frame, der übergeben wird
      * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
      */
-    public Aufgabe04(AufgabenGUI gui, SchlangenEingabe eingabe) {
-        this.gui = gui;
+    public Aufgabe04(SchlangenEingabe eingabe) {
         this.eingabe = eingabe;
         anfang();
     }
@@ -98,9 +95,7 @@ public class Aufgabe04 {
                         anfang();
                         return;
                     case "n":
-                        System.exit(0);
-                        gui.gui.togglevisible();
-                        gui.exit();
+                        System.out.println("Aufgabe beendet.");
                         return;
                     default:
                         System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
@@ -136,17 +131,17 @@ public class Aufgabe04 {
      * @return
      */
     public boolean vergleicheZahl(int pWert) { //pWert ist der schätzwert
-        if (ober < pWert || unter < pWert) {
+        if (ober < pWert || unter > pWert) {
             System.out.println("Ihre Schätzung liegt außerhalb des definierten Bereichs");
             return false;
         } else if (zahl == pWert) {
             System.out.println("Sie haben die richtige Zahl erraten, SUPER!!!");
             return true;
         } else if (zahl > pWert) {
-            System.out.println("Ihre Schätzung ist größer als die Zahl");
+            System.out.println("Ihre Schätzung ist kleiner als die Zahl");
             return false;
         } else if (zahl < pWert) {
-            System.out.println("Ihre Schätzung ist kleiner als die Zahl");
+            System.out.println("Ihre Schätzung ist größer als die Zahl");
             return false;
         }
         return false;

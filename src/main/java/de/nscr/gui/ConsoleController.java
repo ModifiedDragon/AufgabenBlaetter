@@ -2,18 +2,17 @@ package de.nscr.gui;
 
 import de.nscr.blatt1.Aufgabe01;
 import de.nscr.blatt1.Aufgabe02;
+import de.nscr.blatt1.Aufgabe03;
+import de.nscr.blatt1.Aufgabe04;
 import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
 
 @RestController
 public class ConsoleController {
@@ -47,6 +46,42 @@ public class ConsoleController {
                                 // Controller-Loop beenden, damit er nicht mehr liest
                                 new Thread(() -> {
                                     new Aufgabe01(eingabe);
+                                    // nach Ende wieder ins Menü zurück
+                                    aufgabeAktiv = false;
+                                    init(); // neuen Menü-Thread starten
+                                }).start();
+                                break; // Controller-Loop verlassen
+                            } else if (line.equalsIgnoreCase("start 1-2")) {
+                                System.out.println("DEBUG: Starte Aufgabe02");
+                                aufgabeAktiv = true;
+
+                                // Controller-Loop beenden, damit er nicht mehr liest
+                                new Thread(() -> {
+                                    new Aufgabe02(eingabe);
+                                    // nach Ende wieder ins Menü zurück
+                                    aufgabeAktiv = false;
+                                    init(); // neuen Menü-Thread starten
+                                }).start();
+                                break; // Controller-Loop verlassen
+                            } else if (line.equalsIgnoreCase("start 1-3")) {
+                                System.out.println("DEBUG: Starte Aufgabe03");
+                                aufgabeAktiv = true;
+
+                                // Controller-Loop beenden, damit er nicht mehr liest
+                                new Thread(() -> {
+                                    new Aufgabe03(eingabe);
+                                    // nach Ende wieder ins Menü zurück
+                                    aufgabeAktiv = false;
+                                    init(); // neuen Menü-Thread starten
+                                }).start();
+                                break; // Controller-Loop verlassen
+                            } else if (line.equalsIgnoreCase("start 1-4")) {
+                                System.out.println("DEBUG: Starte Aufgabe04");
+                                aufgabeAktiv = true;
+
+                                // Controller-Loop beenden, damit er nicht mehr liest
+                                new Thread(() -> {
+                                    new Aufgabe04(eingabe);
                                     // nach Ende wieder ins Menü zurück
                                     aufgabeAktiv = false;
                                     init(); // neuen Menü-Thread starten
