@@ -26,6 +26,9 @@ public class ConsoleController {
 
     @PostConstruct
     public void init() {
+        /// TODO neuen Thread für jeden user mithilfe von UserID ertsllen, damit jede KonsolenInsanz eigen ist
+        /// TODO DEBUGs entfernen
+        /// TODO Buttons für die Aufgabenauswahl benutzen
         System.out.println("DEBUG: init() aufgerufen, starte Lesethread...");
         new Thread(() -> {
             StringBuilder sb = new StringBuilder();
@@ -88,7 +91,11 @@ public class ConsoleController {
                                 }).start();
                                 break; // Controller-Loop verlassen
                             } else if (line.equalsIgnoreCase("help")) {
-                                System.out.println("'exit' beendet, 'help' zeigt diese Hilfe");
+                                System.out.println("""
+                                        \
+                                        'exit' -> schließt die Aufgabe
+                                        'help' -> zeigt alle verfügbaren Befehle an
+                                        """);
                             } else if (line.equalsIgnoreCase("exit")) {
                                 System.out.println("Beende Konsole...");
                                 break;
