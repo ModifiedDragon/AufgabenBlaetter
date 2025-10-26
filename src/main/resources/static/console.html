@@ -437,6 +437,7 @@
             consoleOutput.scrollTop = consoleOutput.scrollHeight;
         }
 
+
         function processCommand(command) {
             const cmd = command.trim().toLowerCase();
             
@@ -474,14 +475,28 @@
             }
         }
 
-        // Handle Enter key in input
-        consoleInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const command = consoleInput.value;
-                processCommand(command);
-                consoleInput.value = '';
+        // Eingabe: wenn Enter gedrückt wird
+        consoleInput.addEventListener("keydown", e => {
+            if (e.key === "Enter") {
+                const command = consoleInput.value; // Eingabetext sichern
+                fetch("/api/input", { method: "POST", body: command });
+                console.log("DEBUG: Eingabe gesendet -> " + command); // JS-Log, nicht System.out
+                consoleInput.value = ""; // Eingabefeld leeren
             }
         });
+
+        // Ausgabe: alle 1 Sekunde beim Server nach neuen Texten fragen
+        setInterval(() => {
+            fetch("/api/output")
+                .then(r => r.text())
+                .then(t => {
+                    console.log("OUTPUT from server:", JSON.stringify(t));
+                    if (t.trim().length > 0) {
+                        consoleOutput.textContent += t;
+                        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                    }
+                });
+        }, 1000);
 
         // Auto-focus on input
         consoleInput.focus();
