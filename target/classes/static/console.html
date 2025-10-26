@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Page</title>
+    <title>Console - Command Window</title>
     <style>
         * {
             margin: 0;
@@ -55,64 +55,91 @@
             height: 24px;
         }
 
-        .content-wrapper {
-            max-width: 42rem;
+        .console-wrapper {
+            max-width: 56rem;
             width: 100%;
         }
 
-        .welcome-section {
+        .console-title {
             text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
             margin-bottom: 2rem;
         }
 
-        .welcome-title {
-            font-size: 4rem;
-            font-weight: bold;
-            color: white;
+        .console-container {
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 0.5rem;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .console-output {
+            background: #0f172a;
+            height: 400px;
+            padding: 1rem;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            color: #22c55e;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-bottom: 1px solid #334155;
+        }
+
+        .console-output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .console-output::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        .console-output::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        .console-output::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        .console-line {
             margin-bottom: 0.5rem;
         }
 
-        .welcome-subtitle {
-            font-size: 1.25rem;
-            color: #dbeafe;
+        .console-prompt {
+            color: #3b82f6;
         }
 
-        .items-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .item-box {
-            background: rgba(30, 64, 143, 0.6);
+        .console-input-container {
+            background: #0f172a;
             padding: 1rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .text-display {
-            background: rgba(23, 37, 84, 0.4);
-            padding: 0.75rem;
-            border-radius: 0.25rem;
-            border: 1px solid #1e40af;
-            margin-bottom: 0.75rem;
-            color: #dbeafe;
-        }
-
-        .submit-button {
-            background: hsl(222.2, 47.4%, 11.2%);
-            color: hsl(210, 40%, 98%);
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.375rem;
-            cursor: pointer;
+        .console-input-prompt {
+            color: #3b82f6;
+            font-family: 'Courier New', monospace;
             font-size: 0.875rem;
-            font-weight: 500;
-            transition: background 0.2s;
         }
 
-        .submit-button:hover {
-            background: hsl(222.2, 47.4%, 20%);
+        .console-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #22c55e;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            outline: none;
+            padding: 0.25rem;
+        }
+
+        .console-input::placeholder {
+            color: #475569;
         }
 
         /* Sidebar Styles */
@@ -221,17 +248,14 @@
         }
 
         @media (min-width: 768px) {
-            .welcome-title {
-                font-size: 5rem;
-            }
-            .welcome-subtitle {
-                font-size: 1.5rem;
+            .console-title {
+                font-size: 3rem;
             }
         }
 
         @media (min-width: 1024px) {
-            .welcome-title {
-                font-size: 6rem;
+            .console-title {
+                font-size: 3.5rem;
             }
         }
     </style>
@@ -244,26 +268,25 @@
             </svg>
         </button>
 
-        <div class="content-wrapper">
-            <div class="welcome-section">
-                <h1 class="welcome-title">Welcome!</h1>
-                <p class="welcome-subtitle">This is the Website for Programming Tasks</p>
-            </div>
+        <div class="console-wrapper">
+            <h1 class="console-title">Console Command Window</h1>
 
-            <div class="items-container">
-                <div class="item-box">
-                    <div class="text-display">Testat 1</div>
-                    <button class="submit-button" onclick="handleSubmit(1)">Go to the first Testat</button>
+            <div class="console-container">
+                <div class="console-output" id="consoleOutput">
+                    <div class="console-line">System initialized successfully.</div>
+                    <div class="console-line">Type 'help' for available commands.</div>
+                    <div class="console-line">Ready for input...</div>
                 </div>
 
-                <div class="item-box">
-                    <div class="text-display">Testat 2</div>
-                    <button class="submit-button" onclick="handleSubmit(2)">Go to the second Testat</button>
-                </div>
-
-                <div class="item-box">
-                    <div class="text-display">Testat 3</div>
-                    <button class="submit-button" onclick="handleSubmit(3)">Go to the third Testat</button>
+                <div class="console-input-container">
+                    <span class="console-input-prompt">>&nbsp;</span>
+                    <input 
+                        type="text" 
+                        class="console-input" 
+                        id="consoleInput" 
+                        placeholder="Enter command..."
+                        autocomplete="off"
+                    >
                 </div>
             </div>
         </div>
@@ -380,6 +403,12 @@
     </div>
 
     <script>
+        const consoleOutput = document.getElementById('consoleOutput');
+        const consoleInput = document.getElementById('consoleInput');
+
+        // Command history
+        let commandHistory = [];
+
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('open');
@@ -390,10 +419,72 @@
             menuItem.classList.toggle('open');
         }
 
-        function handleSubmit(itemNumber) {
-            console.log('Submit button ' + itemNumber + ' clicked');
-            alert('Submitted item ' + itemNumber);
+        function addLine(text, isCommand = false) {
+            const line = document.createElement('div');
+            line.className = 'console-line';
+            
+            if (isCommand) {
+                const prompt = document.createElement('span');
+                prompt.className = 'console-prompt';
+                prompt.textContent = '> ';
+                line.appendChild(prompt);
+                line.appendChild(document.createTextNode(text));
+            } else {
+                line.textContent = text;
+            }
+            
+            consoleOutput.appendChild(line);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
         }
+
+        function processCommand(command) {
+            const cmd = command.trim().toLowerCase();
+            
+            // Add command to history
+            commandHistory.push(command);
+            addLine(command, true);
+
+            // Process different commands
+            if (cmd === '') {
+                return;
+            } else if (cmd === 'help') {
+                addLine('Available commands:');
+                addLine('  help     - Show this help message');
+                addLine('  clear    - Clear the console');
+                addLine('  date     - Show current date and time');
+                addLine('  echo     - Echo back the text');
+                addLine('  history  - Show command history');
+            } else if (cmd === 'clear') {
+                consoleOutput.innerHTML = '';
+            } else if (cmd === 'date') {
+                addLine(new Date().toString());
+            } else if (cmd.startsWith('echo ')) {
+                addLine(command.substring(5));
+            } else if (cmd === 'history') {
+                if (commandHistory.length === 0) {
+                    addLine('No command history.');
+                } else {
+                    commandHistory.forEach((cmd, index) => {
+                        addLine(`${index + 1}. ${cmd}`);
+                    });
+                }
+            } else {
+                addLine(`Command not found: ${cmd}`);
+                addLine('Type "help" for available commands.');
+            }
+        }
+
+        // Handle Enter key in input
+        consoleInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = consoleInput.value;
+                processCommand(command);
+                consoleInput.value = '';
+            }
+        });
+
+        // Auto-focus on input
+        consoleInput.focus();
     </script>
 </body>
 </html>
