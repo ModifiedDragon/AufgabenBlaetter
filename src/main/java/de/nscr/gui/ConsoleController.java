@@ -111,6 +111,7 @@ public class ConsoleController {
                 e.printStackTrace();
             }
         }).start();
+        System.out.println("DEBUG: Ende des Programms");
     }
 
 
