@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class WebconsoleApplication {
     // Prob needed
-    ///  TODO jede neue Zeile in Konsole
     ///  TODO exit usw fixen mit nur programm schließen usw.
     ///  TODO Angabe am Anfang mit Help befehl
     ///  TODO beenden der Aufgabe mit exit
@@ -14,6 +13,10 @@ public class WebconsoleApplication {
     ///  TODO Buttons verbinden mit Konsolen Link
     ///  TODO Konsolen für jede aufgabe als eigene Instanz?
     ///  TODO Erklärungen der Aufgaben mit auf den Seiten einfügen
+    ///  TODO bei falscher reihenfolge von aufg. 4 ist ausgabe nicht richtig
+    ///  TODO neuen Thread für jeden user mithilfe von UserID erstellen, damit jede KonsolenInstanz eigen ist
+    ///  TODO DEBUGs entfernen
+    ///  TODO Buttons für die Aufgabenauswahl benutzen
 
     // Extra Shit
     ///  TODO Links zu anderen Projekten oder so
