@@ -80,14 +80,17 @@ public class Aufgabe03 {
             } catch (IOException e) {
                 System.out.println("Es wurde keine Richtige Nummer eingegeben (Ganzzahl).");
             }
-            weiter();
+            boolean temp = weiter();
+            if (!temp) {
+                break;
+            }
         }
     }
 
     /**
      *
      */
-    private void weiter() {
+    private boolean weiter() {
         System.out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
         while (true) {
             try {
@@ -95,10 +98,10 @@ public class Aufgabe03 {
                 switch (zeile) {
                     case "y":
                         start();
-                        return;
+                        return true;
                     case "n":
                         System.out.println("Aufgabe beendet.");
-                        return;
+                        return false;
                     default:
                         System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
                 }
