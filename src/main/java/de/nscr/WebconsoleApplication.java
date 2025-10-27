@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class WebconsoleApplication {
+    // Prob needed
     ///  TODO jede neue Zeile in Konsole
     ///  TODO exit usw fixen mit nur programm schließen usw.
     ///  TODO Angabe am Anfang mit Help befehl
@@ -28,6 +29,11 @@ public class WebconsoleApplication {
     // Why do you want this - Shit
     ///  TODO 2FA?
     ///  TODO Usage Analytics
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         SpringApplication.run(WebconsoleApplication.class, args);
     }

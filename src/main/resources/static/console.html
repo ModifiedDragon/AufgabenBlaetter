@@ -261,245 +261,260 @@
     </style>
 </head>
 <body>
-    <div class="main-content">
-        <button class="menu-button" onclick="toggleSidebar()">
-            <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-        </button>
+<div class="main-content">
+    <button class="menu-button" onclick="toggleSidebar()">
+        <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
 
-        <div class="console-wrapper">
-            <h1 class="console-title">Console Command Window</h1>
+    <div class="console-wrapper">
+        <h1 class="console-title">Console Command Window</h1>
 
-            <div class="console-container">
-                <div class="console-output" id="consoleOutput">
-                    <div class="console-line">System initialized successfully.</div>
-                    <div class="console-line">Type 'help' for available commands.</div>
-                    <div class="console-line">Ready for input...</div>
-                </div>
+        <div class="console-container">
+            <div class="console-output" id="consoleOutput">
+                <div class="console-line">System initialized successfully.</div>
+                <div class="console-line">Type 'help' for available commands.</div>
+                <div class="console-line">Ready for input...</div>
+            </div>
 
-                <div class="console-input-container">
-                    <span class="console-input-prompt">>&nbsp;</span>
-                    <input 
-                        type="text" 
-                        class="console-input" 
-                        id="consoleInput" 
+            <div class="console-input-container">
+                <span class="console-input-prompt">>&nbsp;</span>
+                <input
+                        type="text"
+                        class="console-input"
+                        id="consoleInput"
                         placeholder="Enter command..."
                         autocomplete="off"
-                    >
-                </div>
+                >
             </div>
         </div>
     </div>
+</div>
 
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-content">
-            <h2 class="sidebar-label">Navigation</h2>
-            <ul class="menu-list">
-                <li class="menu-item">
-                    <button class="menu-button-item" onclick="toggleMenu(this)">
-                        <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                        </svg>
-                        <span>Home</span>
-                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                    <ul class="submenu">
-                        <li class="submenu-item"><a href="index.html" class="submenu-link">Main Page</a></li>
-                        <li class="submenu-item"><a href="console.html" class="submenu-link">Console</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Analytics</a></li>
-                    </ul>
-                </li>
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+        <h2 class="sidebar-label">Navigation</h2>
+        <ul class="menu-list">
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    <span>Home</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="index.html" class="submenu-link">Main Page</a></li>
+                    <li class="submenu-item"><a href="console.html" class="submenu-link">Console</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Analytics</a></li>
+                </ul>
+            </li>
 
-                <li class="menu-item">
-                    <button class="menu-button-item" onclick="toggleMenu(this)">
-                        <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                        <span>Users</span>
-                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                    <ul class="submenu">
-                        <li class="submenu-item"><a href="#" class="submenu-link">All Users</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Add User</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">User Groups</a></li>
-                    </ul>
-                </li>
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <span>Users</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">All Users</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Add User</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">User Groups</a></li>
+                </ul>
+            </li>
 
-                <li class="menu-item">
-                    <button class="menu-button-item" onclick="toggleMenu(this)">
-                        <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        <span>Documents</span>
-                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                    <ul class="submenu">
-                        <li class="submenu-item"><a href="#" class="submenu-link">My Documents</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Shared</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Recent</a></li>
-                    </ul>
-                </li>
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span>Documents</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">My Documents</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Shared</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Recent</a></li>
+                </ul>
+            </li>
 
-                <li class="menu-item">
-                    <button class="menu-button-item" onclick="toggleMenu(this)">
-                        <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                        </svg>
-                        <span>Messages</span>
-                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                    <ul class="submenu">
-                        <li class="submenu-item"><a href="#" class="submenu-link">Inbox</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Sent</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Drafts</a></li>
-                    </ul>
-                </li>
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>Messages</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">Inbox</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Sent</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Drafts</a></li>
+                </ul>
+            </li>
 
-                <li class="menu-item">
-                    <button class="menu-button-item" onclick="toggleMenu(this)">
-                        <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        <span>Calendar</span>
-                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                    <ul class="submenu">
-                        <li class="submenu-item"><a href="#" class="submenu-link">My Calendar</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Events</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Reminders</a></li>
-                    </ul>
-                </li>
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>Calendar</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">My Calendar</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Events</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Reminders</a></li>
+                </ul>
+            </li>
 
-                <li class="menu-item">
-                    <button class="menu-button-item" onclick="toggleMenu(this)">
-                        <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        <span>Settings</span>
-                        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                    <ul class="submenu">
-                        <li class="submenu-item"><a href="#" class="submenu-link">Profile</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Preferences</a></li>
-                        <li class="submenu-item"><a href="#" class="submenu-link">Security</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>Settings</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">Profile</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Preferences</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Security</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
+</div>
 
-    <script>
-        const consoleOutput = document.getElementById('consoleOutput');
-        const consoleInput = document.getElementById('consoleInput');
+<script>
+    const consoleOutput = document.getElementById('consoleOutput');
+    const consoleInput = document.getElementById('consoleInput');
 
-        // Command history
-        let commandHistory = [];
+    // Command history
+    let commandHistory = [];
 
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('open');
-        }
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('open');
+    }
 
-        function toggleMenu(button) {
-            const menuItem = button.parentElement;
-            menuItem.classList.toggle('open');
-        }
+    function toggleMenu(button) {
+        const menuItem = button.parentElement;
+        menuItem.classList.toggle('open');
+    }
 
-        function addLine(text, isCommand = false) {
+    function addLine(text, isCommand = false) {
+        // Handle newline characters by splitting text into multiple lines
+        const lines = text.split('\\n');
+
+        lines.forEach((lineText, index) => {
             const line = document.createElement('div');
             line.className = 'console-line';
-            
-            if (isCommand) {
+
+            if (isCommand && index === 0) {
+                // Only show prompt on the first line of a command
                 const prompt = document.createElement('span');
                 prompt.className = 'console-prompt';
                 prompt.textContent = '> ';
                 line.appendChild(prompt);
-                line.appendChild(document.createTextNode(text));
+                line.appendChild(document.createTextNode(lineText));
             } else {
-                line.textContent = text;
+                line.textContent = lineText;
             }
-            
+
             consoleOutput.appendChild(line);
-            consoleOutput.scrollTop = consoleOutput.scrollHeight;
-        }
-
-
-        function processCommand(command) {
-            const cmd = command.trim().toLowerCase();
-            
-            // Add command to history
-            commandHistory.push(command);
-            addLine(command, true);
-
-            // Process different commands
-            if (cmd === '') {
-                return;
-            } else if (cmd === 'help') {
-                addLine('Available commands:');
-                addLine('  help     - Show this help message');
-                addLine('  clear    - Clear the console');
-                addLine('  date     - Show current date and time');
-                addLine('  echo     - Echo back the text');
-                addLine('  history  - Show command history');
-            } else if (cmd === 'clear') {
-                consoleOutput.innerHTML = '';
-            } else if (cmd === 'date') {
-                addLine(new Date().toString());
-            } else if (cmd.startsWith('echo ')) {
-                addLine(command.substring(5));
-            } else if (cmd === 'history') {
-                if (commandHistory.length === 0) {
-                    addLine('No command history.');
-                } else {
-                    commandHistory.forEach((cmd, index) => {
-                        addLine(`${index + 1}. ${cmd}`);
-                    });
-                }
-            } else {
-                addLine(`Command not found: ${cmd}`);
-                addLine('Type "help" for available commands.');
-            }
-        }
-
-        // Eingabe: wenn Enter gedrückt wird
-        consoleInput.addEventListener("keydown", e => {
-            if (e.key === "Enter") {
-                const command = consoleInput.value; // Eingabetext sichern
-                fetch("/api/input", { method: "POST", body: command });
-                console.log("DEBUG: Eingabe gesendet -> " + command); // JS-Log, nicht System.out
-                consoleInput.value = ""; // Eingabefeld leeren
-            }
         });
 
-        // Ausgabe: alle 1 Sekunde beim Server nach neuen Texten fragen
-        setInterval(() => {
-            fetch("/api/output")
-                .then(r => r.text())
-                .then(t => {
-                    console.log("OUTPUT from server:", JSON.stringify(t));
-                    if (t.trim().length > 0) {
-                        consoleOutput.textContent += t;
-                        consoleOutput.scrollTop = consoleOutput.scrollHeight;
-                    }
-                });
-        }, 1000);
+        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+    }
 
-        // Auto-focus on input
-        consoleInput.focus();
-    </script>
+
+    function processCommand(command) {
+        const cmd = command.trim().toLowerCase();
+
+        // Add command to history
+        commandHistory.push(command);
+        addLine(command, true);
+
+        // Process different commands
+        if (cmd === '') {
+            return;
+        } else if (cmd === 'help') {
+            addLine('Available commands:');
+            addLine('  help     - Show this help message');
+            addLine('  clear    - Clear the console');
+            addLine('  date     - Show current date and time');
+            addLine('  echo     - Echo back the text');
+            addLine('  history  - Show command history');
+        } else if (cmd === 'clear') {
+            consoleOutput.innerHTML = '';
+        } else if (cmd === 'date') {
+            addLine(new Date().toString());
+        } else if (cmd.startsWith('echo ')) {
+            addLine(command.substring(5));
+        } else if (cmd === 'history') {
+            if (commandHistory.length === 0) {
+                addLine('No command history.');
+            } else {
+                commandHistory.forEach((cmd, index) => {
+                    addLine(`${index + 1}. ${cmd}`);
+                });
+            }
+        } else {
+            addLine(`Command not found: ${cmd}`);
+            addLine('Type "help" for available commands.');
+        }
+    }
+
+    // Eingabe: wenn Enter gedrückt wird
+    consoleInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+            const command = consoleInput.value; // Eingabetext sichern
+            fetch("/api/input", { method: "POST", body: command });
+            console.log("DEBUG: Eingabe gesendet -> " + command); // JS-Log, nicht System.out
+            consoleInput.value = ""; // Eingabefeld leeren
+        }
+    });
+
+    // Ausgabe: alle 1 Sekunde beim Server nach neuen Texten fragen
+    setInterval(() => {
+        fetch("/api/output")
+            .then(r => r.text())
+            .then(t => {
+                if (t.trim().length > 0) {
+                    const lines = t.split("\n");
+                    for (const line of lines) {
+                        if (line.trim().length > 0) {
+                            const div = document.createElement("div");
+                            div.className = "console-line";
+                            div.textContent = line;
+                            consoleOutput.appendChild(div);
+                        }
+                    }
+                    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                }
+            });
+    }, 1000);
+
+
+    // Auto-focus on input
+    consoleInput.focus();
+</script>
 </body>
 </html>
