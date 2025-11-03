@@ -1,9 +1,9 @@
 package de.nscr.blatt1;
 
-import de.nscr.archive.AufgabenGUI;
 import de.nscr.gui.SchlangenEingabe;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -12,13 +12,17 @@ import java.util.Objects;
  */
 public class Aufgabe02 {
     private final SchlangenEingabe eingabe;
+    private final PrintStream out;
 
     /**
      *
-     * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
+     * @param eingabe     Die Eingabe, welche zum Auslesen benutzt wird
+     * @param printStream
      */
-    public Aufgabe02(SchlangenEingabe eingabe) {
+    public Aufgabe02(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
+        this.out = printStream;
+        System.err.println("Aufgabe02 started");
         ausfuehren();
     }
 
@@ -49,7 +53,7 @@ public class Aufgabe02 {
      *
      */
     private void weiter() {
-        System.out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
+        out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
         while (true) {
             try {
                 String zeile = auslesen();
@@ -58,14 +62,14 @@ public class Aufgabe02 {
                         ausfuehren();
                         return;
                     case "n":
-                        System.out.println("Aufgabe beendet.");
+                        out.println("Aufgabe beendet.");
                         return;
                     default:
-                        System.out.println("Bitte geben Sie eine gültige Eingabe ein. (y/n)");
+                        out.println("Bitte geben Sie eine gültige Eingabe ein. (y/n)");
                         weiter();
                 }
             } catch (IOException e) {
-                System.out.println("Bitte gebe Sie eine gültige Eingabe ein. (y/n)");
+                out.println("Bitte gebe Sie eine gültige Eingabe ein. (y/n)");
             }
         }
     }
@@ -74,7 +78,7 @@ public class Aufgabe02 {
      *
      */
     public void ausfuehren() {
-        System.out.println("Welche Zahl wollen Sie als Primzahl überprüfen? (Ganzzahl)");
+        out.println("Welche Zahl wollen Sie als Primzahl überprüfen? (Ganzzahl)");
         while (true) {
             try {
                 int pZahl = Integer.parseInt(Objects.requireNonNull(auslesen()));
@@ -82,7 +86,7 @@ public class Aufgabe02 {
                 weiter();
                 return;
             } catch (IOException e) {
-                System.out.println("Es wurde keine Richtige Nummer eingegeben. (Ganzzahl)");
+                out.println("Es wurde keine Richtige Nummer eingegeben. (Ganzzahl)");
             }
         }
 
@@ -106,7 +110,7 @@ public class Aufgabe02 {
         // Überprüfen, ob Primzahl ist (Für 2. Rekursionsebene)
         if (teiler.size() == 2) {
             if (ersteDurchlauf) {
-                System.out.println(pZahl + " ist eine Primzahl.");
+                out.println(pZahl + " ist eine Primzahl.");
             }
             return true;
         } else {
@@ -116,11 +120,11 @@ public class Aufgabe02 {
                 for (Integer integer : teiler) {
                     boolean prim = pZahlBerechnen(integer, false);
                     if (prim) {
-                        System.out.println(pZahl + " ist durch " + integer + " teilbar und diese ist eine Primzahl.");
+                        out.println(pZahl + " ist durch " + integer + " teilbar und diese ist eine Primzahl.");
                     }
                 }
                 // Überprüfen am Ende, ob die eingegebene Zahl eine Primzahl ist
-                System.out.println(pZahl + " ist keine Primzahl.");
+                out.println(pZahl + " ist keine Primzahl.");
             }
         }
         return false;

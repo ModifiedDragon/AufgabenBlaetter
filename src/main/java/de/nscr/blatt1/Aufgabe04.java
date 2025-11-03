@@ -1,9 +1,9 @@
 package de.nscr.blatt1;
 
-import de.nscr.archive.AufgabenGUI;
 import de.nscr.gui.SchlangenEingabe;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Objects;
 import java.util.Random;
 
@@ -12,6 +12,7 @@ import java.util.Random;
  */
 public class Aufgabe04 {
     private final SchlangenEingabe eingabe;
+    private final PrintStream out;
     int zahl;
     int ober;
     int unter;
@@ -19,10 +20,12 @@ public class Aufgabe04 {
 
     /**
      *
-     * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
+     * @param eingabe     Die Eingabe, welche zum Auslesen benutzt wird
+     * @param printStream
      */
-    public Aufgabe04(SchlangenEingabe eingabe) {
+    public Aufgabe04(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
+        this.out = printStream;
         anfang();
     }
 
@@ -52,7 +55,7 @@ public class Aufgabe04 {
      *
      */
     public void anfang() {
-        System.out.println("In welchem Bereich raten? Wolle Sie raten (z.B. '3,100')");
+        out.println("In welchem Bereich raten? Wolle Sie raten (z.B. '3,100')");
         String[] teile;
         while (true) {
             try {
@@ -77,7 +80,7 @@ public class Aufgabe04 {
                 raten();
                 return;
             } catch (Exception e) {
-                System.out.println("Bitte geben Sie eine richtige Angabe an.");
+                out.println("Bitte geben Sie eine richtige Angabe an.");
             }
         }
     }
@@ -86,7 +89,7 @@ public class Aufgabe04 {
      *
      */
     private void weiter() {
-        System.out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
+        out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
         while (true) {
             try {
                 String zeile = auslesen();
@@ -95,10 +98,10 @@ public class Aufgabe04 {
                         anfang();
                         return;
                     case "n":
-                        System.out.println("Aufgabe beendet.");
+                        out.println("Aufgabe beendet.");
                         return;
                     default:
-                        System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
+                        out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -110,14 +113,14 @@ public class Aufgabe04 {
      *
      */
     private void raten() {
-        System.out.println("Raten Sie die Zahl im Bereich von " + unter + " und " + ober + ".");
+        out.println("Raten Sie die Zahl im Bereich von " + unter + " und " + ober + ".");
         try {
             int temp2 = Integer.parseInt(Objects.requireNonNull(auslesen()));
             if (!vergleicheZahl(temp2)) {
                 versuchsAnzahl++;
                 raten();
             } else {
-                System.out.println("Sie haben die Zahl in " + versuchsAnzahl + " versuchen erraten.");
+                out.println("Sie haben die Zahl in " + versuchsAnzahl + " versuchen erraten.");
                 weiter();
             }
         } catch (Exception e) {
@@ -132,16 +135,16 @@ public class Aufgabe04 {
      */
     public boolean vergleicheZahl(int pWert) { //pWert ist der schätzwert
         if (ober < pWert || unter > pWert) {
-            System.out.println("Ihre Schätzung liegt außerhalb des definierten Bereichs");
+            out.println("Ihre Schätzung liegt außerhalb des definierten Bereichs");
             return false;
         } else if (zahl == pWert) {
-            System.out.println("Sie haben die richtige Zahl erraten, SUPER!!!");
+            out.println("Sie haben die richtige Zahl erraten, SUPER!!!");
             return true;
         } else if (zahl > pWert) {
-            System.out.println("Ihre Schätzung ist kleiner als die Zahl");
+            out.println("Ihre Schätzung ist kleiner als die Zahl");
             return false;
         } else if (zahl < pWert) {
-            System.out.println("Ihre Schätzung ist größer als die Zahl");
+            out.println("Ihre Schätzung ist größer als die Zahl");
             return false;
         }
         return false;

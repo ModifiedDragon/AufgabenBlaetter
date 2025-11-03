@@ -1,27 +1,27 @@
 package de.nscr.blatt1;
 
-import de.nscr.archive.AufgabenGUI;
 import de.nscr.gui.SchlangenEingabe;
 
-import javax.swing.*;
+import java.io.PrintStream;
 import java.math.BigInteger;
 import java.io.IOException;
 
 /**
  *
  */
-import java.io.IOException;
-import java.math.BigInteger;
 
 public class Aufgabe01 {
     private final SchlangenEingabe eingabe;
+    private final PrintStream out;
 
     /**
-     * @param eingabe Die Eingabequelle (kommt vom ConsoleController)
+     * @param eingabe     Die Eingabequelle (kommt vom ConsoleController)
+     * @param printStream
      */
-    public Aufgabe01(SchlangenEingabe eingabe) {
+    public Aufgabe01(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
-        System.out.println("DEBUG: Aufgabe01 gestartet");
+        this.out = printStream;
+        System.err.println("DEBUG: Aufgabe01 gestartet");
         anfang();
     }
 
@@ -49,32 +49,30 @@ public class Aufgabe01 {
      * Startpunkt der Aufgabe
      */
     public void anfang() {
-        System.out.println("DEBUG: Aufgabe01 wartet auf Eingabe...");
-        System.out.println("Geben Sie eine Zahl ein, deren Fakultät berechnet werden soll (Ganzzahl):");
-        while (true) {
+        if (Thread.currentThread().isInterrupted()) return;  // Check for interruption
+        out.println("Geben Sie eine Zahl ein, deren Fakultät berechnet werden soll (Ganzzahl):");
+        while (!Thread.currentThread().isInterrupted()) {  // Check in loop
             try {
                 String zeile = auslesen();
-                if (zeile == null) {
-                    return; // Eingabe beendet
-                }
+                if (zeile == null || Thread.currentThread().isInterrupted()) return;
 
                 int zahl = Integer.parseInt(zeile);
 
                 if (zahl < 0) {
-                    System.out.println("Bitte geben Sie eine Zahl >= 0 ein");
+                    out.println("Bitte geben Sie eine Zahl >= 0 ein");
                     continue;
                 }
                 if (zahl == 0) {
-                    System.out.println("Die Fakultät von 0 ist 1");
+                    out.println("Die Fakultät von 0 ist 1");
                 } else {
                     berechneFakultaet(zahl);
                 }
                 weiter();
                 return;
             } catch (NumberFormatException ex) {
-                System.out.println("Es wurde keine gültige Ganzzahl eingegeben.");
+                out.println("Es wurde keine gültige Ganzzahl eingegeben.");
             } catch (IOException ex) {
-                System.out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
+                out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
                 return;
             }
         }
@@ -83,26 +81,17 @@ public class Aufgabe01 {
     /**
      * Fragt, ob weitere Berechnungen gewünscht sind
      */
-    public void weiter() {
-        System.out.println("Wollen Sie weitere Fakultäten berechnen? (y/n)");
-        while (true) {
-            try {
-                String zeile = auslesen();
-                if (zeile == null) {
-                    return;
-                }
-                zeile = zeile.toLowerCase();
-                if (zeile.equals("y")) {
-                    anfang();
-                    return;
-                } else if (zeile.equals("n")) {
-                    System.out.println("Aufgabe beendet.");
-                    return;
-                } else {
-                    System.out.println("Bitte geben Sie eine gültige Eingabe ein. (y/n)");
-                }
-            } catch (IOException ex) {
-                System.out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
+    public void weiter() throws IOException {
+        if (Thread.currentThread().isInterrupted()) return;
+        out.println("Wollen Sie weitere Fakultäten berechnen? (y/n)");
+        while (!Thread.currentThread().isInterrupted()) {
+            String zeile = auslesen();
+            if (zeile == null || Thread.currentThread().isInterrupted()) return;
+            if (zeile.equalsIgnoreCase("y")) {
+                anfang();  // This should only happen once
+                return;
+            } else if (zeile.equalsIgnoreCase("n")) {
+                out.println("Aufgabe beendet.");
                 return;
             }
         }
@@ -116,6 +105,6 @@ public class Aufgabe01 {
         for (int i = pZahl; i > 0; i--) {
             ergebnis = ergebnis.multiply(BigInteger.valueOf(i));
         }
-        System.out.println("Die Fakultät von " + pZahl + " ist " + ergebnis);
+        out.println("Die Fakultät von " + pZahl + " ist " + ergebnis);
     }
 }

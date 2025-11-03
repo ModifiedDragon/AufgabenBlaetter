@@ -8,7 +8,8 @@ public class ConsoleOutput extends OutputStream {
 
     @Override
     public synchronized void write(int b) {
-        buffer.append((char) b);
+        byte[] one = {(byte) b};
+        buffer.append(new String(one, StandardCharsets.UTF_8));
     }
 
     @Override
@@ -19,6 +20,7 @@ public class ConsoleOutput extends OutputStream {
     public synchronized String getAndClear() {
         String out = buffer.toString();
         buffer.setLength(0);
+        System.out.println("DEBUG: Output buffer: " + out);
         return out;
     }
 }

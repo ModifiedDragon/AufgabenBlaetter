@@ -1,9 +1,9 @@
 package de.nscr.blatt1;
 
-import de.nscr.archive.AufgabenGUI;
 import de.nscr.gui.SchlangenEingabe;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Objects;
 
 /**
@@ -11,13 +11,16 @@ import java.util.Objects;
  */
 public class Aufgabe03 {
     private final SchlangenEingabe eingabe;
+    private final PrintStream out;
 
     /**
      *
-     * @param eingabe Die Eingabe, welche zum Auslesen benutzt wird
+     * @param eingabe     Die Eingabe, welche zum Auslesen benutzt wird
+     * @param printStream
      */
-    public Aufgabe03(SchlangenEingabe eingabe) {
+    public Aufgabe03(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
+        this.out = printStream;
         start();
     }
 
@@ -49,36 +52,35 @@ public class Aufgabe03 {
      *
      */
     public void start() {
-        ///  TODO while schleife mit weiter geht nicht
-        System.out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
+        out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
         while (true) {
             try {
                 switch (Integer.parseInt(Objects.requireNonNull(auslesen()))) {
                     case 0:
-                        System.out.print("Bitte geben Sie den Radius des Kreises an: ");
+                        out.print("Bitte geben Sie den Radius des Kreises an: ");
                         berechneFlaecheninhaltKreis(Integer.parseInt(Objects.requireNonNull(auslesen())));
                         break;
                     case 1:
-                        System.out.print("Bitte geben Sie die Größe der Grundfläche an: ");
+                        out.print("Bitte geben Sie die Größe der Grundfläche an: ");
                         double temp1 = Double.parseDouble(Objects.requireNonNull(auslesen()));
-                        System.out.print("Bitte geben Sie die Größe der Höhe an: ");
+                        out.print("Bitte geben Sie die Größe der Höhe an: ");
                         double temp2 = Double.parseDouble(Objects.requireNonNull(auslesen()));
                         berechneFlaecheninhaltDreieck(temp1, temp2);
                         break;
                     case 2:
-                        System.out.print("Bitte geben Sie die Größe der Grundfläche an: ");
+                        out.print("Bitte geben Sie die Größe der Grundfläche an: ");
                         double temp3 = Double.parseDouble(Objects.requireNonNull(auslesen()));
-                        System.out.print("Bitte geben Sie die Größe der Höhe an: ");
+                        out.print("Bitte geben Sie die Größe der Höhe an: ");
                         double temp4 = Double.parseDouble(Objects.requireNonNull(auslesen()));
                         berechneFlaecheninhaltParallelogramm(temp3, temp4);
                         break;
                     default:
-                        System.out.println("Bitte geben Sie eine Eingabe con 0 bis 2 ein.");
+                        out.println("Bitte geben Sie eine Eingabe con 0 bis 2 ein.");
                         start();
                         break;
                 }
             } catch (IOException e) {
-                System.out.println("Es wurde keine Richtige Nummer eingegeben (Ganzzahl).");
+                out.println("Es wurde keine Richtige Nummer eingegeben (Ganzzahl).");
             }
             boolean temp = weiter();
             if (!temp) {
@@ -91,7 +93,7 @@ public class Aufgabe03 {
      *
      */
     private boolean weiter() {
-        System.out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
+        out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
         while (true) {
             try {
                 String zeile = auslesen();
@@ -100,13 +102,13 @@ public class Aufgabe03 {
                         start();
                         return true;
                     case "n":
-                        System.out.println("Aufgabe beendet.");
+                        out.println("Aufgabe beendet.");
                         return false;
                     default:
-                        System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
+                        out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
                 }
             } catch (IOException e) {
-                System.out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
+                out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
             }
         }
     }
@@ -120,7 +122,7 @@ public class Aufgabe03 {
 
         flaecheninhalt = Math.PI * pRadius * pRadius;
 
-        System.out.println("Der Flächeninhalt des Kreises mit dem Radius " + pRadius + " beträgt " + flaecheninhalt);
+        out.println("Der Flächeninhalt des Kreises mit dem Radius " + pRadius + " beträgt " + flaecheninhalt);
     }
 
     /**
@@ -133,7 +135,7 @@ public class Aufgabe03 {
 
         flaecheninhalt = (pSeiteA * pSeiteB) / 2;
 
-        System.out.println("Der Flächeninhalt des Dreiecks mit den Seitenlängen " + pSeiteA + " und " + pSeiteB + " beträgt " + flaecheninhalt);
+        out.println("Der Flächeninhalt des Dreiecks mit den Seitenlängen " + pSeiteA + " und " + pSeiteB + " beträgt " + flaecheninhalt);
     }
 
     /**
@@ -146,6 +148,6 @@ public class Aufgabe03 {
 
         flaecheninhalt = pHoehe * pGrundseite;
 
-        System.out.println("Der Flächeninhalt des Parallelogram mit der Höhe " + pHoehe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
+        out.println("Der Flächeninhalt des Parallelogram mit der Höhe " + pHoehe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
     }
 }
