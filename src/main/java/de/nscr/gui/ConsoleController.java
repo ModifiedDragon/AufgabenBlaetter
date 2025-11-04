@@ -7,7 +7,6 @@ import de.nscr.blatt1.Aufgabe04;
 import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -81,7 +80,7 @@ public class ConsoleController {
             PrintStream originalOut = System.out;
             System.setOut(out);
             try {
-                System.err.println("DEBUG: launching task " + task + " for session " + session.getId());
+                System.out.println("DEBUG: launching task " + task + " for session " + session.getId());
                 // Small delay to allow frontend polling to sync
                 Thread.sleep(100);  // Optional: Helps with initial output timing
                 switch (task) {
@@ -90,7 +89,7 @@ public class ConsoleController {
                     case "1-3" -> new Aufgabe03(session.getEingabe(), out);
                     case "1-4" -> new Aufgabe04(session.getEingabe(), out);
                     // Add cases for 3-1, etc.
-                    default -> System.err.println("Unknown task: " + task);
+                    default -> System.out.println("Unknown task: " + task);
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -112,44 +111,6 @@ public class ConsoleController {
             return result;
         }
         return "Invalid session";
-    }
-
-    // Internal: start a reader loop for each session
-    private void startReaderThread(ConsoleSession session) {
-        new Thread(() -> {
-            var eingabe = session.getEingabe();
-            StringBuilder sb = new StringBuilder();
-            try {
-                int c;
-                while ((c = eingabe.read()) != -1) {
-                    if (c == '\n') {
-                        String line = sb.toString().trim();
-                        sb.setLength(0);
-
-                        if (!session.isAufgabeAktiv()) {
-                            System.err.println("DEBUG [" + session.getId() + "] -> " + line);
-
-                            if (line.equalsIgnoreCase("help")) {
-                                session.getPrintStream().println("""
-                                        'exit' -> schließt die Aufgabe
-                                        'help' -> zeigt alle verfügbaren Befehle an
-                                        'start' + *Testat*-*Aufgabe* -> Startet die jeweilige Aufgabe
-                                        """);
-                            } else if (line.equalsIgnoreCase("exit")) {
-                                System.err.println("Beende Konsole...");
-                                break;
-                            } else {
-                                System.err.println("Unbekannter Befehl: " + line);
-                            }
-                        }
-                    } else {
-                        sb.append((char) c);
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }, "ConsoleReader-" + session.getId()).start();
     }
 
     @GetMapping("/{id}/status")

@@ -13,9 +13,8 @@ public class WebconsoleApplication {
     ///  TODO bei falscher reihenfolge von aufg. 4 ist ausgabe nicht richtig
     ///  TODO help befehl und exit überarbeiten
     ///  TODO remove weiter?, da Konsolen eigen sind für jedes und back button existiert
-    ///  TODO change Button positioning
     ///  TODO while schleife mit weiter geht nicht Aufgabe 3 in start
-    ///  TODO DEBUGs entfernen
+    // DEBUGs entfernen
 
     // Extra Shit
     ///  TODO Einstellungen einfügen mit änderungen (font, text colours, colours (slide down menu?))

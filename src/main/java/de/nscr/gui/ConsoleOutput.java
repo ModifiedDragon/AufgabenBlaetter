@@ -20,7 +20,6 @@ public class ConsoleOutput extends OutputStream {
     public synchronized String getAndClear() {
         String out = buffer.toString();
         buffer.setLength(0);
-        System.out.println("DEBUG: Output buffer: " + out);
         return out;
     }
 }
