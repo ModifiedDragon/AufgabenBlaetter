@@ -1,9 +1,10 @@
-package de.nscr.gui;
+package de.nscr.archive;
 
 import de.nscr.blatt1.Aufgabe01;
 import de.nscr.blatt1.Aufgabe02;
 import de.nscr.blatt1.Aufgabe03;
 import de.nscr.blatt1.Aufgabe04;
+import de.nscr.gui.SchlangenEingabe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,10 +39,7 @@ public class AufgabenGUI {
         SwingUtilities.invokeLater(() -> new Thread(() -> {
             if (testat == 1) {
                 switch (aufgabe) {
-                    case 1 -> new Aufgabe01(this, eingabe);
-                    case 2 -> new Aufgabe02(this, eingabe);
-                    case 3 -> new Aufgabe03(this, eingabe);
-                    case 4 -> new Aufgabe04(this, eingabe);
+
                 }
             }
         }).start());

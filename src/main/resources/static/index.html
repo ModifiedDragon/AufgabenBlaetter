@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(to top, #172554, #1e40af);
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .menu-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(30, 64, 143, 0.5);
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 100;
+        }
+
+        .menu-button:hover {
+            background: rgba(29, 78, 216, 0.5);
+        }
+
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .content-wrapper {
+            max-width: 42rem;
+            width: 100%;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-title {
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.25rem;
+            color: #dbeafe;
+        }
+
+        .items-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .item-box {
+            background: rgba(30, 64, 143, 0.4);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .text-display {
+            background: rgba(23, 37, 84, 0.6);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #3b82f6;
+            margin-bottom: 1rem;
+            color: #dbeafe;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .submit-button {
+            background: rgba(96, 165, 250, 0.8);
+            color: white;
+            border: none;
+            padding: 0.625rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-button:hover {
+            background: rgba(59, 130, 246, 0.9);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            right: -280px;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(to bottom, #1e293b, #0f172a);
+            border-left: 1px solid #334155;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            z-index: 50;
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-content {
+            padding: 1.5rem 1rem;
+        }
+
+        .sidebar-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+            padding: 0 0.75rem;
+        }
+
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .menu-button-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 0.75rem;
+            background: transparent;
+            border: none;
+            color: #f1f5f9;
+            cursor: pointer;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+            text-align: left;
+        }
+
+        .menu-button-item:hover {
+            background: rgba(30, 58, 138, 0.3);
+        }
+
+        .menu-icon-item {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .chevron {
+            margin-left: auto;
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+
+        .menu-item.open .chevron {
+            transform: rotate(90deg);
+        }
+
+        .submenu {
+            display: none;
+            list-style: none;
+            margin-left: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        .menu-item.open .submenu {
+            display: block;
+        }
+
+        .submenu-item {
+            margin-bottom: 0.125rem;
+        }
+
+        .submenu-link {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .submenu-link:hover {
+            background: rgba(30, 58, 138, 0.2);
+            color: white;
+        }
+
+        .submenu-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            cursor: pointer;
+            font-size: 0.875rem;
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+            width: 100%;
+            border-radius: 0.375rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .submenu-toggle:hover {
+            background: rgba(30, 58, 138, 0.2);
+            color: white;
+        }
+
+        .submenu-toggle .chevron {
+            margin-left: auto;
+            width: 14px;
+            height: 14px;
+            transition: transform 0.2s;
+        }
+
+        .submenu-item.open > .submenu-toggle .chevron {
+            transform: rotate(90deg);
+        }
+
+        .nested-submenu {
+            display: none;
+            list-style: none;
+            margin-left: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        .submenu-item.open > .nested-submenu {
+            display: block;
+        }
+
+        /* Task list styling for main content */
+        .task-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            padding: 0 1rem;
+        }
+
+        .task-list li {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .task-list .submit-button {
+            width: 100%;
+            max-width: 200px;
+        }
+
+        @media (max-width: 640px) {
+            .task-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .welcome-title {
+                font-size: 5rem;
+            }
+            .welcome-subtitle {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .welcome-title {
+                font-size: 6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="main-content">
+    <button class="menu-button" onclick="toggleSidebar()">
+        <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <div class="content-wrapper">
+        <div class="welcome-section">
+            <h1 class="welcome-title">Welcome!</h1>
+            <p class="welcome-subtitle">This is the Website for Programming Tasks</p>
+        </div>
+
+        <div class="items-container">
+            <!-- Testat 1 Container -->
+            <div class="item-box">
+                <div class="text-display">Testat 1</div>
+                <ul class="task-list">
+                    <li><button class="submit-button" onclick="startTask('1-1')">Aufgabe 1‑1</button></li>
+                    <li><button class="submit-button" onclick="startTask('1-2')">Aufgabe 1‑2</button></li>
+                    <li><button class="submit-button" onclick="startTask('1-3')">Aufgabe 1‑3</button></li>
+                    <li><button class="submit-button" onclick="startTask('1-4')">Aufgabe 1‑4</button></li>
+                </ul>
+            </div>
+
+            <!-- Testat 2 Container -->
+            <div class="item-box">
+                <div class="text-display">Testat 2</div>
+                <ul class="task-list">
+                    <li><button class="submit-button" onclick="startTask('2-1')">Aufgabe 2‑1</button></li>
+                    <li><button class="submit-button" onclick="startTask('2-2')">Aufgabe 2‑2</button></li>
+                    <li><button class="submit-button" onclick="startTask('2-3')">Aufgabe 2‑3</button></li>
+                    <li><button class="submit-button" onclick="startTask('2-4')">Aufgabe 2‑4</button></li>
+                </ul>
+            </div>
+
+            <!-- Testat 3 Container -->
+            <div class="item-box">
+                <div class="text-display">Testat 3</div>
+                <ul class="task-list">
+                    <li><button class="submit-button" onclick="startTask('3-1')">Aufgabe 3‑1</button></li>
+                    <li><button class="submit-button" onclick="startTask('3-2')">Aufgabe 3‑2</button></li>
+                    <li><button class="submit-button" onclick="startTask('3-3')">Aufgabe 3‑3</button></li>
+                    <li><button class="submit-button" onclick="startTask('3-4')">Aufgabe 3‑4</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-content">
+        <h2 class="sidebar-label">Navigation</h2>
+        <ul class="menu-list">
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    <span>Home</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="index.html" class="submenu-link">Main Page</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Analytics</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <span>Users</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">All Users</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Add User</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">User Groups</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <span>Documents</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">My Documents</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Shared</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Recent</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>Messages</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">Inbox</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Sent</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Drafts</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>Calendar</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">My Calendar</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Events</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Reminders</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    <span>Testate</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item">
+                        <button class="submenu-toggle" onclick="toggleNestedMenu(this)">
+                            <span>Testat 1</span>
+                            <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <ul class="nested-submenu">
+                            <li><button class="submenu-link" onclick="startTask('1-1')">Aufgabe 1‑1</button></li>
+                            <li><button class="submenu-link" onclick="startTask('1-2')">Aufgabe 1‑2</button></li>
+                            <li><button class="submenu-link" onclick="startTask('1-3')">Aufgabe 1‑3</button></li>
+                            <li><button class="submenu-link" onclick="startTask('1-4')">Aufgabe 1‑4</button></li>
+                        </ul>
+                    </li>
+                    <li class="submenu-item">
+                        <button class="submenu-toggle" onclick="toggleNestedMenu(this)">
+                            <span>Testat 2</span>
+                            <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <ul class="nested-submenu">
+                            <li><button class="submenu-link" onclick="startTask('2-1')">Aufgabe 2‑1</button></li>
+                            <li><button class="submenu-link" onclick="startTask('2-2')">Aufgabe 2‑2</button></li>
+                            <li><button class="submenu-link" onclick="startTask('2-3')">Aufgabe 2‑3</button></li>
+                            <li><button class="submenu-link" onclick="startTask('2-4')">Aufgabe 2‑4</button></li>
+                        </ul>
+                    </li>
+                    <li class="submenu-item">
+                        <button class="submenu-toggle" onclick="toggleNestedMenu(this)">
+                            <span>Testat 3</span>
+                            <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                        <ul class="nested-submenu">
+                            <li><button class="submenu-link" onclick="startTask('3-1')">Aufgabe 3‑1</button></li>
+                            <li><button class="submenu-link" onclick="startTask('3-2')">Aufgabe 3‑2</button></li>
+                            <li><button class="submenu-link" onclick="startTask('3-3')">Aufgabe 3‑3</button></li>
+                            <li><button class="submenu-link" onclick="startTask('3-4')">Aufgabe 3‑4</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="menu-item">
+                <button class="menu-button-item" onclick="toggleMenu(this)">
+                    <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>Settings</span>
+                    <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <ul class="submenu">
+                    <li class="submenu-item"><a href="#" class="submenu-link">Profile</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Preferences</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link">Security</a></li>
+                    <li class="submenu-item"><a href="#" class="submenu-link" onclick="enterDevMode(); return false;">Dev Mode</a></li>
+                    <button onclick="exitSession()">Exit Session</button>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    let sessionId = localStorage.getItem('consoleSessionId');
+    let devMode = false;  // Optional: track dev mode if needed
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('open');
+    }
+
+    function toggleMenu(button) {
+        const menuItem = button.parentElement;
+        menuItem.classList.toggle('open');
+    }
+
+    function toggleNestedMenu(button) {
+        const submenuItem = button.parentElement;
+        submenuItem.classList.toggle('open');
+    }
+
+    async function startTask(task) {
+        if (!sessionId) {
+            alert("No session yet! Please wait for initialization.");
+            return;
+        }
+        // Disable all start buttons temporarily
+        document.querySelectorAll('button[onclick*="startTask"]').forEach(btn => btn.disabled = true);
+        try {
+            const res = await fetch(`/api/console/${sessionId}/start/${task}`, { method: "POST" });
+            const message = await res.text();
+            alert(message);
+            if (res.ok && message.includes("started")) {
+                window.location.href = 'console.html';
+            }
+        } catch (e) {
+            alert("Error starting task: " + e.message);
+        } finally {
+            // Re-enable buttons after a delay
+            setTimeout(() => {
+                document.querySelectorAll('button[onclick*="startTask"]').forEach(btn => btn.disabled = false);
+            }, 2000);  // 2-second cooldown
+        }
+    }
+
+    function enterDevMode() {
+        const pwd = prompt("Enter Dev Mode password:");
+        if (sessionId) {
+            fetch(`/api/console/${sessionId}/devmode`, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain" },
+                body: pwd
+            })
+                .then(res => res.text())
+                .then(msg => {
+                    alert(msg);
+                    devMode = msg.includes("enabled");
+                });
+        }
+    }
+
+    async function initSession() {
+        if (!sessionId) {
+            // Create a new session if none exists
+            const res = await fetch("/api/console/create", {method: "POST"});
+            sessionId = await res.text();
+            localStorage.setItem('consoleSessionId', sessionId);
+            console.log("DEBUG: New session created in index.html -> " + sessionId);
+        } else {
+            console.log("DEBUG: Using existing session in index.html -> " + sessionId);
+            // Validate the session
+            try {
+                const statusRes = await fetch(`/api/console/${sessionId}/status`);
+                const status = await statusRes.text();
+                if (status !== "active") {
+                    console.log("DEBUG: Session invalid, creating new one");
+                    localStorage.removeItem('consoleSessionId');
+                    sessionId = null;
+                    await initSession();  // Recurse to create new
+                }
+            } catch (e) {
+                console.error("DEBUG: Error validating session:", e);
+                localStorage.removeItem('consoleSessionId');
+                sessionId = null;
+                await initSession();
+            }
+        }
+    }
+
+    async function exitSession() {
+        if (sessionId) {
+            try {
+                await fetch(`/api/console/${sessionId}/exit`, { method: "POST" });
+            } catch (e) {
+                console.error("Error exiting session:", e);
+            }
+            localStorage.removeItem('consoleSessionId');
+            sessionId = null;
+            devMode = false;
+            alert("Session ended. Navigate to start a new one.");
+        }
+    }
+
+    initSession();
+</script>
+</body>
+</html>
