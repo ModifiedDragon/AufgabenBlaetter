@@ -4,6 +4,7 @@ import de.nscr.blatt1.Aufgabe01;
 import de.nscr.blatt1.Aufgabe02;
 import de.nscr.blatt1.Aufgabe03;
 import de.nscr.blatt1.Aufgabe04;
+import de.nscr.blatt2.Aufgabe11;
 import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,7 +78,6 @@ public class ConsoleController {
         session.setAufgabeAktiv(true);
         PrintStream out = session.getPrintStream();
         Future<?> taskFuture = executor.submit(() -> {
-            PrintStream originalOut = System.out;
             System.setOut(out);
             try {
                 System.out.println("DEBUG: launching task " + task + " for session " + session.getId());
@@ -88,6 +88,7 @@ public class ConsoleController {
                     case "1-2" -> new Aufgabe02(session.getEingabe(), out);
                     case "1-3" -> new Aufgabe03(session.getEingabe(), out);
                     case "1-4" -> new Aufgabe04(session.getEingabe(), out);
+                    case "2-1" -> new Aufgabe11(session.getEingabe(), out);
                     // Add cases for 3-1, etc.
                     default -> System.out.println("Unknown task: " + task);
                 }
@@ -107,7 +108,7 @@ public class ConsoleController {
         session.setLastActivity(System.currentTimeMillis());
         if (session != null) {
             String result = session.getOutput().getAndClear();
-            session.getPrintStream().flush();  // Ensure output is flushed immediately
+            session.getPrintStream().flush();
             return result;
         }
         return "Invalid session";
