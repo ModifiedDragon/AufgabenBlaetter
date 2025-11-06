@@ -6,13 +6,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class WebconsoleApplication {
     // Prob needed
-    ///  TODO Testate Icons ändern
     ///  TODO Erklärungen der Aufgaben mit auf den Seiten einfügen
+    ///  TODO switching tasks while in one makes a read fail message
+    ///  TODO platzt zwischen den Bäumen entfernen
+
+    ///  TODO aufgaben formatieren
+    ///  TODO javadoc
+    ///  TODO aufräumen
     // DEBUGs entfernen
 
     // Extra Shit
     ///  TODO Einstellungen einfügen mit änderungen (font, text colours, colours (slide down menu?))
-    ///  TODO Dev-Mode Passwort einfügen für DEBUG ausgaben und extra befehle? (Server side auth)
     ///  TODO Visuelle Darstellung der geforderten Aufgabe unter Konsole einfügen mit Erklärung
 
     // Super-Extra Shit

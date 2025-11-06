@@ -317,6 +317,15 @@
             display: block;
         }
 
+        /* Nested submenu button styling */
+        .nested-submenu button {
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            background: transparent;
+            text-align: left;
+        }
+
         @media (min-width: 768px) {
             .console-title {
                 font-size: 3rem;
@@ -457,7 +466,7 @@
                 <button class="menu-button-item" onclick="toggleMenu(this)">
                     <svg class="menu-icon-item" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                     </svg>
                     <span>Testate</span>
                     <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -474,10 +483,10 @@
                             </svg>
                         </button>
                         <ul class="nested-submenu">
-                            <li><a href="console.html?task=1-1" class="submenu-link">Aufgabe 1‑1</a></li>
-                            <li><a href="console.html?task=1-2" class="submenu-link">Aufgabe 1‑2</a></li>
-                            <li><a href="console.html?task=1-3" class="submenu-link">Aufgabe 1‑3</a></li>
-                            <li><a href="console.html?task=1-4" class="submenu-link">Aufgabe 1‑4</a></li>
+                            <li><button class="submenu-link" onclick="startTask('1-1')">Aufgabe 1‑1</button></li>
+                            <li><button class="submenu-link" onclick="startTask('1-2')">Aufgabe 1‑2</button></li>
+                            <li><button class="submenu-link" onclick="startTask('1-3')">Aufgabe 1‑3</button></li>
+                            <li><button class="submenu-link" onclick="startTask('1-4')">Aufgabe 1‑4</button></li>
                         </ul>
                     </li>
                     <li class="submenu-item">
@@ -488,10 +497,7 @@
                             </svg>
                         </button>
                         <ul class="nested-submenu">
-                            <li><a href="console.html?task=2-1" class="submenu-link">Aufgabe 2‑1</a></li>
-                            <li><a href="console.html?task=2-2" class="submenu-link">Aufgabe 2‑2</a></li>
-                            <li><a href="console.html?task=2-3" class="submenu-link">Aufgabe 2‑3</a></li>
-                            <li><a href="console.html?task=2-4" class="submenu-link">Aufgabe 2‑4</a></li>
+                            <li><button class="submenu-link" onclick="startTask('2-1')">Aufgabe 2</button></li>
                         </ul>
                     </li>
                     <li class="submenu-item">
@@ -502,10 +508,10 @@
                             </svg>
                         </button>
                         <ul class="nested-submenu">
-                            <li><a href="console.html?task=3-1" class="submenu-link">Aufgabe 3‑1</a></li>
-                            <li><a href="console.html?task=3-2" class="submenu-link">Aufgabe 3‑2</a></li>
-                            <li><a href="console.html?task=3-3" class="submenu-link">Aufgabe 3‑3</a></li>
-                            <li><a href="console.html?task=3-4" class="submenu-link">Aufgabe 3‑4</a></li>
+                            <li><button class="submenu-link" onclick="startTask('3-1')">Aufgabe 3‑1</button></li>
+                            <li><button class="submenu-link" onclick="startTask('3-2')">Aufgabe 3‑2</button></li>
+                            <li><button class="submenu-link" onclick="startTask('3-3')">Aufgabe 3‑3</button></li>
+                            <li><button class="submenu-link" onclick="startTask('3-4')">Aufgabe 3‑4</button></li>
                         </ul>
                     </li>
                 </ul>
@@ -527,7 +533,7 @@
                     <li class="submenu-item"><a href="#" class="submenu-link">Preferences</a></li>
                     <li class="submenu-item"><a href="#" class="submenu-link">Security</a></li>
                     <li class="submenu-item"><a href="#" class="submenu-link" onclick="enterDevMode(); return false;">Dev Mode</a></li>
-                    <button onclick="exitSession()">Exit Session</button>
+                    <li class="submenu-item"><a href="#" class="submenu-link" onclick="exitSession(); return false;">Exit Session</a></li>
                 </ul>
             </li>
         </ul>
@@ -548,6 +554,30 @@
         submenuItem.classList.toggle('open');
     }
 
+    async function startTask(task) {
+        if (!sessionId) {
+            alert("No session yet! Please wait for initialization.");
+            return;
+        }
+        // Disable all start buttons temporarily
+        document.querySelectorAll('button[onclick*="startTask"]').forEach(btn => btn.disabled = true);
+        try {
+            const res = await fetch(`/api/console/${sessionId}/start/${task}`, { method: "POST" });
+            const message = await res.text();
+            if (res.ok && message.includes("started")) {
+                // Already on console.html, just reload to start the new task
+                window.location.reload();
+            }
+        } catch (e) {
+            alert("Error starting task: " + e.message);
+        } finally {
+            // Re-enable buttons after a delay
+            setTimeout(() => {
+                document.querySelectorAll('button[onclick*="startTask"]').forEach(btn => btn.disabled = false);
+            }, 2000);  // 2-second cooldown
+        }
+    }
+
     function enterDevMode() {
         const pwd = prompt("Enter Dev Mode password:");
         if (sessionId) {
@@ -564,13 +594,30 @@
         }
     }
 
+    async function exitSession() {
+        if (sessionId) {
+            try {
+                await fetch(`/api/console/${sessionId}/exit`, { method: "POST" });
+            } catch (e) {
+                console.error("Error exiting session:", e);
+            }
+            localStorage.removeItem('consoleSessionId');
+            sessionId = null;
+            devMode = false;
+            alert("Session ended. Redirecting to main page.");
+            window.location.href = 'index.html';
+        } else {
+            alert("No active session to exit.");
+        }
+    }
+
     let sessionId = localStorage.getItem('consoleSessionId');
     let devMode = false;
     let isPolling = false;
     let pollingInterval;
     let displayedLines = new Set();
 
-        // Initialize/validate session
+    // Initialize/validate session
     async function initSession() {
         if (!sessionId) {
             const res = await fetch("/api/console/create", {method: "POST"});
@@ -696,7 +743,7 @@
                     }
                 }
                 consoleOutput.scrollTop = consoleOutput.scrollHeight;
-                }
+            }
         }
     }, 100);  // Small delay to ensure session is ready
 
