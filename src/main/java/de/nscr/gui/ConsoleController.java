@@ -60,7 +60,16 @@ public class ConsoleController {
     public void input(@PathVariable String id, @RequestBody String command) {
         ConsoleSession session = sessions.get(id);
         if (session != null) {
-            session.getEingabe().inputEinfuegen(command + "\n");
+            if (command.equals("help")) {
+                System.out.println("help -> get all commands for the current task");
+                // prep for help command
+                switch (session.getTask()) {
+                    case "2-1" -> System.out.println(""" 
+                            """);
+                }
+            } else {
+                session.getEingabe().inputEinfuegen(command + "\n");
+            }
         }
         session.setLastActivity(System.currentTimeMillis());
     }
@@ -95,6 +104,7 @@ public class ConsoleController {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } finally {
+                session.setTask(task);
                 session.setAufgabeAktiv(false);
             }
         });
@@ -135,11 +145,18 @@ public class ConsoleController {
         private final PrintStream printStream;
         private volatile long lastActivity = System.currentTimeMillis();
         private volatile Future<?> currentTask;
+        private volatile String task;
 
         public ConsoleSession() {
             this.printStream = new PrintStream(output, true, StandardCharsets.UTF_8);
         }
 
+        public String getTask() {
+            return task;
+        }
+        public void setTask(String task) {
+            this.task = task;
+        }
         public Future<?> getCurrentTask() {
             return currentTask;
         }

@@ -16,7 +16,7 @@ public class Aufgabe04 {
     int zahl;
     int ober;
     int unter;
-    int versuchsAnzahl = 1;
+    int versuchsAnzahl;
 
     /**
      *
@@ -26,7 +26,10 @@ public class Aufgabe04 {
     public Aufgabe04(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
         this.out = printStream;
-        anfang();
+        boolean weiter = true;
+        while (weiter) {
+            weiter = anfang();
+        }
     }
 
     /**
@@ -54,17 +57,24 @@ public class Aufgabe04 {
     /**
      *
      */
-    public void anfang() {
-        out.println("In welchem Bereich raten? Wolle Sie raten (z.B. '3,100')");
-        String[] teile;
-        while (true) {
+    public boolean anfang() {
+        if (Thread.currentThread().isInterrupted()) return false;
+        while (!Thread.currentThread().isInterrupted()) {
+            out.println("In welchem Bereich raten? Wolle Sie raten (z.B. '3,100')");
+            String[] teile;
+            versuchsAnzahl = 1;
             try {
-                String angabe = auslesen();
-                teile = angabe.trim().split(",");
+                String zeile = auslesen();
+                if (zeile == null || Thread.currentThread().isInterrupted()) return false;
+                if (zeile.equals("exit")) {
+                    System.out.println("Programm beendet");
+                    return false;
+                }
+                teile = zeile.trim().split(",");
 
                 if (teile.length != 2) {
                     System.out.println("Bitte geben Sie zwei Zahlen an.");
-                    anfang();
+                    return true;
                 }
                 int temp1 = Integer.parseInt(teile[0]);
                 if (temp1 > Integer.parseInt(teile[1])) {
@@ -77,55 +87,40 @@ public class Aufgabe04 {
                 Random random = new Random();
                 // Ober und Untergrenze müssen um 1 erhöht werde, da Random mit 0 anfängt und nicht 1
                 zahl = random.nextInt(unter + 1, ober + 1);
-                raten();
-                return;
+                return raten();
             } catch (Exception e) {
                 out.println("Bitte geben Sie eine richtige Angabe an.");
             }
         }
+        return false;
     }
 
     /**
      *
      */
-    private void weiter() {
-        out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
-        while (true) {
+    private boolean raten() {
+        out.println("Raten Sie die Zahl im Bereich von " + unter + " und " + ober + ".");
+        if (Thread.currentThread().isInterrupted()) return false;
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 String zeile = auslesen();
-                switch (zeile) {
-                    case "y":
-                        anfang();
-                        return;
-                    case "n":
-                        out.println("Aufgabe beendet.");
-                        return;
-                    default:
-                        out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
+                if (zeile == null || Thread.currentThread().isInterrupted()) return false;
+                if (zeile.equals("exit")) {
+                    System.out.println("Programm beendet");
+                    return false;
+                }
+                int temp2 = Integer.parseInt(zeile);
+                if (!vergleicheZahl(temp2)) {
+                    versuchsAnzahl++;
+                } else {
+                    out.println("Sie haben die Zahl in " + versuchsAnzahl + " versuchen erraten.");
+                    return true;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     *
-     */
-    private void raten() {
-        out.println("Raten Sie die Zahl im Bereich von " + unter + " und " + ober + ".");
-        try {
-            int temp2 = Integer.parseInt(Objects.requireNonNull(auslesen()));
-            if (!vergleicheZahl(temp2)) {
-                versuchsAnzahl++;
-                raten();
-            } else {
-                out.println("Sie haben die Zahl in " + versuchsAnzahl + " versuchen erraten.");
-                weiter();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return false;
     }
 
     /**
@@ -135,19 +130,18 @@ public class Aufgabe04 {
      */
     public boolean vergleicheZahl(int pWert) { //pWert ist der schätzwert
         if (ober < pWert || unter > pWert) {
-            out.println("Ihre Schätzung liegt außerhalb des definierten Bereichs");
+            out.println("Ihre Schätzung liegt außerhalb des definierten Bereichs  (" + pWert + ")");
             return false;
         } else if (zahl == pWert) {
             out.println("Sie haben die richtige Zahl erraten, SUPER!!!");
             return true;
         } else if (zahl > pWert) {
-            out.println("Ihre Schätzung ist kleiner als die Zahl");
+            out.println("Ihre Schätzung ist kleiner als die Zahl (" + pWert + ")");
             return false;
-        } else if (zahl < pWert) {
-            out.println("Ihre Schätzung ist größer als die Zahl");
+        } else {
+            out.println("Ihre Schätzung ist größer als die Zahl (" + pWert + ")");
             return false;
         }
-        return false;
     }
 }
 

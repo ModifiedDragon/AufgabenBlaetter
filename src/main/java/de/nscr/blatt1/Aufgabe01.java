@@ -22,7 +22,10 @@ public class Aufgabe01 {
         this.eingabe = eingabe;
         this.out = printStream;
         System.err.println("DEBUG: Aufgabe01 gestartet");
-        anfang();
+        boolean weiter = true;
+        while (weiter) {
+            weiter = anfang();
+        }
     }
 
     /**
@@ -48,13 +51,17 @@ public class Aufgabe01 {
     /**
      * Startpunkt der Aufgabe
      */
-    public void anfang() {
-        if (Thread.currentThread().isInterrupted()) return;  // Check for interruption
+    public boolean anfang() {
+        if (Thread.currentThread().isInterrupted()) return false;  // Check for interruption
         out.println("Geben Sie eine Zahl ein, deren Fakultät berechnet werden soll (Ganzzahl):");
         while (!Thread.currentThread().isInterrupted()) {  // Check in loop
             try {
                 String zeile = auslesen();
-                if (zeile == null || Thread.currentThread().isInterrupted()) return;
+                if (zeile == null || Thread.currentThread().isInterrupted()) return false;
+                if (zeile.equals("exit")) {
+                    System.out.println("Programm beendet");
+                    return false;
+                }
 
                 int zahl = Integer.parseInt(zeile);
 
@@ -67,34 +74,15 @@ public class Aufgabe01 {
                 } else {
                     berechneFakultaet(zahl);
                 }
-                weiter();
-                return;
+                return true;
             } catch (NumberFormatException ex) {
                 out.println("Es wurde keine gültige Ganzzahl eingegeben.");
             } catch (IOException ex) {
                 out.println("Fehler beim Lesen der Eingabe: " + ex.getMessage());
-                return;
+                return false;
             }
         }
-    }
-
-    /**
-     * Fragt, ob weitere Berechnungen gewünscht sind
-     */
-    public void weiter() throws IOException {
-        if (Thread.currentThread().isInterrupted()) return;
-        out.println("Wollen Sie weitere Fakultäten berechnen? (y/n)");
-        while (!Thread.currentThread().isInterrupted()) {
-            String zeile = auslesen();
-            if (zeile == null || Thread.currentThread().isInterrupted()) return;
-            if (zeile.equalsIgnoreCase("y")) {
-                anfang();  // This should only happen once
-                return;
-            } else if (zeile.equalsIgnoreCase("n")) {
-                out.println("Aufgabe beendet.");
-                return;
-            }
-        }
+        return false;
     }
 
     /**

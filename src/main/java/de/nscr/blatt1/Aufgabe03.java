@@ -21,7 +21,10 @@ public class Aufgabe03 {
     public Aufgabe03(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
         this.out = printStream;
-        start();
+        boolean weiter = true;
+        while (weiter) {
+            weiter = anfang();
+        }
     }
 
 
@@ -51,11 +54,18 @@ public class Aufgabe03 {
     /**
      *
      */
-    public void start() {
-        out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
-        while (true) {
+    public boolean anfang() {
+        if (Thread.currentThread().isInterrupted()) return false;
+        while (!Thread.currentThread().isInterrupted()) {
+            out.println("Bitte geben Sie 0 für ein Kreis, 1 für ein Dreieck und 2 für ein Parallelogramm ein.");
             try {
-                switch (Integer.parseInt(Objects.requireNonNull(auslesen()))) {
+                String zeile = auslesen();
+                if (zeile == null || Thread.currentThread().isInterrupted()) return false;
+                if (zeile.equals("exit")) {
+                    System.out.println("Programm beendet");
+                    return false;
+                }
+                switch (Integer.parseInt(zeile)) {
                     case 0:
                         out.print("Bitte geben Sie den Radius des Kreises an: ");
                         berechneFlaecheninhaltKreis(Integer.parseInt(Objects.requireNonNull(auslesen())));
@@ -76,41 +86,13 @@ public class Aufgabe03 {
                         break;
                     default:
                         out.println("Bitte geben Sie eine Eingabe con 0 bis 2 ein.");
-                        start();
                         break;
                 }
             } catch (IOException e) {
                 out.println("Es wurde keine Richtige Nummer eingegeben (Ganzzahl).");
             }
-            boolean temp = weiter();
-            if (!temp) {
-                break;
-            }
         }
-    }
-
-    /**
-     *
-     */
-    private boolean weiter() {
-        out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
-        while (true) {
-            try {
-                String zeile = auslesen();
-                switch (zeile) {
-                    case "y":
-                        start();
-                        return true;
-                    case "n":
-                        out.println("Aufgabe beendet.");
-                        return false;
-                    default:
-                        out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
-                }
-            } catch (IOException e) {
-                out.println("Bitte geben Sie eine gültige Eingabe. (y/n)");
-            }
-        }
+        return false;
     }
 
     /**
@@ -119,9 +101,7 @@ public class Aufgabe03 {
      */
     public void berechneFlaecheninhaltKreis(double pRadius) {
         double flaecheninhalt;
-
         flaecheninhalt = Math.PI * pRadius * pRadius;
-
         out.println("Der Flächeninhalt des Kreises mit dem Radius " + pRadius + " beträgt " + flaecheninhalt);
     }
 
@@ -132,9 +112,7 @@ public class Aufgabe03 {
      */
     public void berechneFlaecheninhaltDreieck(double pSeiteA, double pSeiteB) {
         double flaecheninhalt;
-
         flaecheninhalt = (pSeiteA * pSeiteB) / 2;
-
         out.println("Der Flächeninhalt des Dreiecks mit den Seitenlängen " + pSeiteA + " und " + pSeiteB + " beträgt " + flaecheninhalt);
     }
 
@@ -145,9 +123,7 @@ public class Aufgabe03 {
      */
     public void berechneFlaecheninhaltParallelogramm(double pHoehe, double pGrundseite) {
         double flaecheninhalt;
-
         flaecheninhalt = pHoehe * pGrundseite;
-
         out.println("Der Flächeninhalt des Parallelogram mit der Höhe " + pHoehe +" und der Grundseitenlänge " + pGrundseite +" beträgt " + flaecheninhalt);
     }
 }

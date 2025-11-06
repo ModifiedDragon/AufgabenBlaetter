@@ -342,10 +342,7 @@
             <div class="item-box">
                 <div class="text-display">Testat 2</div>
                 <ul class="task-list">
-                    <li><button class="submit-button" onclick="startTask('2-1')">Aufgabe 2‑1</button></li>
-                    <li><button class="submit-button" onclick="startTask('2-2')">Aufgabe 2‑2</button></li>
-                    <li><button class="submit-button" onclick="startTask('2-3')">Aufgabe 2‑3</button></li>
-                    <li><button class="submit-button" onclick="startTask('2-4')">Aufgabe 2‑4</button></li>
+                    <li><button class="submit-button" onclick="startTask('2-1')">Aufgabe 2</button></li>
                 </ul>
             </div>
 
@@ -486,10 +483,7 @@
                             </svg>
                         </button>
                         <ul class="nested-submenu">
-                            <li><button class="submenu-link" onclick="startTask('2-1')">Aufgabe 2‑1</button></li>
-                            <li><button class="submenu-link" onclick="startTask('2-2')">Aufgabe 2‑2</button></li>
-                            <li><button class="submenu-link" onclick="startTask('2-3')">Aufgabe 2‑3</button></li>
-                            <li><button class="submenu-link" onclick="startTask('2-4')">Aufgabe 2‑4</button></li>
+                            <li><button class="submenu-link" onclick="startTask('2-1')">Aufgabe 2</button></li>
                         </ul>
                     </li>
                     <li class="submenu-item">
@@ -561,7 +555,6 @@
         try {
             const res = await fetch(`/api/console/${sessionId}/start/${task}`, { method: "POST" });
             const message = await res.text();
-            alert(message);
             if (res.ok && message.includes("started")) {
                 window.location.href = 'console.html';
             }

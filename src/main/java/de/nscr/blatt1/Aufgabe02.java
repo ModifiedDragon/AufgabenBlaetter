@@ -5,7 +5,6 @@ import de.nscr.gui.SchlangenEingabe;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  *
@@ -23,7 +22,10 @@ public class Aufgabe02 {
         this.eingabe = eingabe;
         this.out = printStream;
         System.err.println("Aufgabe02 started");
-        ausfuehren();
+        boolean weiter = true;
+        while (weiter) {
+            weiter = anfang();
+        }
     }
 
     /**
@@ -50,46 +52,26 @@ public class Aufgabe02 {
 
     /**
      *
-     *
      */
-    private void weiter() {
-        out.println("Wollen Sie noch eine Sache abfragen? (y/n)");
-        while (true) {
+    public boolean anfang() {
+        if (Thread.currentThread().isInterrupted()) return false;
+        out.println("Welche Zahl wollen Sie als Primzahl überprüfen? (Ganzzahl)");
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 String zeile = auslesen();
-                switch (zeile) {
-                    case "y":
-                        ausfuehren();
-                        return;
-                    case "n":
-                        out.println("Aufgabe beendet.");
-                        return;
-                    default:
-                        out.println("Bitte geben Sie eine gültige Eingabe ein. (y/n)");
-                        weiter();
+                if (zeile == null || Thread.currentThread().isInterrupted()) return false;
+                if (zeile.equals("exit")) {
+                    System.out.println("Programm beendet");
+                    return false;
                 }
-            } catch (IOException e) {
-                out.println("Bitte gebe Sie eine gültige Eingabe ein. (y/n)");
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public void ausfuehren() {
-        out.println("Welche Zahl wollen Sie als Primzahl überprüfen? (Ganzzahl)");
-        while (true) {
-            try {
-                int pZahl = Integer.parseInt(Objects.requireNonNull(auslesen()));
+                int pZahl = Integer.parseInt(zeile);
                 pZahlBerechnen(pZahl, true);
-                weiter();
-                return;
+                return true;
             } catch (IOException e) {
                 out.println("Es wurde keine Richtige Nummer eingegeben. (Ganzzahl)");
             }
         }
-
+        return false;
     }
 
     /**

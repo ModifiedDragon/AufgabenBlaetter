@@ -12,7 +12,10 @@ public class Aufgabe11 {
     public Aufgabe11(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
         this.out = printStream;
-        anfang();
+        boolean weiter = true;
+        while (weiter) {
+            weiter = anfang();
+        }
     }
 
     private String auslesen() throws IOException {
@@ -32,17 +35,24 @@ public class Aufgabe11 {
         return ergebnis;
     }
 
-    public void anfang() {
-        if (Thread.currentThread().isInterrupted()) return;  // Check for interruption
+    public boolean anfang() {
+        if (Thread.currentThread().isInterrupted()) return false;  // Check for interruption
         out.println("Geben Sie eine Zahl ein (Ganzzahl):");
         while (!Thread.currentThread().isInterrupted()) {  // Check in loop
             try {
                 String zeile = auslesen();
+                if (zeile == null || Thread.currentThread().isInterrupted()) return false;
+                if (zeile.equals("exit")) {
+                    System.out.println("Programm beendet");
+                    return false;
+                }
                 musterA(Integer.parseInt(zeile));
             } catch (IOException e) {
+                System.out.println("Sie haben keine richtige Zahl eingegeben.");
                 e.printStackTrace();
             }
         }
+        return false;
     }
 
     public void musterA(int n) {
