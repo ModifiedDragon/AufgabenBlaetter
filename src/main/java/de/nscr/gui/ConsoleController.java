@@ -5,6 +5,7 @@ import de.nscr.blatt1.Aufgabe02;
 import de.nscr.blatt1.Aufgabe03;
 import de.nscr.blatt1.Aufgabe04;
 import de.nscr.blatt2.Aufgabe11;
+import de.nscr.blatt3.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.*;
 
@@ -98,7 +99,11 @@ public class ConsoleController {
                     case "1-3" -> new Aufgabe03(session.getEingabe(), out);
                     case "1-4" -> new Aufgabe04(session.getEingabe(), out);
                     case "2-1" -> new Aufgabe11(session.getEingabe(), out);
-                    // Add cases for 3-1, etc.
+                    case "3-1" -> new Aufgabe21(session.getEingabe(), out);
+                    case "3-2" -> new Aufgabe22(session.getEingabe(), out);
+                    case "3-3" -> new Aufgabe23(session.getEingabe(), out);
+                    case "3-4" -> new Aufgabe24(session.getEingabe(), out);
+                    case "3-5" -> new Aufgabe25(session.getEingabe(), out);
                     default -> System.out.println("Unknown task: " + task);
                 }
             } catch (InterruptedException e) {
