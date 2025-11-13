@@ -67,7 +67,7 @@ public class Aufgabe04 {
                 String zeile = auslesen();
                 if (zeile == null || Thread.currentThread().isInterrupted()) return false;
                 if (zeile.equals("exit")) {
-                    System.out.println("Programm beendet");
+                    out.println("Programm beendet");
                     return false;
                 }
                 teile = zeile.trim().split(",");

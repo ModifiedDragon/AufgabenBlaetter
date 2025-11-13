@@ -2,6 +2,7 @@ package de.nscr.blatt3;
 
 import de.nscr.gui.SchlangenEingabe;
 
+import java.io.IOException;
 import java.io.PrintStream;
 
 public class Aufgabe25 {
@@ -15,6 +16,28 @@ public class Aufgabe25 {
         while (weiter) {
             weiter = anfang();
         }
+    }
+
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
+    private String auslesen() throws IOException {
+        StringBuilder line = new StringBuilder();
+        int b;
+        while ((b = eingabe.read()) != -1) {
+            char c = (char) b;
+            if (c == '\n') {
+                break;
+            }
+            line.append(c);
+        }
+        String result = line.toString().trim();
+        if (result.isEmpty() && b == -1) {
+            return null;
+        }
+        return result;
     }
 
     private boolean anfang() {

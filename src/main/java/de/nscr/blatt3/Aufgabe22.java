@@ -11,7 +11,6 @@ public class Aufgabe22 {
     private final PrintStream out;
 
     public Aufgabe22(SchlangenEingabe eingabe, PrintStream printStream) {
-        // Palindrome
         this.eingabe = eingabe;
         this.out = printStream;
         boolean weiter = true;
@@ -45,17 +44,17 @@ public class Aufgabe22 {
     private boolean anfang() {
         if (Thread.currentThread().isInterrupted()) return false;
         while (!Thread.currentThread().isInterrupted()) {
-            out.println("Geben Sie die Wörter zum überprüfen der Palindrome ein (Format wort1,wort2)");
+            out.println("Geben Sie die Wörter zum überprüfen der Palindrome ein (Format wort1 wort2)");
             try {
                 String zeile = auslesen();
                 if (zeile == null || Thread.currentThread().isInterrupted()) return false;
                 if (zeile.equals("exit")) {
-                    System.out.println("Programm beendet");
+                    out.println("Programm beendet");
                     return false;
                 }
-                String[] wort = Objects.requireNonNull(zeile).split(",");
+                String[] wort = Objects.requireNonNull(zeile).split(" ");
                 for (String string : wort) {
-                    string = string.trim();
+                    string = string.trim().toLowerCase();
                     if (string.contentEquals(new StringBuilder(string).reverse())) {
                         out.println(string + " ist ein Palindrom");
                     }
