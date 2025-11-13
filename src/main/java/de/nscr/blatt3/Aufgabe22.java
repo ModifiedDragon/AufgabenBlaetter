@@ -47,13 +47,20 @@ public class Aufgabe22 {
         while (!Thread.currentThread().isInterrupted()) {
             out.println("Geben Sie die Wörter zum überprüfen der Palindrome ein (Format wort1,wort2)");
             try {
-                String[] wort = Objects.requireNonNull(auslesen()).split(",");
+                String zeile = auslesen();
+                if (zeile == null || Thread.currentThread().isInterrupted()) return false;
+                if (zeile.equals("exit")) {
+                    System.out.println("Programm beendet");
+                    return false;
+                }
+                String[] wort = Objects.requireNonNull(zeile).split(",");
                 for (String string : wort) {
                     string = string.trim();
                     if (string.contentEquals(new StringBuilder(string).reverse())) {
                         out.println(string + " ist ein Palindrom");
                     }
                 }
+                return true;
             } catch (IOException e) {
                 out.println(e.getMessage());
             }
