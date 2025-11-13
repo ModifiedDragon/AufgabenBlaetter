@@ -1,0 +1,4 @@
+Zeile 1
+Zeile 2
+Zeile 3
+de.nscr.gui.ConsoleController@52cc8049
