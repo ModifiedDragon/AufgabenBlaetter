@@ -44,16 +44,17 @@ public class Aufgabe24 {
     private boolean anfang() {
         if (Thread.currentThread().isInterrupted()) return false;
         while (!Thread.currentThread().isInterrupted()) {
-            boolean versch = false;
+            boolean versch = true;
             out.println("Wollen Sie einen Text Entschlüsseln oder Verschlüsseln? (ent/ver)");
+            out.println("Bei keiner richtigen eingabe wird als Standart auf Verschlüsseln gegangen");
             try {
                 String zeile = auslesen();
                 if (zeile == null || Thread.currentThread().isInterrupted()) return false;
                 else if (zeile.equals("exit")) {
                     out.println("Programm beendet");
                     return false;
-                } else if (zeile.equals("ver")) {
-                    versch = true;
+                } else if (zeile.equals("ent")) {
+                    versch = false;
                 }
             } catch (IOException e) {
                 out.println(e.getMessage());
@@ -70,7 +71,7 @@ public class Aufgabe24 {
                     out.println("Programm beendet");
                     return false;
                 }
-                String[] wort = Objects.requireNonNull(zeile).split(" ");
+                String[] woerter = Objects.requireNonNull(zeile).split(" ");
 
             } catch (IOException e) {
             out.println(e.getMessage());
