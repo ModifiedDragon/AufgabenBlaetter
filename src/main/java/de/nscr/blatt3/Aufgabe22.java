@@ -45,6 +45,7 @@ public class Aufgabe22 {
         if (Thread.currentThread().isInterrupted()) return false;
         while (!Thread.currentThread().isInterrupted()) {
             out.println("Geben Sie die Wörter zum überprüfen der Palindrome ein (Format wort1 wort2)");
+            out.println("Mit 'exit' kann auch alternativ das Programm geschlossen werden.");
             try {
                 String zeile = auslesen();
                 if (zeile == null || Thread.currentThread().isInterrupted()) return false;

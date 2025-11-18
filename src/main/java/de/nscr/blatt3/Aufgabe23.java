@@ -45,6 +45,7 @@ public class Aufgabe23 {
         if (Thread.currentThread().isInterrupted()) return false;
         while (!Thread.currentThread().isInterrupted()) {
             out.println("Geben sie das Wort zur Umwandlung in ASCII Code an");
+            out.println("Mit 'exit' kann auch alternativ das Programm geschlossen werden.");
             try {
                 String zeile = auslesen();
                 if (zeile == null || Thread.currentThread().isInterrupted()) return false;
