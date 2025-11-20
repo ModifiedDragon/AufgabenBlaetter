@@ -8,7 +8,7 @@ import java.util.Objects;
 
 /**
  * Dies ist die Aufgabe 2.1 oder auch die Aufgabe aus Testat 2.
- * Sie wird in der main Methode ausgeführt.
+ * Sie wird mit Buttons auf der Website ausgeführt
  */
 public class Aufgabe11 {
     private final SchlangenEingabe eingabe;
