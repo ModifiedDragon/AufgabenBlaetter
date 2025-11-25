@@ -61,16 +61,7 @@ public class ConsoleController {
     public void input(@PathVariable String id, @RequestBody String command) {
         ConsoleSession session = sessions.get(id);
         if (session != null) {
-            if (command.equals("help")) {
-                System.out.println("help -> get all commands for the current task");
-                // prep for help command
-                switch (session.getTask()) {
-                    case "2-1" -> System.out.println(""" 
-                            """);
-                }
-            } else {
-                session.getEingabe().inputEinfuegen(command + "\n");
-            }
+            session.getEingabe().inputEinfuegen(command + "\n");
         }
         session.setLastActivity(System.currentTimeMillis());
     }
