@@ -6,10 +6,31 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Objects;
 
+/**
+ * Aufgabe 3.2: Ein kleines Konsolenprogramm zur Palindrom-Erkennung.
+ * <p>
+ * Die Klasse liest Eingaben aus einer HTML-Konsole (über {@link SchlangenEingabe})
+ * und überprüft, ob die eingegebenen Wörter Palindrome sind. Ergebnisse werden
+ * über einen {@link PrintStream} ausgegeben.
+ * </p>
+ */
 public class Aufgabe22 {
     private final SchlangenEingabe eingabe;
     private final PrintStream out;
 
+    /**
+     * Konstruktor der Klasse.
+     * <p>
+     * Initialisiert die Eingabe- und Ausgabeströme und startet die Hauptschleife,
+     * in der wiederholt Eingaben abgefragt und überprüft werden, bis das Programm
+     * beendet wird (z. B. durch Eingabe von "exit").
+     * </p>
+     *
+     * @param eingabe     Eingabequelle (ähnlich wie {@code System.in}), liest Zeichen
+     *                    aus der HTML-Konsole.
+     * @param printStream Ausgabestream (ähnlich wie {@code System.out}), schreibt
+     *                    Nachrichten in die HTML-Konsole.
+     */
     public Aufgabe22(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
         this.out = printStream;
@@ -20,9 +41,15 @@ public class Aufgabe22 {
     }
 
     /**
+     * Liest eine Zeile aus der Eingabequelle.
+     * <p>
+     * Die Methode sammelt Zeichen, bis ein Zeilenumbruch erreicht wird oder
+     * das Ende der Eingabe erreicht ist. Leere Eingaben am Ende führen zu
+     * {@code null}.
+     * </p>
      *
-     * @return
-     * @throws IOException
+     * @return die eingelesene Zeile als String, oder {@code null}, wenn keine Eingabe mehr vorhanden ist
+     * @throws IOException falls beim Lesen ein Fehler auftritt
      */
     private String auslesen() throws IOException {
         StringBuilder line = new StringBuilder();
@@ -41,6 +68,16 @@ public class Aufgabe22 {
         return result;
     }
 
+    /**
+     * Führt eine Eingabe- und Prüfungsrunde aus.
+     * <p>
+     * Fragt den Benutzer nach Wörtern, überprüft jedes Wort auf Palindrom-Eigenschaft
+     * und gibt das Ergebnis aus. Mit der Eingabe "exit" kann das Programm beendet werden.
+     * </p>
+     *
+     * @return {@code true}, wenn eine Runde erfolgreich abgeschlossen wurde und eine neue gestartet werden soll;
+     *         {@code false}, wenn das Programm beendet werden soll
+     */
     private boolean anfang() {
         if (Thread.currentThread().isInterrupted()) return false;
         while (!Thread.currentThread().isInterrupted()) {

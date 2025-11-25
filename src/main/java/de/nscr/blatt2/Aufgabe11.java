@@ -16,6 +16,8 @@ public class Aufgabe11 {
 
     /**
      * Konstruktor, welcher keine Übergabeparameter bekommen hat. Dieser führt die Abfrage und ausführung in Anfang wiederholt durch, bis false zurückgegeben wird.
+     * @param eingabe
+     * @param printStream
      */
     public Aufgabe11(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
@@ -27,9 +29,10 @@ public class Aufgabe11 {
     }
 
     /**
+     * Liest eine Zeile aus dem Eingabestrom ein.
      *
-     * @return
-     * @throws IOException
+     * @return eingelesene Zeile ohne Zeilenumbruch, oder null bei EOF
+     * @throws IOException falls ein Lesefehler auftritt
      */
     private String auslesen() throws IOException {
         StringBuilder line = new StringBuilder();

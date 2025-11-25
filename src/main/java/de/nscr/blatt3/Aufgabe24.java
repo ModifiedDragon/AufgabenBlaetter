@@ -6,11 +6,21 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Objects;
 
+/**
+ * Diese Klasse implementiert eine einfache Verschlüsselungs- und Entschlüsselungsroutine
+ * nach dem Caesar-Verschiebeverfahren. Die Eingaben erfolgen über ein
+ * {@link SchlangenEingabe}-Objekt, die Ausgaben über einen {@link PrintStream}.
+ */
 public class Aufgabe24 {
     private final SchlangenEingabe eingabe;
     private final PrintStream out;
     boolean verschluesseln = true;
 
+    /**
+     * Konstruktor, welcher keine Übergabeparameter bekommen hat. Dieser führt die Abfrage und ausführung in Anfang wiederholt durch, bis false zurückgegeben wird.
+     * @param eingabe Eingabe ist eine selbsterstellte Klasse, welche die Eingabe aus der Html Konsole ausließt und übergibt. Hierbei wird bei der Aufgabe die instanz zum Auslesen übergeben. Agiert ähnlich wie System.in
+     * @param printStream ist die Ausgabe aus dem Code, welche zu der Html Website Konsole geleitet und übergeben wird. Agiert ähnlich wie System.out
+     */
     public Aufgabe24(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
         this.out = printStream;
@@ -21,9 +31,16 @@ public class Aufgabe24 {
     }
 
     /**
+     * Liest eine einzelne Zeile von der Eingabequelle {@link SchlangenEingabe} ein.
      *
-     * @return
-     * @throws IOException
+     * <p>Die Methode liest Zeichen so lange ein, bis ein Zeilenumbruch ('\n') oder
+     * das Ende der Eingabe (-1) erreicht wird. Anschließend wird der gelesene String
+     * getrimmt (führende und nachfolgende Leerzeichen entfernt) und zurückgegeben.</p>
+     *
+     * <p>Wenn die Zeile leer ist und das Ende der Eingabe erreicht wurde, wird null zurückgegeben.</p>
+     *
+     * @return die eingelesene und getrimmte Zeile, oder null wenn das Ende der Eingabe erreicht wurde
+     * @throws IOException falls ein Ein-/Ausgabefehler beim Lesen auftritt
      */
     private String auslesen() throws IOException {
         StringBuilder line = new StringBuilder();
@@ -42,6 +59,11 @@ public class Aufgabe24 {
         return result;
     }
 
+    /**
+     * Startet die Abfrage, ob verschlüsselt oder entschlüsselt werden soll.
+     *
+     * @return
+     */
     private boolean anfang() {
         if (Thread.currentThread().isInterrupted()) return false;
         while (!Thread.currentThread().isInterrupted()) {
@@ -65,6 +87,12 @@ public class Aufgabe24 {
         return false;
     }
 
+    /**
+     * Fragt den Text und den Schlüssel ab und führt anschließend die Verschlüsselung
+     * oder Entschlüsselung durch.
+     *
+     * @return true, wenn erneut abgefragt werden soll, false bei Programmende
+     */
     private boolean verschl() {
         out.println("Geben Sie den Text und den Schlüssel an: ");
         out.println("Sie können so viel Text eingeben wie Sie wollen. Leerzeichen werden dabei entfernt.");
@@ -107,6 +135,13 @@ public class Aufgabe24 {
     }
 
 
+    /**
+     *
+     * Führt die Caesar-Verschlüsselung bzw. Entschlüsselung anhand des Schlüssels aus.
+     *
+     * @param schluessel Verschiebewert; positiv zum Verschlüsseln, negativ zum Entschlüsseln
+     * @param woerter Array aus Textbestandteilen, die verarbeitet werden sollen
+     */
     public void berechnung(int schluessel, String[] woerter) {
         try {
             for (String s : woerter) {

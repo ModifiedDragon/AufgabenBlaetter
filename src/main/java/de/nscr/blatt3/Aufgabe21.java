@@ -6,6 +6,17 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Objects;
 
+/**
+ * Aufgabe 3.1: Konsolenbasiertes Tic-Tac-Toe-Spiel.
+ * <p>
+ * Diese Klasse implementiert ein einfaches Tic-Tac-Toe-Spiel, das über die
+ * HTML-Konsole gespielt wird. Spieler 1 verwendet das Symbol "X", Spieler 2
+ * das Symbol "O". Die Spieler geben abwechselnd ihre Züge über Koordinaten
+ * (1,1 bis 3,3) ein. Das Spielfeld wird nach jedem Zug aktualisiert und
+ * ausgegeben. Das Spiel endet, wenn ein Spieler gewinnt, ein Unentschieden
+ * erreicht wird oder der Benutzer "exit" eingibt.
+ * </p>
+ */
 public class Aufgabe21 {
     private final SchlangenEingabe eingabe;
     private final PrintStream out;
@@ -13,6 +24,19 @@ public class Aufgabe21 {
     private boolean zug = false; // false: Spieler 1 (X), true: Spieler 2 (O)
     private int zugn = 0;
 
+    /**
+     * Konstruktor der Klasse.
+     * <p>
+     * Initialisiert Eingabe und Ausgabe sowie das Spielfeld. Führt die
+     * Spielschleife aus, indem wiederholt {@link #anfang()} aufgerufen wird,
+     * bis das Spiel beendet wird.
+     * </p>
+     *
+     * @param eingabe     Eingabequelle (ähnlich wie {@code System.in}), liest Zeichen
+     *                    aus der HTML-Konsole.
+     * @param printStream Ausgabestream (ähnlich wie {@code System.out}), schreibt
+     *                    Nachrichten in die HTML-Konsole.
+     */
     public Aufgabe21(SchlangenEingabe eingabe, PrintStream printStream) {
         this.eingabe = eingabe;
         this.out = printStream;
@@ -24,9 +48,14 @@ public class Aufgabe21 {
     }
 
     /**
-     * Liest eine Zeile von der Eingabe.
-     * @return die gelesene Zeile oder null bei EOF
-     * @throws IOException
+     * Liest eine Zeile aus dem Eingabestrom ein.
+     * <p>
+     * Die Methode sammelt Zeichen bis zum Zeilenumbruch oder bis das Ende
+     * der Eingabe erreicht ist. Leere Eingaben am Ende führen zu {@code null}.
+     * </p>
+     *
+     * @return eingelesene Zeile ohne Zeilenumbruch, oder {@code null} bei EOF
+     * @throws IOException falls ein Lesefehler auftritt
      */
     private String auslesen() throws IOException {
         StringBuilder line = new StringBuilder();
@@ -45,6 +74,18 @@ public class Aufgabe21 {
         return result;
     }
 
+    /**
+     * Startet eine neue Spielrunde Tic-Tac-Toe.
+     * <p>
+     * Spieler 1 beginnt mit "X", Spieler 2 mit "O". Jeder Spieler gibt
+     * abwechselnd Koordinaten ein. Nach jedem Zug wird das Spielfeld
+     * aktualisiert und ausgegeben. Das Spiel endet, wenn ein Spieler
+     * gewinnt, ein Unentschieden erreicht wird oder "exit" eingegeben wird.
+     * </p>
+     *
+     * @return {@code true}, wenn ein Spieler gewonnen hat und eine neue Runde
+     *         gestartet werden soll; {@code false}, wenn das Spiel beendet wird
+     */
     private boolean anfang() {
         if (Thread.currentThread().isInterrupted()) return false;
         zug = false;
@@ -94,6 +135,16 @@ public class Aufgabe21 {
         return false;
     }
 
+    /**
+     * Gibt das aktuelle Spielfeld als Tabelle in der Konsole aus.
+     * <p>
+     * Jede Zelle wird mit dem aktuellen Symbol ("X", "O" oder Leerzeichen)
+     * dargestellt. Die Ausgabe ist formatiert mit Rahmenlinien, sodass das
+     * Spielfeld klar erkennbar ist.
+     * </p>
+     *
+     * @param grid zweidimensionales Array mit den Spielfeldinhalten
+     */
     public void printGrid(String[][] grid) {
         int rows = grid.length;
         int cols = grid[0].length;
@@ -126,6 +177,17 @@ public class Aufgabe21 {
         out.println(horizontalBorder);
     }
 
+    /**
+     * Prüft, ob der angegebene Spieler das Spiel gewonnen hat.
+     * <p>
+     * Ein Spieler gewinnt, wenn er drei gleiche Symbole in einer Reihe,
+     * Spalte oder Diagonale hat.
+     * </p>
+     *
+     * @param feld    aktuelles Spielfeld
+     * @param spieler das Symbol des Spielers ("X" oder "O")
+     * @return {@code true}, wenn der Spieler gewonnen hat, sonst {@code false}
+     */
     public boolean pruefeGewonnen(String[][] feld, String spieler) {
         // Zeilen prüfen
         for (int zeile = 0; zeile < 3; zeile++) {
@@ -158,6 +220,21 @@ public class Aufgabe21 {
                 Objects.equals(feld[2][0], spieler);
     }
 
+    /**
+     * Trägt den aktuellen Spielzug in das Spielfeld ein.
+     * <p>
+     * Der Spieler gibt die gewünschte Position über Koordinaten (1–3 für Zeile
+     * und Spalte) an. Falls das Feld frei ist, wird das Symbol ("X" oder "O")
+     * eingetragen und das Spielfeld neu ausgegeben. Falls das Feld bereits
+     * belegt oder die Eingabe ungültig ist, wird eine entsprechende Meldung
+     * ausgegeben.
+     * </p>
+     *
+     * @param px Zeilenkoordinate (1–3)
+     * @param py Spaltenkoordinate (1–3)
+     * @return das Symbol ("X" oder "O"), wenn der Zug erfolgreich war;
+     *         {@code null}, wenn der Zug ungültig war
+     */
     public String eintragen(int px, int py) {
         int x = px - 1;
         int y = py - 1;
